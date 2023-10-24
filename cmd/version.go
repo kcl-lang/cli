@@ -1,3 +1,5 @@
+// Copyright The KCL Authors. All rights reserved.
+
 package cmd
 
 import (
