@@ -6,13 +6,13 @@
 // kcl
 //
 //	run           compile kcl package from a url or filepath
-//	build         build the kcl package
-//	check         check the current package, but don't build target files
+//	build         build the kcl package (Not yet implemented)
+//	check         check the current package, but don't build target files (Not yet implemented)
 //	doc           documentation tool
 //	fmt           format tool
 //	lint          lint tool
-//	test          unit/integration/benchmark test tool
-//	lsp           language server tool
+//	vet           vet tool
+//	test          unit/integration/benchmark test tool (Not yet implemented)
 //	clean         remove object files and cached files
 //
 // ```
@@ -64,7 +64,7 @@
 // kcl
 //
 //	help, h   Shows a list of commands or help for one command
-//	version Shows the command version
+//	version   Shows the command version
 //
 // ```
 // #### Alias
@@ -104,11 +104,22 @@ func New() *cobra.Command {
 		SilenceUsage: true,
 		Version:      version.GetVersionString(),
 	}
-	cmd.AddCommand(NewVersionCmd())
+	// Language commands
 	cmd.AddCommand(NewRunCmd())
+	// Tool commands
+	cmd.AddCommand(NewLintCmd())
+	cmd.AddCommand(NewDocCmd())
+	cmd.AddCommand(NewFmtCmd())
+	cmd.AddCommand(NewVetCmd())
+	cmd.AddCommand(NewCleanCmd())
+	cmd.AddCommand(NewImportCmd())
+	// Module & Registry commands
 	cmd.AddCommand(NewModCmd())
 	cmd.AddCommand(NewRegistryCmd())
-
+	// Version & Help commands
+	cmd.AddCommand(NewVersionCmd())
+	cmd.SetHelpCommand(&cobra.Command{}) // Disable the help command
+	// Plugin commands
 	bootstrapCmdPlugin(cmd, plugin.NewDefaultPluginHandler([]string{cmdName}))
 
 	return cmd

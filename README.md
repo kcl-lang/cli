@@ -15,7 +15,7 @@
 
 ## Introduction
 
-`kcl` is the KCL package manager. `KCL CLI` downloads your KCL package's dependencies, compiles your KCL packages, makes packages, and uploads them to the kcl package registry.
+`kcl` is a command-line interface that includes language core features, IDE features, package management tools, community integration, and other tools.
 
 ## Installation
 
@@ -26,7 +26,7 @@
 You can download `kcl` via `go install`.
 
 ```shell
-go install kcl-lang.io/cli@latest
+go install kcl-lang.io/cli@main
 ```
 
 ### Download from GITHUB Release Page
@@ -45,6 +45,11 @@ kcl --help
 ```
 
 ### Build from Source Code
+
+```shell
+git clone https://github.com/kcl-lang/cli
+cd cli && go build -o kcl
+```
 
 ## Quick Start
 
