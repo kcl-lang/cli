@@ -19,3 +19,9 @@
 
 # Go workspace file
 go.work
+
+build/
+.vscode/
+.kclvm/
+
+.DS_store
