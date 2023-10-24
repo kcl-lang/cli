@@ -5,8 +5,8 @@ package version
 // version will be set by build flags.
 var version string
 
-// GetVersionInStr() will return the latest version of kpm.
-func GetVersionInStr() string {
+// GetVersionString() will return the latest version of kpm.
+func GetVersionString() string {
 	if len(version) == 0 {
 		// If version is not set by build flags, return the version constant.
 		return VersionTypeLatest.String()

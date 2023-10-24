@@ -1,3 +1,5 @@
+// Copyright The KCL Authors. All rights reserved.
+//
 // #### Language & Tooling Commands
 //
 // ```
@@ -69,10 +71,10 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
+	"kcl-lang.io/cli/pkg/version"
 )
 
-const rootCmdShortUsage = "The KCL Command Line Interface (CLI)."
-const rootCmdLongUsage = `The KCL Command Line Interface (CLI).
+const rootDesc = `The KCL Command Line Interface (CLI).
 
 KCL is an open-source, constraint-based record and functional language that
 enhances the writing of complex configurations, including those for cloud-native
@@ -83,9 +85,10 @@ scenarios. The KCL website: https://kcl-lang.io
 func New() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:          "kcl",
-		Short:        rootCmdShortUsage,
-		Long:         rootCmdLongUsage,
+		Short:        "The KCL Command Line Interface (CLI).",
+		Long:         rootDesc,
 		SilenceUsage: true,
+		Version:      version.GetVersionString(),
 	}
 	cmd.AddCommand(NewVersionCmd())
 	cmd.AddCommand(NewRunCmd())

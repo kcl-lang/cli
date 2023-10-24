@@ -2,7 +2,7 @@ package version
 
 import "testing"
 
-func TestGetVersionInStr(t *testing.T) {
+func TestGetVersionString(t *testing.T) {
 	tests := []struct {
 		name string
 		want string
@@ -14,8 +14,8 @@ func TestGetVersionInStr(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := GetVersionInStr(); got != tt.want {
-				t.Errorf("GetVersionInStr() = %v, want %v", got, tt.want)
+			if got := GetVersionString(); got != tt.want {
+				t.Errorf(" GetVersionString() = %v, want %v", got, tt.want)
 			}
 		})
 	}
