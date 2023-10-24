@@ -67,24 +67,38 @@
 //	version Shows the command version
 //
 // ```
+// #### Alias
+//
+// ```
+// alias kcl="kcl run"
+// alias kpm="kcl mod"
+// ```
 package cmd
 
 import (
+	"fmt"
+	"os"
+	"strings"
+
 	"github.com/spf13/cobra"
+	"kcl-lang.io/cli/pkg/plugin"
 	"kcl-lang.io/cli/pkg/version"
 )
 
-const rootDesc = `The KCL Command Line Interface (CLI).
+const (
+	cmdName  = "kcl"
+	rootDesc = `The KCL Command Line Interface (CLI).
 
 KCL is an open-source, constraint-based record and functional language that
 enhances the writing of complex configurations, including those for cloud-native
 scenarios. The KCL website: https://kcl-lang.io
 `
+)
 
 // New creates a new cobra client
 func New() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:          "kcl",
+		Use:          cmdName,
 		Short:        "The KCL Command Line Interface (CLI).",
 		Long:         rootDesc,
 		SilenceUsage: true,
@@ -92,6 +106,60 @@ func New() *cobra.Command {
 	}
 	cmd.AddCommand(NewVersionCmd())
 	cmd.AddCommand(NewRunCmd())
-	cmd.SetHelpCommand(&cobra.Command{}) // Disable the help command
+	cmd.AddCommand(NewModCmd())
+	cmd.AddCommand(NewRegistryCmd())
+
+	bootstrapCmdPlugin(cmd, plugin.NewDefaultPluginHandler([]string{cmdName}))
+
 	return cmd
+}
+
+func bootstrapCmdPlugin(cmd *cobra.Command, pluginHandler plugin.PluginHandler) {
+	if pluginHandler == nil {
+		return
+	}
+	if len(os.Args) > 1 {
+		cmdPathPieces := os.Args[1:]
+
+		// only look for suitable extension executables if
+		// the specified command does not already exist
+		if foundCmd, _, err := cmd.Find(cmdPathPieces); err != nil {
+			// Also check the commands that will be added by Cobra.
+			// These commands are only added once rootCmd.Execute() is called, so we
+			// need to check them explicitly here.
+			var cmdName string // first "non-flag" arguments
+			for _, arg := range cmdPathPieces {
+				if !strings.HasPrefix(arg, "-") {
+					cmdName = arg
+					break
+				}
+			}
+
+			builtinSubcmdExist := false
+			for _, subcmd := range foundCmd.Commands() {
+				if subcmd.Name() == cmdName {
+					builtinSubcmdExist = true
+					break
+				}
+			}
+			switch cmdName {
+			// Don't search for a plugin
+			case "help", cobra.ShellCompRequestCmd, cobra.ShellCompNoDescRequestCmd:
+			default:
+				if !builtinSubcmdExist {
+					if err := plugin.HandlePluginCommand(pluginHandler, cmdPathPieces, false); err != nil {
+						fmt.Fprintf(os.Stderr, "Error: %v\n", err)
+						os.Exit(1)
+					}
+					// Run the run command for the root command. alias kcl="kcl run"
+					cmd := NewRunCmd()
+					cmd.SetArgs(cmdPathPieces)
+					if err := cmd.Execute(); err != nil {
+						os.Exit(1)
+					}
+					os.Exit(0)
+				}
+			}
+		}
+	}
 }
