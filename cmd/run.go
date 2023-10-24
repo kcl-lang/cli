@@ -39,7 +39,9 @@ func NewRunCmd() *cobra.Command {
 		Long:    runDesc,
 		Example: runExample,
 		RunE: func(_ *cobra.Command, args []string) error {
-			o.Complete(args)
+			if err := o.Complete(args); err != nil {
+				return err
+			}
 			if err := o.Validate(); err != nil {
 				return err
 			}
