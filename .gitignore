@@ -19,6 +19,8 @@
 
 # Go workspace file
 go.work
+# Go coverage test
+coverage.out
 
 build/
 .vscode/

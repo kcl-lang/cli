@@ -1,7 +1,9 @@
 VERSION := $(shell cat VERSION)
 
-PKG:= kcl-lang.io/kcl
-LDFLAGS := -X $(PKG)/cmd.Version=$(VERSION)
+PKG:= kcl-lang.io/cli
+LDFLAGS := -X $(PKG)/pkg/version.version=$(VERSION)
+COVER_FILE			?= coverage.out
+SOURCE_PATHS		?= ./pkg/...
 
 GO ?= go
 
