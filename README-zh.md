@@ -22,6 +22,21 @@
 
 ### 使用脚本安装
 
+#### MacOS
+
+```shell
+```
+
+#### Linux
+
+```shell
+```
+
+#### Windows
+
+```shell
+```
+
 ### 使用 `go install` 安装
 
 您可以使用 `go install` 命令安装 `kcl`。
@@ -44,6 +59,10 @@ export PATH=$KCL_INSTALLATION_PATH:$PATH
 ```shell
 kcl --help
 ```
+
+### Homebrew
+
+### Scoop
 
 ### 从源代码构建
 

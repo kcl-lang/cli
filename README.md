@@ -21,6 +21,31 @@
 
 ### Scripts
 
+#### MacOS
+
+```shell
+```
+
+#### Linux
+
+```shell
+```
+
+#### Windows
+
+```shell
+```
+
+### Homebrew
+
+```shell
+```
+
+### Scoop
+
+```shell
+```
+
 ### Go install
 
 You can download `kcl` via `go install`.
