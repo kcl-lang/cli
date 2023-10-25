@@ -5,11 +5,6 @@ before:
     # You may remove this if you don't use go modules.
     - go mod tidy
 
-release:
-  github:
-    owner: kcl-lang
-    name: kcl
-
 # .goreleaser.yml
 builds:
   - id: "kcl"
