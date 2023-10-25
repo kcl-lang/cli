@@ -34,8 +34,8 @@ go install kcl-lang.io/cli/cmd/kcl@latest
 You can also get `kcl` from the github release and set the binary path to the environment variable PATH.
 
 ```shell
-# KCL CLI_INSTALLATION_PATH is the path of the `KCL CLI` binary.
-export PATH=$KCL CLI_INSTALLATION_PATH:$PATH  
+# KCL_CLI_INSTALLATION_PATH is the path of the `KCL CLI` binary.
+export PATH=$KCL_CLI_INSTALLATION_PATH:$PATH  
 ```
 
 Use the following command to ensure that you install `kcl` successfully.
@@ -48,7 +48,7 @@ kcl --help
 
 ```shell
 git clone https://github.com/kcl-lang/cli
-cd cli && go build -o kcl
+cd cli && go build ./cmd/kcl/main.go -o kcl
 ```
 
 ## Quick Start

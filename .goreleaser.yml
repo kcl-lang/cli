@@ -8,7 +8,7 @@ before:
 # .goreleaser.yml
 builds:
   - id: "kcl"
-    main: ./kcl.go
+    main: ./cmd/kcl/main.go
     goos:
       - darwin
       - linux

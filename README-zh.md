@@ -49,7 +49,7 @@ kcl --help
 
 ```shell
 git clone https://github.com/kcl-lang/cli
-cd cli && go build -o kcl
+cd cli && go build ./cmd/kcl/main.go -o kcl
 ```
 
 ## 快速开始
