@@ -7,7 +7,7 @@ before:
 
 # .goreleaser.yml
 builds:
-  - id: "kcl"
+  - id: default
     main: ./cmd/kcl/main.go
     binary: kcl
     goos:
