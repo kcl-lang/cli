@@ -18,13 +18,6 @@ import (
 	"kcl-lang.io/kpm/pkg/runner"
 )
 
-const (
-	// Json is the JSON output format.
-	Json string = "json"
-	// Yaml is the YAML output format.
-	Yaml string = "yaml"
-)
-
 // RunOptions is a struct that holds the options for the run command.
 type RunOptions struct {
 	// Entries is the list of the kcl code entry including filepath, folder, OCI package, etc.
@@ -55,8 +48,8 @@ type RunOptions struct {
 	StrictRangeCheck bool
 	// Tag is the package tag of the OCI or Git artifact.
 	Tag string
-	// CheckOnly is used to check a local package and all of its dependencies for errors.
-	CheckOnly bool
+	// CompileOnly is used to check a local package and all of its dependencies for errors.
+	CompileOnly bool
 	// Format is the output type, e.g., Json, Yaml, etc. Default is Yaml.
 	Format string
 	// Writer is used to output the run result. Default is os.Stdout.
@@ -220,10 +213,12 @@ func CompileOptionFromCli(o *RunOptions) *opt.CompileOptions {
 	// --strict_range_check, -r
 	opts.StrictRangeCheck = o.StrictRangeCheck
 
+	opts.CompileOnly = o.CompileOnly
+
 	// --vendor
 	opts.SetVendor(o.Vendor)
 
-	// TODO: path_selector, check_only
+	// TODO: path_selector
 
 	return opts
 }

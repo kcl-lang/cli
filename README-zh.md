@@ -27,7 +27,7 @@
 您可以使用 `go install` 命令安装 `kcl`。
 
 ```shell
-go install kcl-lang.io/cli@latest
+go install kcl-lang.io/cli@main
 ```
 
 ### 从 Github Release 页面手动安装
@@ -46,6 +46,11 @@ kcl --help
 ```
 
 ### 从源代码构建
+
+```shell
+git clone https://github.com/kcl-lang/cli
+cd cli && go build -o kcl
+```
 
 ## 快速开始
 

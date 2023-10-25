@@ -50,34 +50,7 @@ func NewRunCmd() *cobra.Command {
 		SilenceUsage: true,
 	}
 
-	cmd.Flags().StringSliceVarP(&o.Arguments, "argument", "D", []string{},
-		"Specify the top-level argument")
-	cmd.Flags().StringSliceVarP(&o.Settings, "setting", "Y", []string{},
-		"Specify the command line setting files")
-	cmd.Flags().StringSliceVarP(&o.Overrides, "overrides", "O", []string{},
-		"Specify the configuration override path and value")
-	cmd.Flags().StringSliceVarP(&o.PathSelectors, "path_selectors", "S", []string{},
-		"Specify the path selectors")
-	cmd.Flags().StringSliceVarP(&o.ExternalPackages, "external", "E", []string{},
-		" Mapping of package name and path where the package is located")
-	cmd.Flags().StringVarP(&o.Output, "output", "o", "",
-		"Specify the YAML/JSON output file path")
-	cmd.Flags().StringVarP(&o.Tag, "tag", "t", "",
-		"Specify the tag for the OCI or Git artifact")
-	cmd.Flags().StringVar(&o.Format, "format", "yaml",
-		"Specify the output format")
-	cmd.Flags().BoolVarP(&o.DisableNone, "disable_none", "n", false,
-		"Disable dumping None values")
-	cmd.Flags().BoolVarP(&o.StrictRangeCheck, "strict_range_check", "r", false,
-		"Do perform strict numeric range checks")
-	cmd.Flags().BoolVarP(&o.Debug, "debug", "d", false,
-		"Run in debug mode")
-	cmd.Flags().BoolVarP(&o.SortKeys, "sort_keys", "k", false,
-		"Sort output result keys")
-	cmd.Flags().BoolVarP(&o.Vendor, "vendor", "V", false,
-		"Sort output result keys")
-	cmd.Flags().BoolVar(&o.NoStyle, "no_style", false,
-		"Sort output result keys")
+	appendLangFlags(o, cmd.Flags())
 
 	return cmd
 }
