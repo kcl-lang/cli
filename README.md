@@ -26,7 +26,7 @@
 You can download `kcl` via `go install`.
 
 ```shell
-go install kcl-lang.io/cli@main
+go install kcl-lang.io/cli/cmd/kcl@main
 ```
 
 ### Download from GITHUB Release Page

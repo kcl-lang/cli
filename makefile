@@ -9,7 +9,7 @@ GO ?= go
 
 .PHONY: run
 run:
-	go run kcl.go run ./examples/kubernetes.k
+	go run ./cmd/kcl/main.go run ./examples/kubernetes.k
 
 .PHONY: format
 format:
@@ -25,7 +25,7 @@ lint:
 .PHONY: build
 build: lint
 	mkdir -p bin/
-	go build -v -o bin/kcl -ldflags="$(LDFLAGS)"
+	go build -o bin/kcl -ldflags="$(LDFLAGS)" ./cmd/kcl/main.go
 
 .PHONY: test
 test:
@@ -58,16 +58,16 @@ dist:
 	rm -rf build/kcl/* release/*
 	mkdir -p build/kcl/bin release/
 	cp -f README.md LICENSE build/kcl
-	GOOS=linux GOARCH=amd64 $(GO) build -o build/kcl/bin/kcl -trimpath -ldflags="$(LDFLAGS)"
+	GOOS=linux GOARCH=amd64 $(GO) build -o build/kcl/bin/kcl -trimpath -ldflags="$(LDFLAGS)" ./cmd/kcl/main.go
 	tar -C build/ -zcvf $(CURDIR)/release/kcl-linux-amd64.tgz kcl/
-	GOOS=linux GOARCH=arm64 $(GO) build -o build/kcl/bin/kcl -trimpath -ldflags="$(LDFLAGS)"
+	GOOS=linux GOARCH=arm64 $(GO) build -o build/kcl/bin/kcl -trimpath -ldflags="$(LDFLAGS)" ./cmd/kcl/main.go
 	tar -C build/ -zcvf $(CURDIR)/release/kcl-linux-arm64.tgz kcl/
-	GOOS=darwin GOARCH=amd64 $(GO) build -o build/kcl/bin/kcl -trimpath -ldflags="$(LDFLAGS)"
+	GOOS=darwin GOARCH=amd64 $(GO) build -o build/kcl/bin/kcl -trimpath -ldflags="$(LDFLAGS)" ./cmd/kcl/main.go
 	tar -C build/ -zcvf $(CURDIR)/release/kcl-macos-amd64.tgz kcl/
-	GOOS=darwin GOARCH=arm64 $(GO) build -o build/kcl/bin/kcl -trimpath -ldflags="$(LDFLAGS)"
+	GOOS=darwin GOARCH=arm64 $(GO) build -o build/kcl/bin/kcl -trimpath -ldflags="$(LDFLAGS)" ./cmd/kcl/main.go
 	tar -C build/ -zcvf $(CURDIR)/release/kcl-macos-arm64.tgz kcl/
 	rm build/kcl/bin/kcl
-	GOOS=windows GOARCH=amd64 $(GO) build -o build/kcl/bin/kcl.exe -trimpath -ldflags="$(LDFLAGS)"
+	GOOS=windows GOARCH=amd64 $(GO) build -o build/kcl/bin/kcl.exe -trimpath -ldflags="$(LDFLAGS)" ./cmd/kcl/main.go
 	tar -C build/ -zcvf $(CURDIR)/release/kcl-windows-amd64.tgz kcl/
 
 .PHONY: release
