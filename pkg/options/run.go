@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/acarl005/stripansi"
@@ -91,15 +92,25 @@ func (o *RunOptions) Run() error {
 			result, err = api.RunWithOpt(opts)
 		}
 	} else {
-		// kcl compiles the package from the local file system.
-		if entry.IsLocalFile() || entry.IsLocalFileWithKclMod() {
-			if entry.IsLocalFile() {
-				// If there is only kcl file without kcl package (kcl.mod)
-				result, err = api.RunWithOpt(opts)
-			} else {
-				// Else compile the kcl package (kcl.mod)
-				result, err = cli.CompileWithOpts(opts)
+		// kcl compiles the package from the local file system, tar and OCI package, etc.
+		if entry.IsLocalFile() {
+			// If there is only kcl file without kcl package (kcl.mod)
+			result, err = api.RunWithOpt(opts)
+		} else if entry.IsLocalFileWithKclMod() {
+			// Else compile the kcl package (kcl.mod)
+			var transformedEntries []string
+			for _, entry := range opts.Entries() {
+				if !filepath.IsAbs(entry) {
+					entry, err = filepath.Abs(entry)
+					if err != nil {
+						return err
+					}
+				}
+				transformedEntries = append(transformedEntries, entry)
 			}
+			opts.SetEntries(transformedEntries)
+			opts.SetPkgPath(entry.PackageSource())
+			result, err = cli.CompileWithOpts(opts)
 		} else if entry.IsTar() {
 			// kcl compiles the package from the kcl package tar.
 			result, err = cli.CompileTarPkg(entry.PackageSource(), opts)
@@ -131,6 +142,11 @@ func (o *RunOptions) Validate() error {
 	if o.Format != "" && strings.ToLower(o.Format) != Json && strings.ToLower(o.Format) != Yaml {
 		return fmt.Errorf("invalid output format, expected %v, got %v", []string{Json, Yaml}, o.Format)
 	}
+	for _, setting := range o.Settings {
+		if _, err := os.Stat(setting); err != nil {
+			return fmt.Errorf("failed to load '%s', no such file or directory", setting)
+		}
+	}
 	return nil
 }
 
@@ -156,7 +172,6 @@ func FilterByPath(result *kcl.KCLResultList, pathSelectors []string) *kcl.KCLRes
 }
 
 func (o *RunOptions) writeResult(result *kcl.KCLResultList) error {
-
 	if result == nil {
 		return nil
 	}

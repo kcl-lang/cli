@@ -33,7 +33,7 @@ func TestNewRunCmd(t *testing.T) {
 		t.Fatal("RunE function is nil")
 	}
 
-	args := []string{"../examples/kubernetes.k"}
+	args := []string{"../../../examples/kubernetes.k"}
 	err := runE(cmd, args)
 	if err != nil {
 		t.Errorf("RunE function returned an error: %v", err)
