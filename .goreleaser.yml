@@ -9,6 +9,7 @@ before:
 builds:
   - id: "kcl"
     main: ./cmd/kcl/main.go
+    binary: kcl
     goos:
       - darwin
       - linux
@@ -20,3 +21,12 @@ builds:
       - CGO_ENABLED=0
     ldflags:
       - "-X kcl-lang.io/cli/pkg/version.version={{.Version}}"
+
+archives:
+  - id: default
+    builds:
+      - default
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    format_overrides:
+      - goos: windows
+        format: zip
