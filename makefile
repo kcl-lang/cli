@@ -74,3 +74,7 @@ dist:
 .PHONY: release
 release: lint dist
 	scripts/release.sh v$(VERSION)
+
+.PHONY: tag
+tag:
+	scripts/tag.sh v$(VERSION)
