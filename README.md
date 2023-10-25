@@ -24,26 +24,32 @@
 #### MacOS
 
 ```shell
+curl -fsSL https://kcl-lang.io/script/install-cli.sh | /bin/bash
 ```
 
 #### Linux
 
 ```shell
+wget -q https://kcl-lang.io/script/install-cli.sh -O - | /bin/bash
 ```
 
 #### Windows
 
 ```shell
+powershell -Command "iwr -useb https://kcl-lang.io/script/install-cli.ps1 | iex"
 ```
 
-### Homebrew
+### Homebrew (MacOS & Linux)
 
 ```shell
+brew install kcl-lang/tap/kcl
 ```
 
-### Scoop
+### Scoop (Windows)
 
 ```shell
+scoop bucket add kcl-lang https://github.com/kcl-lang/scoop-bucket.git
+scoop install kcl-lang/kcl
 ```
 
 ### Go install
@@ -56,17 +62,11 @@ go install kcl-lang.io/cli/cmd/kcl@latest
 
 ### Download from GITHUB Release Page
 
-You can also get `kcl` from the github release and set the binary path to the environment variable PATH.
+You can also get `kcl` from the [github release](https://github.com/kcl-lang/cli/releases) and set the binary path to the environment variable PATH.
 
 ```shell
 # KCL_CLI_INSTALLATION_PATH is the path of the `KCL CLI` binary.
 export PATH=$KCL_CLI_INSTALLATION_PATH:$PATH  
-```
-
-Use the following command to ensure that you install `kcl` successfully.
-
-```shell
-kcl --help
 ```
 
 ### Build from Source Code
@@ -76,17 +76,17 @@ git clone https://github.com/kcl-lang/cli
 cd cli && go build ./cmd/kcl/main.go -o kcl
 ```
 
+Use the following command to ensure that you install `kcl` successfully.
+
+```shell
+kcl --help
+```
+
 ## Quick Start
 
 ```shell
 kcl run ./examples/kubernetes.k
 ```
-
-## Frequently Asked Questions (FAQ)
-
-### Q: I am using `go install` to install `kcl`, but I get the error `command not found`.
-
-- A: `go install` will install the binary file to `$GOPATH/bin` by default. You need to add `$GOPATH/bin` to the environment variable `PATH`.
 
 ## Learn More
 
