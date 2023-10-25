@@ -5,7 +5,7 @@ package main
 import (
 	"os"
 
-	"kcl-lang.io/cli/cmd"
+	"kcl-lang.io/cli/cmd/kcl/commands"
 )
 
 func main() {
