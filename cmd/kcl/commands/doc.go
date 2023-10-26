@@ -50,6 +50,7 @@ func NewDocCmd() *cobra.Command {
 		Long:         docDesc,
 		Example:      docExample,
 		SilenceUsage: true,
+		Aliases:      []string{"d"},
 	}
 
 	cmd.AddCommand(NewDocGenerateCmd())

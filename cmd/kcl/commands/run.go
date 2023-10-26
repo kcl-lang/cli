@@ -47,6 +47,7 @@ func NewRunCmd() *cobra.Command {
 			}
 			return o.Run()
 		},
+		Aliases:      []string{"r"},
 		SilenceUsage: true,
 	}
 
