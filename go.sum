@@ -160,8 +160,8 @@ github.com/docker/cli v23.0.1+incompatible h1:LRyWITpGzl2C9e9uGxzisptnxAn1zfZKXy
 github.com/docker/cli v23.0.1+incompatible/go.mod h1:JLrzqnKDaYBop7H2jaqPtU4hHvMKP+vjCwu2uszcLI8=
 github.com/docker/distribution v2.8.2+incompatible h1:T3de5rq0dB1j30rp0sA2rER+m322EBzniBPB6ZIzuh8=
 github.com/docker/distribution v2.8.2+incompatible/go.mod h1:J2gT2udsDAN96Uj4KfcMRqY0/ypR+oyYUYmja8H+y+w=
-github.com/docker/docker v23.0.1+incompatible h1:vjgvJZxprTTE1A37nm+CLNAdwu6xZekyoiVlUZEINcY=
-github.com/docker/docker v23.0.1+incompatible/go.mod h1:eEKB0N0r5NX/I1kEveEz05bcu8tLC/8azJZsviup8Sk=
+github.com/docker/docker v23.0.3+incompatible h1:9GhVsShNWz1hO//9BNg/dpMnZW25KydO4wtVxWAIbho=
+github.com/docker/docker v23.0.3+incompatible/go.mod h1:eEKB0N0r5NX/I1kEveEz05bcu8tLC/8azJZsviup8Sk=
 github.com/docker/docker-credential-helpers v0.7.0 h1:xtCHsjxogADNZcdv1pKUHXryefjlVRqWqIhk/uXJp0A=
 github.com/docker/docker-credential-helpers v0.7.0/go.mod h1:rETQfLdHNT3foU5kuNkFR1R1V12OJRRO5lzt2D1b5X0=
 github.com/docker/go-connections v0.4.0 h1:El9xVISelRB7BuFusrZozjnkIM5YnzCViNKohAFqRJQ=
@@ -1274,10 +1274,10 @@ k8s.io/utils v0.0.0-20210802155522-efc7438f0176/go.mod h1:jPW/WVKK9YHAvNhRxK0md/
 k8s.io/utils v0.0.0-20220210201930-3a6ce19ff2f9/go.mod h1:jPW/WVKK9YHAvNhRxK0md/EJ228hCsBRufyofKtW8HA=
 k8s.io/utils v0.0.0-20230406110748-d93618cff8a2 h1:qY1Ad8PODbnymg2pRbkyMT/ylpTrCM8P2RJ0yroCyIk=
 k8s.io/utils v0.0.0-20230406110748-d93618cff8a2/go.mod h1:OLgZIPagt7ERELqWJFomSt595RzquPNLL48iOWgYOg0=
-kcl-lang.io/kcl-artifact-go v0.6.0 h1:J/1FKzgGRqzFDkq0amBWxCdXXRMrtg5oT3IGtoo9sgU=
-kcl-lang.io/kcl-artifact-go v0.6.0/go.mod h1:c07mqi9Hu2UjPW7lYfHhAAWOlZiB7lo7Vkr4jL5ov/M=
-kcl-lang.io/kcl-go v0.6.2-0.20231025053208-f9ea93c99c1a h1:ds5HFWjbt8+ns8rzvm3sH4Z9807sI96eSmISO2F8w9M=
-kcl-lang.io/kcl-go v0.6.2-0.20231025053208-f9ea93c99c1a/go.mod h1:1/xEscOhVGNabr9+rYC5peFDIjphbthYqk8UyHzaPRk=
+kcl-lang.io/kcl-artifact-go v0.7.0-alpha.1 h1:b9EPI/JBeR7cB/cViVXHaKfKpTbMKqRAtXNlePjswsk=
+kcl-lang.io/kcl-artifact-go v0.7.0-alpha.1/go.mod h1:c07mqi9Hu2UjPW7lYfHhAAWOlZiB7lo7Vkr4jL5ov/M=
+kcl-lang.io/kcl-go v0.7.0-alpha.1 h1:/Z4DlyGJjpMV300bjJ840tAkWHeuCK7Ukkj2XJn+D4o=
+kcl-lang.io/kcl-go v0.7.0-alpha.1/go.mod h1:71orQfLXck+KxhKs/OJE8pCtWN3x1M29AMYQnUctIKs=
 kcl-lang.io/kcl-openapi v0.5.1 h1:cnXANaoLQ0nUW4I8s147g8NcXYoXfb8xPnpNvAZI9pY=
 kcl-lang.io/kcl-openapi v0.5.1/go.mod h1:Ai9mFztCVKkRSFabczO/r5hCNdqaNtAc2ZIRxTeV0Mk=
 kcl-lang.io/kpm v0.3.8-0.20231025082801-abc1063c2250 h1:UR+2AkBWP2iu6bPP/RsFC5s/tU9rEUjZ09dIZ7ipsVI=

@@ -163,14 +163,6 @@ func (o *RunOptions) writer() (io.Writer, error) {
 	}
 }
 
-// / FilterByPath filters values using path selectors.
-func FilterByPath(result *kcl.KCLResultList, pathSelectors []string) *kcl.KCLResultList {
-	if len(pathSelectors) == 0 || result == nil {
-		return result
-	}
-	return result
-}
-
 func (o *RunOptions) writeResult(result *kcl.KCLResultList) error {
 	if result == nil {
 		return nil
@@ -224,6 +216,11 @@ func CompileOptionFromCli(o *RunOptions) *opt.CompileOptions {
 		if o.Debug {
 			opts.PrintOverrideAst = true
 		}
+	}
+
+	// --path_selector, -S
+	if len(o.PathSelectors) != 0 {
+		opts.Merge(kcl.WithSelectors(o.PathSelectors...))
 	}
 
 	// --disable_none, -n

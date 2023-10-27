@@ -12,7 +12,7 @@ func appendLangFlags(o *options.RunOptions, flags *pflag.FlagSet) {
 		"Specify the command line setting files")
 	flags.StringSliceVarP(&o.Overrides, "overrides", "O", []string{},
 		"Specify the configuration override path and value")
-	flags.StringSliceVarP(&o.PathSelectors, "path_selectors", "S", []string{},
+	flags.StringSliceVarP(&o.PathSelectors, "path_selector", "S", []string{},
 		"Specify the path selectors")
 	flags.StringSliceVarP(&o.ExternalPackages, "external", "E", []string{},
 		" Mapping of package name and path where the package is located")
