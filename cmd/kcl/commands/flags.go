@@ -31,7 +31,7 @@ func appendLangFlags(o *options.RunOptions, flags *pflag.FlagSet) {
 	flags.BoolVarP(&o.SortKeys, "sort_keys", "k", false,
 		"Sort output result keys")
 	flags.BoolVarP(&o.Vendor, "vendor", "V", false,
-		"Sort output result keys")
+		"Run in vendor mode")
 	flags.BoolVar(&o.NoStyle, "no_style", false,
-		"Sort output result keys")
+		"Set to prohibit output of command line waiting styles, including colors, etc.")
 }
