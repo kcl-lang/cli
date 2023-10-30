@@ -16,9 +16,14 @@ This command manages the kcl module
 	modExample = `  # Init one kcl module
   kcl mod init
 
+  # Add dependencies for the current module
+  kcl mod add k8s
+
+  # Pull external packages to local
+  kcl mod pull k8s
+
   # Push the module
-  kcl mod push
-  `
+  kcl mod push`
 )
 
 // NewModCmd returns the mod command.
