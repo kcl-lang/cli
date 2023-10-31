@@ -1278,10 +1278,10 @@ kcl-lang.io/kcl-artifact-go v0.7.0-alpha.1 h1:b9EPI/JBeR7cB/cViVXHaKfKpTbMKqRAtX
 kcl-lang.io/kcl-artifact-go v0.7.0-alpha.1/go.mod h1:c07mqi9Hu2UjPW7lYfHhAAWOlZiB7lo7Vkr4jL5ov/M=
 kcl-lang.io/kcl-go v0.7.0-alpha.1 h1:/Z4DlyGJjpMV300bjJ840tAkWHeuCK7Ukkj2XJn+D4o=
 kcl-lang.io/kcl-go v0.7.0-alpha.1/go.mod h1:71orQfLXck+KxhKs/OJE8pCtWN3x1M29AMYQnUctIKs=
-kcl-lang.io/kcl-openapi v0.5.1 h1:cnXANaoLQ0nUW4I8s147g8NcXYoXfb8xPnpNvAZI9pY=
-kcl-lang.io/kcl-openapi v0.5.1/go.mod h1:Ai9mFztCVKkRSFabczO/r5hCNdqaNtAc2ZIRxTeV0Mk=
-kcl-lang.io/kpm v0.3.8-0.20231025082801-abc1063c2250 h1:UR+2AkBWP2iu6bPP/RsFC5s/tU9rEUjZ09dIZ7ipsVI=
-kcl-lang.io/kpm v0.3.8-0.20231025082801-abc1063c2250/go.mod h1:akaCM+hipJFZg9NvsABjcK5HRBZaNas8wH55ZFwYrwA=
+kcl-lang.io/kcl-openapi v0.5.2-0.20231030135154-85914c973a3f h1:Qqex0WaWQUokwCAhJT/k9V1eBpPWpfxTYNENjMxbfJU=
+kcl-lang.io/kcl-openapi v0.5.2-0.20231030135154-85914c973a3f/go.mod h1:Ai9mFztCVKkRSFabczO/r5hCNdqaNtAc2ZIRxTeV0Mk=
+kcl-lang.io/kpm v0.3.8-0.20231030111336-55b49aeaaa16 h1:YtBQzZsiucIPGxM1VnT49n8clRzqj0AY3qR8CXoAP7c=
+kcl-lang.io/kpm v0.3.8-0.20231030111336-55b49aeaaa16/go.mod h1:pTZYA7WR7wi6HTtdCZ1M/KLlH/Q95kyP7hr3MlnqzXw=
 oras.land/oras-go v1.2.3 h1:v8PJl+gEAntI1pJ/LCrDgsuk+1PKVavVEPsYIHFE5uY=
 oras.land/oras-go v1.2.3/go.mod h1:M/uaPdYklze0Vf3AakfarnpoEckvw0ESbRdN8Z1vdJg=
 oras.land/oras-go/v2 v2.3.0 h1:lqX1aXdN+DAmDTKjiDyvq85cIaI4RkIKp/PghWlAGIU=
