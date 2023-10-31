@@ -6,7 +6,7 @@ require (
 	github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d
 	github.com/spf13/cobra v1.7.0
 	github.com/urfave/cli/v2 v2.25.0
-	kcl-lang.io/kcl-go v0.7.0-alpha.1
+	kcl-lang.io/kcl-go v0.7.0-alpha.1.0.20231031031432-25d679a46c78
 	kcl-lang.io/kcl-openapi v0.5.2-0.20231030135154-85914c973a3f
 	kcl-lang.io/kpm v0.3.8-0.20231030111336-55b49aeaaa16
 )
