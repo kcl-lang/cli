@@ -30,3 +30,65 @@ archives:
     format_overrides:
       - goos: windows
         format: zip
+
+dockers:
+  - use: buildx
+    goos: linux
+    goarch: amd64
+    dockerfile: Dockerfile
+    image_templates:
+      - kcllang/kclcli:{{ .Tag }}
+    build_flag_templates:
+      - "--target=goreleaser"
+      - "--pull"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.name={{.ProjectName}}"
+      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+      - "--label=org.opencontainers.image.source={{.GitURL}}"
+      - "--platform=linux/amd64"
+
+docker_manifests:
+  - use: docker
+    name_template: kcllang/kcl:{{ .Tag }}
+    image_templates:
+      - kcllang/kcl:{{ .Tag }}-amd64
+  - use: docker
+    name_template:  kcllang/kcl:latest
+    image_templates:
+      - kcllang/kcl:{{ .Tag }}-amd64
+
+brews:
+  - tap:
+      owner: kcl-lang
+      name: homebrew-tap
+    url_template: "https://github.com/kcl-lang/cli/releases/download/{{ .Tag }}/kcl-v{{ .Version }}-{{ .Os }}-{{ .Arch }}"
+    download_strategy: CurlDownloadStrategy
+    # Git author used to commit to the repository.
+    # Defaults are shown.
+    commit_author:
+      name: GoReleaser Bot
+      email: goreleaser@carlosbecker.com
+    folder: HomebrewFormula
+    homepage: "https://github.com/kcl-lang/kcl"
+    description: "KCL Command Line Interface"
+    license: "Apache License"
+    skip_upload: false
+    test: |
+      system "#{bin}/kcl version"
+
+scoop:
+  url_template: "https://github.com/kcl-lang/cli/releases/download/{{ .Tag }}/kcl-v{{ .Version }}-{{ .Os }}-{{ .Arch }}"
+  bucket:
+    owner: kcl-lang
+    name: scoop-bucket
+    branch: main
+    token: "{{ .Env.GITHUB_TOKEN }}"
+  folder: Scoops
+  commit_author:
+    name: goreleaserbot
+    email: bot@goreleaser.com
+  commit_msg_template: "Scoop update for kcl version {{ .Tag }}"
+  homepage: "http://github.com/kcl-lang/kcl"
+  description: "KCL Command Line Interface"
+  license: Apache License 2.0

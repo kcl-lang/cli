@@ -2,6 +2,11 @@
 
 package version
 
+import (
+	"fmt"
+	"runtime"
+)
+
 // version will be set by build flags.
 var version string
 
@@ -19,7 +24,11 @@ type VersionType string
 
 // String() will transform VersionType to string.
 func (kvt VersionType) String() string {
-	return string(kvt)
+	return getVersion(string(kvt))
+}
+
+func getVersion(version string) string {
+	return fmt.Sprintf("%s-%s-%s", version, runtime.GOOS, runtime.GOARCH)
 }
 
 // All the kpm versions.
