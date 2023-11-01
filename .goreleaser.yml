@@ -37,7 +37,7 @@ dockers:
     goarch: amd64
     dockerfile: Dockerfile
     image_templates:
-      - kcllang/kclcli:{{ .Tag }}
+      - kcllang/kcl:{{ .Tag }}
     build_flag_templates:
       - "--target=goreleaser"
       - "--pull"
