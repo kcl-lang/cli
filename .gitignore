@@ -24,6 +24,8 @@ dist
 go.work
 # Go coverage test
 coverage.out
+.terraform
+.terraform.lock.hcl
 
 build/
 .vscode/

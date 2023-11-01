@@ -8,7 +8,7 @@ require (
 	github.com/urfave/cli/v2 v2.25.0
 	kcl-lang.io/kcl-go v0.7.0-alpha.1.0.20231031031432-25d679a46c78
 	kcl-lang.io/kcl-openapi v0.5.2-0.20231030135154-85914c973a3f
-	kcl-lang.io/kpm v0.3.8-0.20231030111336-55b49aeaaa16
+	kcl-lang.io/kpm v0.3.8-0.20231101092819-703dd7cf0a25
 )
 
 require (

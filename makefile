@@ -32,6 +32,10 @@ build: lint
 test:
 	go test -v ./...
 
+.PHONY: e2e-test
+e2e-test:
+	./examples/test.sh
+
 .PHONY: cover
 cover: ## Generates coverage report
 	go test -gcflags=all=-l -timeout=20m `go list $(SOURCE_PATHS)` -coverprofile $(COVER_FILE) ${TEST_FLAGS} -v
