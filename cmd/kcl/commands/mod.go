@@ -59,8 +59,6 @@ func RunWithKpmMod(cmd string, args []string) error {
 		kpmcmd.NewPkgCmd(kpmcli),
 		kpmcmd.NewMetadataCmd(kpmcli),
 		kpmcmd.NewRunCmd(kpmcli),
-		kpmcmd.NewLoginCmd(kpmcli),
-		kpmcmd.NewLogoutCmd(kpmcli),
 		kpmcmd.NewPushCmd(kpmcli),
 		kpmcmd.NewPullCmd(kpmcli),
 	}
