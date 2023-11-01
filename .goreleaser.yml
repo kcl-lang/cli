@@ -31,33 +31,6 @@ archives:
       - goos: windows
         format: zip
 
-dockers:
-  - use: buildx
-    goos: linux
-    goarch: amd64
-    dockerfile: Dockerfile
-    image_templates:
-      - kcllang/kcl:{{ .Tag }}
-    build_flag_templates:
-      - "--target=goreleaser"
-      - "--pull"
-      - "--label=org.opencontainers.image.created={{.Date}}"
-      - "--label=org.opencontainers.image.name={{.ProjectName}}"
-      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
-      - "--label=org.opencontainers.image.version={{.Version}}"
-      - "--label=org.opencontainers.image.source={{.GitURL}}"
-      - "--platform=linux/amd64"
-
-docker_manifests:
-  - use: docker
-    name_template: kcllang/kcl:{{ .Tag }}
-    image_templates:
-      - kcllang/kcl:{{ .Tag }}-amd64
-  - use: docker
-    name_template:  kcllang/kcl:latest
-    image_templates:
-      - kcllang/kcl:{{ .Tag }}-amd64
-
 brews:
   - tap:
       owner: kcl-lang
