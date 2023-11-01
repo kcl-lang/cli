@@ -1,0 +1,31 @@
+name: CI
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      image:
+        required: true
+        description: 'docker image name'
+      sha-tag:
+        required: true
+        description: 'docker image tag'
+jobs:
+  update-manifests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        if: ${{ github.event.inputs.image }}
+      - name: KCL config edit
+        if: ${{ github.event.inputs.image }}
+        run: |
+          wget -q https://kcl-lang.io/script/install.sh -O - | /bin/bash
+          /usr/local/kclvm/bin/kcl -d -O config.containers.flask_demo.image="${{ github.event.inputs.image }}:${{ github.event.inputs.sha-tag }}"
+      - name: Git Commit/Push Changes
+        uses: EndBug/add-and-commit@v9
+        if: ${{ github.event.inputs.image }}
+        with:
+          default_author: github_actions
+          message: "kcl code set image to ${{ github.event.inputs.image }}:${{ github.event.inputs.sha-tag }}"

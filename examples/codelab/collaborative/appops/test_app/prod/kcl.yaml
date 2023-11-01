@@ -1,0 +1,5 @@
+kcl_cli_configs:
+  files:
+    - ../base/base.k
+    - main.k
+  output: ./ci-test/stdout.golden.yaml

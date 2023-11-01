@@ -1,0 +1,23 @@
+name: example-e2e-test
+on:
+  pull_request:
+    branches:
+     - main
+  push:
+    branches:
+     - main
+jobs:
+  example-e2e-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v1
+        with:
+          go-version: "1.19"
+
+      - name: kcl Installation
+        run: go install ./cmd/kcl
+
+      - name: Example tests
+        shell: bash -ieo pipefail {0}
+        run: PATH=$PATH:$HOME/go/bin ./examples/test.sh

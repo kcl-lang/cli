@@ -1,0 +1,29 @@
+spec:
+  template:
+    spec:
+      containers:
+      - name: my-plugin
+        command: [/var/run/argocd/argocd-cmp-server] # Entrypoint should be Argo CD lightweight CMP server i.e. argocd-cmp-server
+        image: kcllang/kcl # This can be off-the-shelf or custom-built image
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 999
+        volumeMounts:
+          - mountPath: /var/run/argocd
+            name: var-files
+          - mountPath: /home/argocd/cmp-server/plugins
+            name: plugins
+          # Remove this volumeMount if you've chosen to bake the config file into the sidecar image.
+          - mountPath: /home/argocd/cmp-server/config/plugin.yaml
+            subPath: plugin.yaml
+            name: kcl-plugin-config
+          # Starting with v2.4, do NOT mount the same tmp volume as the repo-server container. The filesystem separation helps 
+          # mitigate path traversal attacks.
+          - mountPath: /tmp
+            name: cmp-tmp
+      volumes:
+      - configMap:
+          name: kcl-plugin-config
+        name: kcl-plugin-config
+      - emptyDir: {}
+        name: cmp-tmp
