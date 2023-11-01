@@ -36,7 +36,7 @@ brews:
       owner: kcl-lang
       name: homebrew-tap
     name: kcl
-    url_template: "https://github.com/kcl-lang/cli/releases/download/{{ .Tag }}/kcl-v{{ .Version }}-{{ .Os }}-{{ .Arch }}"
+    url_template: "https://github.com/kcl-lang/cli/releases/download/{{ .Tag }}/kcl-v{{ .Version }}-{{ .Os }}-{{ .Arch }}.tar.gz"
     download_strategy: CurlDownloadStrategy
     # Git author used to commit to the repository.
     # Defaults are shown.
@@ -53,7 +53,7 @@ brews:
 
 scoop:
   name: kcl
-  url_template: "https://github.com/kcl-lang/cli/releases/download/{{ .Tag }}/kcl-v{{ .Version }}-{{ .Os }}-{{ .Arch }}"
+  url_template: "https://github.com/kcl-lang/cli/releases/download/{{ .Tag }}/kcl-v{{ .Version }}-{{ .Os }}-{{ .Arch }}.zip"
   bucket:
     owner: kcl-lang
     name: scoop-bucket
