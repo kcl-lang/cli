@@ -2,10 +2,7 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
-	cli "github.com/urfave/cli/v2"
-	"kcl-lang.io/cli/pkg/version"
 	"kcl-lang.io/kpm/pkg/client"
-	kpmcmd "kcl-lang.io/kpm/pkg/cmd"
 	"kcl-lang.io/kpm/pkg/reporter"
 )
 
@@ -13,7 +10,8 @@ const (
 	modDesc = `
 This command manages the kcl module
 `
-	modExample = `  # Init one kcl module
+	modExample = `  kcl mod <command> [arguments]...
+  # Init one kcl module
   kcl mod init
 
   # Add dependencies for the current module
@@ -26,55 +24,42 @@ This command manages the kcl module
   kcl mod push`
 )
 
+var (
+	quiet  bool
+	vendor bool
+	update bool
+	git    string
+	tag    string
+	target string
+)
+
 // NewModCmd returns the mod command.
 func NewModCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:     "mod",
-		Short:   "KCL module management",
-		Long:    modDesc,
-		Example: modExample,
-		RunE: func(_ *cobra.Command, args []string) error {
-			return RunWithKpmMod("mod", args)
-		},
+		Use:          "mod",
+		Short:        "KCL module management",
+		Long:         modDesc,
+		Example:      modExample,
 		SilenceUsage: true,
 	}
 
-	return cmd
-}
+	cmd.Flags().BoolVarP(&quiet, "quiet", "q", false, "quiet (no output)")
 
-func RunWithKpmMod(cmd string, args []string) error {
 	reporter.InitReporter()
-	kpmcli, err := client.NewKpmClient()
+	cli, err := client.NewKpmClient()
 	if err != nil {
-		return err
+		panic(err)
 	}
-	app := cli.NewApp()
-	app.Usage = "module related functions"
-	app.Name = "kcl mod"
-	app.Version = version.GetVersionString()
-	app.UsageText = "kcl mod <command> [arguments]..."
-	app.Commands = []*cli.Command{
-		kpmcmd.NewInitCmd(kpmcli),
-		kpmcmd.NewAddCmd(kpmcli),
-		kpmcmd.NewPkgCmd(kpmcli),
-		kpmcmd.NewMetadataCmd(kpmcli),
-		kpmcmd.NewRunCmd(kpmcli),
-		kpmcmd.NewPushCmd(kpmcli),
-		kpmcmd.NewPullCmd(kpmcli),
+	if quiet {
+		cli.SetLogWriter(nil)
 	}
-	app.Flags = []cli.Flag{
-		&cli.BoolFlag{
-			Name:  kpmcmd.FLAG_QUIET,
-			Usage: "push in vendor mode",
-		},
-	}
-	app.Before = func(c *cli.Context) error {
-		if c.Bool(kpmcmd.FLAG_QUIET) {
-			kpmcli.SetLogWriter(nil)
-		}
-		return nil
-	}
-	argsWithCmd := []string{cmd}
-	argsWithCmd = append(argsWithCmd, args...)
-	return app.Run(argsWithCmd)
+
+	cmd.AddCommand(NewModInitCmd(cli))
+	cmd.AddCommand(NewModAddCmd(cli))
+	cmd.AddCommand(NewModPkgCmd(cli))
+	cmd.AddCommand(NewModMetadataCmd(cli))
+	cmd.AddCommand(NewModPushCmd(cli))
+	cmd.AddCommand(NewModPullCmd(cli))
+
+	return cmd
 }
