@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 
 	"github.com/spf13/cobra"
+	"kcl-lang.io/cli/pkg/fs"
 	"kcl-lang.io/kcl-go/pkg/utils"
 )
 
@@ -43,7 +44,7 @@ func NewCleanCmd() *cobra.Command {
 				filepath.Join(args[0], "__main__/.kclvm/cache"),
 			}
 			for _, cachePath := range cachePaths {
-				if isDir(cachePath) {
+				if fs.IsDir(cachePath) {
 					if err := os.RemoveAll(cachePath); err == nil {
 						fmt.Printf("%s removed\n", cachePath)
 					} else {
@@ -58,12 +59,4 @@ func NewCleanCmd() *cobra.Command {
 	}
 
 	return cmd
-}
-
-func isDir(path string) bool {
-	fileInfo, err := os.Stat(path)
-	if err != nil {
-		return false
-	}
-	return fileInfo.IsDir()
 }

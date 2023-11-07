@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"kcl-lang.io/cli/pkg/fs"
 	"kcl-lang.io/kcl-go/pkg/tools/gen"
 	crdGen "kcl-lang.io/kcl-openapi/pkg/kube_resource/generator"
 	"kcl-lang.io/kcl-openapi/pkg/swagger/generator"
@@ -20,6 +21,7 @@ type ImportOptions struct {
 	Force          bool
 	SkipValidation bool
 	ModelPackage   string
+	Recursive      bool
 }
 
 // NewImportOptions returns a new instance of ImportOptions with default values.
@@ -33,6 +35,10 @@ func NewImportOptions() *ImportOptions {
 func (o *ImportOptions) Run() error {
 	opts := &gen.GenKclOptions{}
 	mode := strings.ToLower(o.Mode)
+	files, err := fs.ExpandInputFiles(o.Files, o.Recursive)
+	if err != nil {
+		return err
+	}
 	switch mode {
 	case Json:
 		opts.Mode = gen.ModeJson
@@ -47,7 +53,7 @@ func (o *ImportOptions) Run() error {
 	case Auto:
 		opts.Mode = gen.ModeAuto
 	case Crd, OpenAPI:
-		for _, p := range o.Files {
+		for _, p := range files {
 			opts := new(generator.GenOpts)
 			// cli opts to generator.GenOpts
 			opts.Spec = p
@@ -85,14 +91,14 @@ func (o *ImportOptions) Run() error {
 	}
 
 	if o.Output == "-" {
-		for _, p := range o.Files {
+		for _, p := range files {
 			err := gen.GenKcl(os.Stdout, p, nil, opts)
 			if err != nil {
 				return err
 			}
 		}
 	} else {
-		for _, p := range o.Files {
+		for _, p := range files {
 			outputFile := o.Output
 			if outputFile == "" {
 				filenameWithExtension := filepath.Base(p)
