@@ -5,7 +5,6 @@ go 1.19
 require (
 	github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d
 	github.com/spf13/cobra v1.7.0
-	github.com/urfave/cli/v2 v2.25.0
 	kcl-lang.io/kcl-go v0.7.0-alpha.1.0.20231031031432-25d679a46c78
 	kcl-lang.io/kcl-openapi v0.5.2-0.20231030135154-85914c973a3f
 	kcl-lang.io/kpm v0.3.8-0.20231101092819-703dd7cf0a25
@@ -94,7 +93,6 @@ require (
 	github.com/bahlo/generic-list-go v0.2.0 // indirect
 	github.com/buger/jsonparser v1.1.1 // indirect
 	github.com/cloudflare/circl v1.1.0 // indirect
-	github.com/cpuguy83/go-md2man/v2 v2.0.2 // indirect
 	github.com/emirpasic/gods v1.18.1 // indirect
 	github.com/fatih/color v1.10.0 // indirect
 	github.com/go-git/gcfg v1.5.0 // indirect
@@ -127,13 +125,11 @@ require (
 	github.com/pjbgf/sha1cd v0.3.0 // indirect
 	github.com/qri-io/jsonpointer v0.1.1 // indirect
 	github.com/rogpeppe/go-internal v1.10.0 // indirect
-	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/sergi/go-diff v1.1.0 // indirect
 	github.com/skeema/knownhosts v1.1.0 // indirect
 	github.com/thoas/go-funk v0.9.3 // indirect
 	github.com/wk8/go-ordered-map/v2 v2.1.8 // indirect
 	github.com/xanzy/ssh-agent v0.3.3 // indirect
-	github.com/xrash/smetrics v0.0.0-20201216005158-039620a65673 // indirect
 	go.mongodb.org/mongo-driver v1.9.1 // indirect
 	golang.org/x/crypto v0.14.0 // indirect
 	golang.org/x/mod v0.10.0 // indirect
