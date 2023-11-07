@@ -34,4 +34,6 @@ func appendLangFlags(o *options.RunOptions, flags *pflag.FlagSet) {
 		"Run in vendor mode")
 	flags.BoolVar(&o.NoStyle, "no_style", false,
 		"Set to prohibit output of command line waiting styles, including colors, etc.")
+	flags.BoolVarP(&o.Quiet, "quiet", "q", false,
+		"quiet (no output)")
 }

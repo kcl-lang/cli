@@ -37,6 +37,8 @@ type RunOptions struct {
 	ExternalPackages []string
 	// NoStyle denotes disabling the output information style and color.
 	NoStyle bool
+	// Quiet denotes disabling all the output information.
+	Quiet bool
 	// Vendor denotes running kcl in the vendor mode.
 	Vendor bool
 	// SortKeys denotes sorting the output result keys, e.g., `{b = 1, a = 2} => {a = 2, b = 1}`.
@@ -71,6 +73,9 @@ func (o *RunOptions) Run() error {
 	var err error
 	opts := CompileOptionFromCli(o)
 	cli, err := client.NewKpmClient()
+	if o.Quiet {
+		cli.SetLogWriter(nil)
+	}
 	if err != nil {
 		return err
 	}
