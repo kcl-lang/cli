@@ -112,6 +112,8 @@ func New() *cobra.Command {
 	// Module & Registry commands
 	cmd.AddCommand(NewModCmd())
 	cmd.AddCommand(NewRegistryCmd())
+	// Server commands
+	cmd.AddCommand(NewServerCmd())
 	// Version & Help commands
 	cmd.AddCommand(NewVersionCmd())
 	cmd.SetHelpCommand(&cobra.Command{}) // Disable the help command

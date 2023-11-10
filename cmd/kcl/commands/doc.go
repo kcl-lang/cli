@@ -82,6 +82,7 @@ func NewDocGenerateCmd() *cobra.Command {
 				return nil
 			}
 		},
+		Aliases:      []string{"gen", "g"},
 		SilenceUsage: true,
 	}
 
