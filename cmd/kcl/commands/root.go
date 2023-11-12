@@ -5,15 +5,17 @@
 // ```
 // kcl
 //
-//	run           compile kcl package from a url or filepath
-//	build         build the kcl package (Not yet implemented)
-//	check         check the current package, but don't build target files (Not yet implemented)
-//	doc           documentation tool
-//	fmt           format tool
-//	lint          lint tool
-//	vet           vet tool
-//	test          unit/integration/benchmark test tool (Not yet implemented)
-//	clean         remove object files and cached files
+//		run           compile kcl package from a url or filepath
+//		build         build the kcl package (Not yet implemented)
+//		check         check the current package, but don't build target files (Not yet implemented)
+//		doc           documentation tool
+//		fmt           format tool
+//		lint          lint tool
+//		vet           vet tool
+//		test          unit/integration/benchmark test tool (Not yet implemented)
+//	 	deps          dependency analysis, providing dependency diagrams for KCL modules and packages (Not yet implemented)
+//	 	server        run a KCL server to provider REST APIs for other applications
+//		clean         remove object files and cached files
 //
 // ```
 //
