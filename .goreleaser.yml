@@ -31,28 +31,6 @@ archives:
       - goos: windows
         format: zip
 
-nfpms:
-  -
-    id: kcl
-    package_name: kcl
-    file_name_template: "kcl-v{{ .Version }}-{{ .Os }}-{{ .Arch }}"
-    builds:
-      - kcl
-    vendor: The KCL Programming Language
-    homepage: kcl-lang.io
-    maintainer: The KCL Programming Language
-    description: A CLI tool for KCL
-    license: AGPL-3.0
-    release: "1"
-    formats:
-      - deb
-      - rpm
-    dependencies:
-      - git
-      - zsh
-    # Path that the binaries should be installed.
-    bindir: /usr/bin
-
 brews:
   - tap:
       owner: kcl-lang
@@ -68,6 +46,8 @@ brews:
     folder: HomebrewFormula
     homepage: "https://github.com/kcl-lang/kcl"
     description: "KCL Command Line Interface"
+    dependencies:
+      - name: "kcl-lsp@0.7.0"
     license: "Apache License"
     skip_upload: false
     test: |
