@@ -1154,8 +1154,8 @@ google.golang.org/genproto v0.0.0-20210402141018-6c239bbf2bb1/go.mod h1:9lPAdzaE
 google.golang.org/genproto v0.0.0-20210602131652-f16073e35f0c/go.mod h1:UODoCrxHCcBojKKwX1terBiRUaqAsFqJiF615XL43r0=
 google.golang.org/genproto v0.0.0-20210831024726-fe130286e0e2/go.mod h1:eFjDcFEctNawg4eG61bRv87N7iHBWyVhJu7u1kqDUXY=
 google.golang.org/genproto v0.0.0-20220107163113-42d7afdf6368/go.mod h1:5CzLGKJ67TSI2B9POpiiyGha0AjJvZIUgRMt1dSmuhc=
-google.golang.org/genproto v0.0.0-20230306155012-7f2fa6fef1f4 h1:DdoeryqhaXp1LtT/emMP1BRJPHHKFi5akj/nbx/zNTA=
-google.golang.org/genproto v0.0.0-20230306155012-7f2fa6fef1f4/go.mod h1:NWraEVixdDnqcqQ30jipen1STv2r/n24Wb7twVTGR4s=
+google.golang.org/genproto v0.0.0-20230410155749-daa745c078e1 h1:KpwkzHKEF7B9Zxg18WzOa7djJ+Ha5DzthMyZYQfEn2A=
+google.golang.org/genproto v0.0.0-20230410155749-daa745c078e1/go.mod h1:nKE/iIaLqn2bQwXBg8f1g2Ylh6r5MN5CmZvuzZCgsCU=
 google.golang.org/grpc v1.19.0/go.mod h1:mqu4LbDTu4XGKhr4mRzUsmM4RtVoemTSY81AxZiDr8c=
 google.golang.org/grpc v1.20.1/go.mod h1:10oTOabMzJvdu6/UiuZezV6QK5dSlG84ov/aaiqXj38=
 google.golang.org/grpc v1.21.1/go.mod h1:oYelfM1adQP15Ek0mdvEgi9Df8B9CZIaU1084ijfRaM=
@@ -1178,8 +1178,8 @@ google.golang.org/grpc v1.36.1/go.mod h1:qjiiYl8FncCW8feJPdyg3v6XW24KsRHe+dy9BAG
 google.golang.org/grpc v1.37.0/go.mod h1:NREThFqKR1f3iQ6oBuvc5LadQuXVGo9rkm5ZGrQdJfM=
 google.golang.org/grpc v1.38.0/go.mod h1:NREThFqKR1f3iQ6oBuvc5LadQuXVGo9rkm5ZGrQdJfM=
 google.golang.org/grpc v1.40.0/go.mod h1:ogyxbiOoUXAkP+4+xa6PZSE9DZgIHtSpzjDTB9KAK34=
-google.golang.org/grpc v1.53.0 h1:LAv2ds7cmFV/XTS3XG1NneeENYrXGmorPxsBbptIjNc=
-google.golang.org/grpc v1.53.0/go.mod h1:OnIrk0ipVdj4N5d9IUoFUx72/VlD7+jUsHwZgwSMQpw=
+google.golang.org/grpc v1.56.3 h1:8I4C0Yq1EjstUzUJzpcRVbuYA2mODtEmpWiQoN/b2nc=
+google.golang.org/grpc v1.56.3/go.mod h1:I9bI3vqKfayGqPUAwGdOSu7kt6oIJLixfffKrpXqQ9s=
 google.golang.org/protobuf v0.0.0-20200109180630-ec00e32a8dfd/go.mod h1:DFci5gLYBciE7Vtevhsrf46CRTquxDuWsQurQQe4oz8=
 google.golang.org/protobuf v0.0.0-20200221191635-4d8936d0db64/go.mod h1:kwYJMbMJ01Woi6D6+Kah6886xMZcty6N08ah7+eCXa0=
 google.golang.org/protobuf v0.0.0-20200228230310-ab0ca4ff8a60/go.mod h1:cfTl7dwQJ+fmap5saPgwCLgHXTUD7jkjRqWcaiX5VyM=
@@ -1268,10 +1268,10 @@ k8s.io/utils v0.0.0-20210802155522-efc7438f0176/go.mod h1:jPW/WVKK9YHAvNhRxK0md/
 k8s.io/utils v0.0.0-20220210201930-3a6ce19ff2f9/go.mod h1:jPW/WVKK9YHAvNhRxK0md/EJ228hCsBRufyofKtW8HA=
 k8s.io/utils v0.0.0-20230406110748-d93618cff8a2 h1:qY1Ad8PODbnymg2pRbkyMT/ylpTrCM8P2RJ0yroCyIk=
 k8s.io/utils v0.0.0-20230406110748-d93618cff8a2/go.mod h1:OLgZIPagt7ERELqWJFomSt595RzquPNLL48iOWgYOg0=
-kcl-lang.io/kcl-artifact-go v0.7.0-alpha.1 h1:b9EPI/JBeR7cB/cViVXHaKfKpTbMKqRAtXNlePjswsk=
-kcl-lang.io/kcl-artifact-go v0.7.0-alpha.1/go.mod h1:c07mqi9Hu2UjPW7lYfHhAAWOlZiB7lo7Vkr4jL5ov/M=
-kcl-lang.io/kcl-go v0.7.0-alpha.1.0.20231031031432-25d679a46c78 h1:uvXbJL230YqW8BHPAyq6MMxaa6QXQEqYbH74YAjkMIQ=
-kcl-lang.io/kcl-go v0.7.0-alpha.1.0.20231031031432-25d679a46c78/go.mod h1:71orQfLXck+KxhKs/OJE8pCtWN3x1M29AMYQnUctIKs=
+kcl-lang.io/kcl-artifact-go v0.7.0-alpha.2 h1:ct6HPq+ssN4kNwMnyqyJAJ35YGiWPMgV4vWyyqzqpYo=
+kcl-lang.io/kcl-artifact-go v0.7.0-alpha.2/go.mod h1:c07mqi9Hu2UjPW7lYfHhAAWOlZiB7lo7Vkr4jL5ov/M=
+kcl-lang.io/kcl-go v0.7.0-alpha.2 h1:UjKyGx4OSKUnpHTTNJC6q/qYHcexA0nEBLdd/ZdxNnA=
+kcl-lang.io/kcl-go v0.7.0-alpha.2/go.mod h1:GnXGUfNp+72g4ichID2VkfI679SCLEnmSuTPF7+N1H0=
 kcl-lang.io/kcl-openapi v0.5.2-0.20231030135154-85914c973a3f h1:Qqex0WaWQUokwCAhJT/k9V1eBpPWpfxTYNENjMxbfJU=
 kcl-lang.io/kcl-openapi v0.5.2-0.20231030135154-85914c973a3f/go.mod h1:Ai9mFztCVKkRSFabczO/r5hCNdqaNtAc2ZIRxTeV0Mk=
 kcl-lang.io/kpm v0.3.8-0.20231101092819-703dd7cf0a25 h1:JyHQebmfJImAbpi5VvcgQ8ut76q2D8MwhAjLsKPNsag=
