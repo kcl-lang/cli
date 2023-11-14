@@ -15,7 +15,7 @@ func appendLangFlags(o *options.RunOptions, flags *pflag.FlagSet) {
 	flags.StringSliceVarP(&o.PathSelectors, "path_selector", "S", []string{},
 		"Specify the path selectors")
 	flags.StringSliceVarP(&o.ExternalPackages, "external", "E", []string{},
-		" Mapping of package name and path where the package is located")
+		"Specify the mapping of package name and path where the package is located")
 	flags.StringVarP(&o.Output, "output", "o", "",
 		"Specify the YAML/JSON output file path")
 	flags.StringVarP(&o.Tag, "tag", "t", "",
@@ -35,5 +35,5 @@ func appendLangFlags(o *options.RunOptions, flags *pflag.FlagSet) {
 	flags.BoolVar(&o.NoStyle, "no_style", false,
 		"Set to prohibit output of command line waiting styles, including colors, etc.")
 	flags.BoolVarP(&o.Quiet, "quiet", "q", false,
-		"quiet (no output)")
+		"Set the quiet mode (no output)")
 }
