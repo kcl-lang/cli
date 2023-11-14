@@ -18,7 +18,7 @@ const (
 // NewRegistryLogoutCmd returns the registry logout command.
 func NewRegistryLogoutCmd(cli *client.KpmClient) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:     "init",
+		Use:     "logout",
 		Short:   "logout from a registry",
 		Long:    registryLogoutDesc,
 		Example: registryLogoutExample,

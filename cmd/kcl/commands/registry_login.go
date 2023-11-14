@@ -25,7 +25,7 @@ const (
 // NewRegistryLoginCmd returns the registry login command.
 func NewRegistryLoginCmd(cli *client.KpmClient) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:     "init",
+		Use:     "login",
 		Short:   "login to a registry",
 		Long:    registryLoginDesc,
 		Example: registryLoginExample,
