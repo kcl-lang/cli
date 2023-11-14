@@ -60,6 +60,7 @@ func NewModCmd() *cobra.Command {
 	cmd.AddCommand(NewModMetadataCmd(cli))
 	cmd.AddCommand(NewModPushCmd(cli))
 	cmd.AddCommand(NewModPullCmd(cli))
+	cmd.AddCommand(NewModUpdateCmd(cli))
 
 	return cmd
 }
