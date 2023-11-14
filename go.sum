@@ -1270,8 +1270,8 @@ k8s.io/utils v0.0.0-20230406110748-d93618cff8a2 h1:qY1Ad8PODbnymg2pRbkyMT/ylpTrC
 k8s.io/utils v0.0.0-20230406110748-d93618cff8a2/go.mod h1:OLgZIPagt7ERELqWJFomSt595RzquPNLL48iOWgYOg0=
 kcl-lang.io/kcl-artifact-go v0.7.0-alpha.2 h1:ct6HPq+ssN4kNwMnyqyJAJ35YGiWPMgV4vWyyqzqpYo=
 kcl-lang.io/kcl-artifact-go v0.7.0-alpha.2/go.mod h1:c07mqi9Hu2UjPW7lYfHhAAWOlZiB7lo7Vkr4jL5ov/M=
-kcl-lang.io/kcl-go v0.7.0-alpha.2 h1:UjKyGx4OSKUnpHTTNJC6q/qYHcexA0nEBLdd/ZdxNnA=
-kcl-lang.io/kcl-go v0.7.0-alpha.2/go.mod h1:GnXGUfNp+72g4ichID2VkfI679SCLEnmSuTPF7+N1H0=
+kcl-lang.io/kcl-go v0.7.0-alpha.2.0.20231114095059-90254869c6e3 h1:sgTak3oF6blGPTvooh0hvA3HFKwNdSC/Df5SVG2Gb+w=
+kcl-lang.io/kcl-go v0.7.0-alpha.2.0.20231114095059-90254869c6e3/go.mod h1:GnXGUfNp+72g4ichID2VkfI679SCLEnmSuTPF7+N1H0=
 kcl-lang.io/kcl-openapi v0.5.2-0.20231030135154-85914c973a3f h1:Qqex0WaWQUokwCAhJT/k9V1eBpPWpfxTYNENjMxbfJU=
 kcl-lang.io/kcl-openapi v0.5.2-0.20231030135154-85914c973a3f/go.mod h1:Ai9mFztCVKkRSFabczO/r5hCNdqaNtAc2ZIRxTeV0Mk=
 kcl-lang.io/kpm v0.3.8-0.20231101092819-703dd7cf0a25 h1:JyHQebmfJImAbpi5VvcgQ8ut76q2D8MwhAjLsKPNsag=
