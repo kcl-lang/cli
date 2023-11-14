@@ -7,7 +7,7 @@ require (
 	github.com/spf13/cobra v1.7.0
 	kcl-lang.io/kcl-go v0.7.0-alpha.2
 	kcl-lang.io/kcl-openapi v0.5.2-0.20231030135154-85914c973a3f
-	kcl-lang.io/kpm v0.3.8-0.20231101092819-703dd7cf0a25
+	kcl-lang.io/kpm v0.4.0
 )
 
 require (
