@@ -3,7 +3,6 @@
 package options
 
 import (
-	"bufio"
 	"fmt"
 	"io"
 	"os"
@@ -155,27 +154,9 @@ func (o *RunOptions) Validate() error {
 	return nil
 }
 
-// writer returns the writer to use for output.
-func (o *RunOptions) writer() (io.Writer, error) {
-	if o.Output == "" {
-		return o.Writer, nil
-	} else {
-		file, err := os.OpenFile(o.Output, os.O_CREATE|os.O_RDWR, 0744)
-		if err != nil {
-			return nil, err
-		}
-		return bufio.NewWriter(file), nil
-	}
-}
-
 func (o *RunOptions) writeResult(result *kcl.KCLResultList) error {
 	if result == nil {
 		return nil
-	}
-	// Get the writer and output the kcl result.
-	writer, err := o.writer()
-	if err != nil {
-		return err
 	}
 	var output []byte
 	if strings.ToLower(o.Format) == Json {
@@ -189,8 +170,18 @@ func (o *RunOptions) writeResult(result *kcl.KCLResultList) error {
 		// Both considering the raw YAML format and the YAML stream format that contains the `---` separator.
 		output = []byte(result.GetRawYamlResult() + "\n")
 	}
-	_, err = writer.Write(output)
-	return err
+
+	if o.Output == "" {
+		o.Writer.Write(output)
+	} else {
+		file, err := os.OpenFile(o.Output, os.O_CREATE|os.O_RDWR, 0744)
+		if err != nil {
+			return err
+		}
+		defer file.Close()
+		file.Write(output)
+	}
+	return nil
 }
 
 // CompileOptionFromCli will parse the kcl options from the cli options.
