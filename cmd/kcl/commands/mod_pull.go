@@ -16,7 +16,7 @@ const (
 // NewModPullCmd returns the mod pull command.
 func NewModPullCmd(cli *client.KpmClient) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:     "push",
+		Use:     "pull",
 		Short:   "pull kcl package from the registry",
 		Long:    modPullDesc,
 		Example: modPullExample,
