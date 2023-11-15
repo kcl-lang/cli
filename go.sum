@@ -1272,8 +1272,8 @@ kcl-lang.io/kcl-artifact-go v0.7.0-alpha.2 h1:ct6HPq+ssN4kNwMnyqyJAJ35YGiWPMgV4v
 kcl-lang.io/kcl-artifact-go v0.7.0-alpha.2/go.mod h1:c07mqi9Hu2UjPW7lYfHhAAWOlZiB7lo7Vkr4jL5ov/M=
 kcl-lang.io/kcl-go v0.7.0-alpha.2.0.20231114095059-90254869c6e3 h1:sgTak3oF6blGPTvooh0hvA3HFKwNdSC/Df5SVG2Gb+w=
 kcl-lang.io/kcl-go v0.7.0-alpha.2.0.20231114095059-90254869c6e3/go.mod h1:GnXGUfNp+72g4ichID2VkfI679SCLEnmSuTPF7+N1H0=
-kcl-lang.io/kcl-openapi v0.5.2-0.20231030135154-85914c973a3f h1:Qqex0WaWQUokwCAhJT/k9V1eBpPWpfxTYNENjMxbfJU=
-kcl-lang.io/kcl-openapi v0.5.2-0.20231030135154-85914c973a3f/go.mod h1:Ai9mFztCVKkRSFabczO/r5hCNdqaNtAc2ZIRxTeV0Mk=
+kcl-lang.io/kcl-openapi v0.5.2-0.20231114111648-35bf76e44e3d h1:pYxmErxf+JcXZ+FPgGkKgbzau8B2SuDdREuCq9IsspU=
+kcl-lang.io/kcl-openapi v0.5.2-0.20231114111648-35bf76e44e3d/go.mod h1:Ai9mFztCVKkRSFabczO/r5hCNdqaNtAc2ZIRxTeV0Mk=
 kcl-lang.io/kpm v0.4.0 h1:ilauycc1dfjuy9SeWkPuoCToUbMho4Wvw70GQ24m+rI=
 kcl-lang.io/kpm v0.4.0/go.mod h1:GM6IrXwcTZHU+JLg6b0/JXoAcfwIzJkjIbGqV15jrtI=
 oras.land/oras-go v1.2.3 h1:v8PJl+gEAntI1pJ/LCrDgsuk+1PKVavVEPsYIHFE5uY=
