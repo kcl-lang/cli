@@ -138,6 +138,8 @@ func (o *RunOptions) Run() error {
 // Complete completes the options based on the provided arguments.
 func (o *RunOptions) Complete(args []string) error {
 	o.Entries = args
+	// To walk around for wrong kpm log messages.
+	o.Quiet = true
 	return nil
 }
 
