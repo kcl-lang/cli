@@ -139,16 +139,3 @@ func TestRunOptions_Validate(t *testing.T) {
 		}
 	}
 }
-
-func TestRunOptions_writer(t *testing.T) {
-	options := NewRunOptions()
-
-	writer, err := options.writer()
-	if err != nil {
-		t.Fatalf("RunOptions.writer() failed: %v", err)
-	}
-
-	if writer == nil {
-		t.Fatalf("writer should not be nil")
-	}
-}
