@@ -16,6 +16,7 @@
 //	 	deps          dependency analysis, providing dependency diagrams for KCL modules and packages (Not yet implemented)
 //	 	server        run a KCL server to provider REST APIs for other applications
 //		clean         remove object files and cached files
+//		play          open the playground
 //
 // ```
 //
@@ -111,6 +112,7 @@ func New() *cobra.Command {
 	cmd.AddCommand(NewVetCmd())
 	cmd.AddCommand(NewCleanCmd())
 	cmd.AddCommand(NewImportCmd())
+	cmd.AddCommand(NewPlayCmd())
 	// Module & Registry commands
 	cmd.AddCommand(NewModCmd())
 	cmd.AddCommand(NewRegistryCmd())

@@ -7,6 +7,7 @@ require (
 	github.com/spf13/cobra v1.7.0
 	kcl-lang.io/kcl-go v0.7.0-alpha.2.0.20231114095059-90254869c6e3
 	kcl-lang.io/kcl-openapi v0.5.2-0.20231114111648-35bf76e44e3d
+	kcl-lang.io/kcl-playground v0.5.1-0.20230919072953-347ab8959295
 	kcl-lang.io/kpm v0.4.0
 )
 
@@ -91,10 +92,13 @@ require (
 	github.com/ProtonMail/go-crypto v0.0.0-20230217124315-7d5c6f04bbb8 // indirect
 	github.com/acomagu/bufpipe v1.0.4 // indirect
 	github.com/bahlo/generic-list-go v0.2.0 // indirect
+	github.com/boltdb/bolt v1.3.1 // indirect
 	github.com/buger/jsonparser v1.1.1 // indirect
 	github.com/cloudflare/circl v1.1.0 // indirect
 	github.com/emirpasic/gods v1.18.1 // indirect
 	github.com/fatih/color v1.10.0 // indirect
+	github.com/gin-contrib/sse v0.1.0 // indirect
+	github.com/gin-gonic/gin v1.7.7 // indirect
 	github.com/go-git/gcfg v1.5.0 // indirect
 	github.com/go-git/go-billy/v5 v5.4.1 // indirect
 	github.com/go-git/go-git/v5 v5.6.1 // indirect
@@ -105,6 +109,9 @@ require (
 	github.com/go-openapi/spec v0.20.6 // indirect
 	github.com/go-openapi/strfmt v0.21.2 // indirect
 	github.com/go-openapi/validate v0.21.0 // indirect
+	github.com/go-playground/locales v0.13.0 // indirect
+	github.com/go-playground/universal-translator v0.17.0 // indirect
+	github.com/go-playground/validator/v10 v10.4.1 // indirect
 	github.com/go-stack/stack v1.8.1 // indirect
 	github.com/goccy/go-yaml v1.11.0 // indirect
 	github.com/gofrs/flock v0.8.1 // indirect
@@ -117,6 +124,7 @@ require (
 	github.com/kevinburke/ssh_config v1.2.0 // indirect
 	github.com/kr/pretty v0.3.1 // indirect
 	github.com/kr/text v0.2.0 // indirect
+	github.com/leodido/go-urn v1.2.0 // indirect
 	github.com/mattn/go-colorable v0.1.8 // indirect
 	github.com/mattn/go-isatty v0.0.12 // indirect
 	github.com/moby/term v0.0.0-20221205130635-1aeaba878587 // indirect
@@ -128,6 +136,7 @@ require (
 	github.com/sergi/go-diff v1.1.0 // indirect
 	github.com/skeema/knownhosts v1.1.0 // indirect
 	github.com/thoas/go-funk v0.9.3 // indirect
+	github.com/ugorji/go/codec v1.1.7 // indirect
 	github.com/wk8/go-ordered-map/v2 v2.1.8 // indirect
 	github.com/xanzy/ssh-agent v0.3.3 // indirect
 	go.mongodb.org/mongo-driver v1.9.1 // indirect
