@@ -11,6 +11,7 @@ import (
 
 	"github.com/acarl005/stripansi"
 	"github.com/pkg/errors"
+	"kcl-lang.io/cli/pkg/fs"
 	"kcl-lang.io/kcl-go/pkg/kcl"
 	"kcl-lang.io/kpm/pkg/api"
 	"kcl-lang.io/kpm/pkg/client"
@@ -88,7 +89,7 @@ func (o *RunOptions) Run() error {
 	}
 	if entry.IsEmpty() {
 		// kcl compiles the current package under '$pwd'.
-		if _, found := api.GetKclPackage(pwd); found == nil {
+		if _, e := api.GetKclPackage(pwd); e == nil {
 			opts.SetPkgPath(pwd)
 			result, err = cli.CompileWithOpts(opts)
 		} else {
@@ -112,8 +113,18 @@ func (o *RunOptions) Run() error {
 				}
 				transformedEntries = append(transformedEntries, entry)
 			}
-			opts.SetEntries(transformedEntries)
-			opts.SetPkgPath(entry.PackageSource())
+			// Maybe a single KCL module folder, use the kcl.mod entry profile to run.
+			if pkg, e := api.GetKclPackage(transformedEntries[0]); e == nil && fs.IsDir(transformedEntries[0]) {
+				entries := pkg.GetPkgProfile().Entries
+				if len(entries) > 0 {
+					opts.SetEntries(entries)
+				}
+				opts.SetPkgPath(transformedEntries[0])
+			} else {
+				// Multiple entries with the kcl.mod file and deps.
+				opts.SetEntries(transformedEntries)
+				opts.SetPkgPath(entry.PackageSource())
+			}
 			result, err = cli.CompileWithOpts(opts)
 		} else if entry.IsTar() {
 			// kcl compiles the package from the kcl package tar.
