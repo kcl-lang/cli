@@ -9,3 +9,5 @@ ENV LANG=en_US.utf8
 FROM base
 COPY --from=build /src/bin/kcl /usr/local/bin/kcl
 RUN /usr/local/bin/kcl
+RUN apt-get update
+RUN apt-get install gcc -y
