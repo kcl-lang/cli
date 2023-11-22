@@ -1292,8 +1292,8 @@ kcl-lang.io/kcl-openapi v0.5.2-0.20231116071001-d8316c05cd2d h1:wbaI/FjzeMbzFGEj
 kcl-lang.io/kcl-openapi v0.5.2-0.20231116071001-d8316c05cd2d/go.mod h1:Ai9mFztCVKkRSFabczO/r5hCNdqaNtAc2ZIRxTeV0Mk=
 kcl-lang.io/kcl-playground v0.5.1-0.20230919072953-347ab8959295 h1:RUY3w6jNAB6GoMo27CO1oS4C4gjyWdMXfOTNpTEnkjs=
 kcl-lang.io/kcl-playground v0.5.1-0.20230919072953-347ab8959295/go.mod h1:3aMvkPRLMZeORiQ/sHxXQCopwr8L1MMSSXMPC+hxwPA=
-kcl-lang.io/kpm v0.4.1-0.20231121124654-7868e7e7674c h1:TDMGbJV14+2yhKp6NEMnWVzQH/qP/maavc9M/vG9PL0=
-kcl-lang.io/kpm v0.4.1-0.20231121124654-7868e7e7674c/go.mod h1:GM6IrXwcTZHU+JLg6b0/JXoAcfwIzJkjIbGqV15jrtI=
+kcl-lang.io/kpm v0.4.1 h1:72kNdmMF6UNMGwa0JOsTVWwFSHyb5TAVaj3PYMmkw4Y=
+kcl-lang.io/kpm v0.4.1/go.mod h1:GM6IrXwcTZHU+JLg6b0/JXoAcfwIzJkjIbGqV15jrtI=
 oras.land/oras-go v1.2.3 h1:v8PJl+gEAntI1pJ/LCrDgsuk+1PKVavVEPsYIHFE5uY=
 oras.land/oras-go v1.2.3/go.mod h1:M/uaPdYklze0Vf3AakfarnpoEckvw0ESbRdN8Z1vdJg=
 oras.land/oras-go/v2 v2.3.0 h1:lqX1aXdN+DAmDTKjiDyvq85cIaI4RkIKp/PghWlAGIU=
