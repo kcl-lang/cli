@@ -33,9 +33,10 @@ func getVersion(version string) string {
 
 // All the kpm versions.
 const (
-	VersionTypeLatest = Version_0_7_0_alpha_2
+	VersionTypeLatest = Version_0_7_0_beta_1
 
 	Version_0_7_0         VersionType = "0.7.0"
+	Version_0_7_0_beta_1  VersionType = "0.7.0-beta.1"
 	Version_0_7_0_alpha_2 VersionType = "0.7.0-alpha.2"
 	Version_0_7_0_alpha_1 VersionType = "0.7.0-alpha.1"
 	Version_0_6_0         VersionType = "0.6.0"
