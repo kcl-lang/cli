@@ -183,14 +183,20 @@ func (o *RunOptions) writeResult(result *kcl.KCLResultList) error {
 	}
 
 	if o.Output == "" {
-		o.Writer.Write(output)
+		_, err := o.Writer.Write(output)
+		if err != nil {
+			return err
+		}
 	} else {
 		file, err := os.OpenFile(o.Output, os.O_CREATE|os.O_RDWR, 0744)
 		if err != nil {
 			return err
 		}
 		defer file.Close()
-		file.Write(output)
+		_, err = file.Write(output)
+		if err != nil {
+			return err
+		}
 	}
 	return nil
 }

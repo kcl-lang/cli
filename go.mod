@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d
 	github.com/spf13/cobra v1.7.0
-	kcl-lang.io/kcl-go v0.7.0-alpha.2.0.20231114095059-90254869c6e3
+	kcl-lang.io/kcl-go v0.7.0-alpha.2.0.20231124040835-17b297a9a177
 	kcl-lang.io/kcl-openapi v0.5.2-0.20231116071001-d8316c05cd2d
 	kcl-lang.io/kcl-playground v0.5.1-0.20230919072953-347ab8959295
 	kcl-lang.io/kpm v0.4.1
@@ -81,7 +81,7 @@ require (
 	k8s.io/klog/v2 v2.100.1 // indirect
 	k8s.io/kube-openapi v0.0.0-20230717233707-2695361300d9 // indirect
 	k8s.io/utils v0.0.0-20230406110748-d93618cff8a2 // indirect
-	kcl-lang.io/kcl-artifact-go v0.7.0-alpha.2 // indirect
+	kcl-lang.io/kcl-artifact-go v0.7.0-beta.1 // indirect
 	sigs.k8s.io/json v0.0.0-20221116044647-bc3834ca7abd // indirect
 	sigs.k8s.io/structured-merge-diff/v4 v4.2.3 // indirect
 	sigs.k8s.io/yaml v1.3.0 // indirect
