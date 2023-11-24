@@ -12,7 +12,7 @@
 //		fmt           format tool
 //		lint          lint tool
 //		vet           vet tool
-//		test          unit/integration/benchmark test tool (Not yet implemented)
+//		test          unit/integration/benchmark test tool
 //	 	deps          dependency analysis, providing dependency diagrams for KCL modules and packages (Not yet implemented)
 //	 	server        run a KCL server to provider REST APIs for other applications
 //		clean         remove object files and cached files
@@ -109,6 +109,7 @@ func New() *cobra.Command {
 	cmd.AddCommand(NewLintCmd())
 	cmd.AddCommand(NewDocCmd())
 	cmd.AddCommand(NewFmtCmd())
+	cmd.AddCommand(NewTestCmd())
 	cmd.AddCommand(NewVetCmd())
 	cmd.AddCommand(NewCleanCmd())
 	cmd.AddCommand(NewImportCmd())
