@@ -57,7 +57,7 @@ func runPlayground(addr string) error {
 	fmt.Printf("[Info] Playground listens at %s\n", addr)
 	go func() {
 		time.Sleep(time.Second * 2)
-		openBrowser(addr)
+		_ = openBrowser(addr)
 	}()
 	return play.Run(addr, &opts)
 }
