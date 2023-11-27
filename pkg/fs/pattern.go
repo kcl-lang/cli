@@ -82,3 +82,11 @@ func IsDir(path string) bool {
 	}
 	return fileInfo.IsDir()
 }
+
+func FileExists(path string) bool {
+	fi, err := os.Lstat(path)
+	if err != nil || fi.IsDir() {
+		return false
+	}
+	return true
+}

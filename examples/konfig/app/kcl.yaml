@@ -1,0 +1,7 @@
+kcl_cli_configs:
+  file:
+  - main.k
+  - ../pkg/render/render.k
+kcl_options:
+  - key: env
+    value: prod

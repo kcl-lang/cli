@@ -19,6 +19,10 @@ import (
 	"kcl-lang.io/kpm/pkg/runner"
 )
 
+const (
+	DefaultSettingsFile = "kcl.yaml"
+)
+
 // RunOptions is a struct that holds the options for the run command.
 type RunOptions struct {
 	// Entries is the list of the kcl code entry including filepath, folder, OCI package, etc.
@@ -213,6 +217,10 @@ func CompileOptionFromCli(o *RunOptions) *opt.CompileOptions {
 		for _, sPath := range o.Settings {
 			opts.Merge(kcl.WithSettings(sPath))
 		}
+		opts.SetHasSettingsYaml(true)
+	} else if fs.FileExists(DefaultSettingsFile) {
+		// If exists default kcl.yaml, load it.
+		opts.Merge(kcl.WithSettings(DefaultSettingsFile))
 		opts.SetHasSettingsYaml(true)
 	}
 
