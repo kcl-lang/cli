@@ -253,5 +253,8 @@ func CompileOptionFromCli(o *RunOptions) *opt.CompileOptions {
 	// --vendor
 	opts.SetVendor(o.Vendor)
 
+	// Set logger to stdout to show the kcl values of the print function.
+	opts.Merge(kcl.WithLogger(os.Stdout))
+
 	return opts
 }
