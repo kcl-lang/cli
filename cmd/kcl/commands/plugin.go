@@ -20,6 +20,10 @@ func executeRunCmd(args []string) {
 	os.Exit(0)
 }
 
+func isHelpOrVersionFlag(flag string) bool {
+	return flag == "-h" || flag != "--help" || flag == "-v" || flag == "--version"
+}
+
 func bootstrapCmdPlugin(cmd *cobra.Command, pluginHandler plugin.PluginHandler) {
 	if pluginHandler == nil {
 		return
@@ -30,7 +34,7 @@ func bootstrapCmdPlugin(cmd *cobra.Command, pluginHandler plugin.PluginHandler) 
 		// only look for suitable extension executables if
 		// the specified command does not already exist
 		// flags cannot be placed before plugin name
-		if strings.HasPrefix(cmdPathPieces[0], "-") {
+		if strings.HasPrefix(cmdPathPieces[0], "-") && !isHelpOrVersionFlag(cmdPathPieces[0]) {
 			executeRunCmd(cmdPathPieces)
 		} else if foundCmd, _, err := cmd.Find(cmdPathPieces); err != nil {
 			// Also check the commands that will be added by Cobra.
@@ -44,10 +48,10 @@ func bootstrapCmdPlugin(cmd *cobra.Command, pluginHandler plugin.PluginHandler) 
 				}
 			}
 
-			builtinSubcmdExist := false
-			for _, subcmd := range foundCmd.Commands() {
-				if subcmd.Name() == cmdName {
-					builtinSubcmdExist = true
+			builtinSubCmdExist := false
+			for _, cmd := range foundCmd.Commands() {
+				if cmd.Name() == cmdName {
+					builtinSubCmdExist = true
 					break
 				}
 			}
@@ -55,7 +59,7 @@ func bootstrapCmdPlugin(cmd *cobra.Command, pluginHandler plugin.PluginHandler) 
 			// Don't search for a plugin
 			case "help", cobra.ShellCompRequestCmd, cobra.ShellCompNoDescRequestCmd:
 			default:
-				if !builtinSubcmdExist {
+				if !builtinSubCmdExist {
 					if err := plugin.HandlePluginCommand(pluginHandler, cmdPathPieces, false); err != nil {
 						fmt.Fprintf(os.Stderr, "Error: %v\n", err)
 						os.Exit(1)

@@ -12,9 +12,12 @@ import (
 
 const (
 	fmtDesc = `
-This command formats all kcl files of the current crate using kcl-fmt.
+This command formats all kcl files of the current crate.
 `
-	fmtExample = `  # Format all files in this folder recursively
+	fmtExample = `  # Format the single file
+  kcl fmt /path/to/file.k
+
+  # Format all files in this folder recursively
   kcl fmt ./...`
 )
 

@@ -26,7 +26,7 @@
 // kcl
 //
 //	mod init         initialize new module in current directory
-//	mod search       search a command from regisry
+//	mod search       search a command from registry
 //	mod add          add new dependency
 //	mod remove       remove dependency
 //	mod update       update dependency
@@ -45,11 +45,11 @@
 // kcl
 //
 //	import     migration other data and schema to kcl e.g., openapi, jsonschema, json, yaml
-//	export     convert kcl schema to other schema e.g., openapi
+//	export     convert kcl schema to other schema e.g., openapi (Not yet implemented)
 //
 // ```
 //
-// #### Plugin Commands (plugin workspace)
+// #### Plugin Commands (Not yet implemented)
 //
 // ```
 // kcl
