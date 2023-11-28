@@ -21,7 +21,7 @@ func executeRunCmd(args []string) {
 }
 
 func isHelpOrVersionFlag(flag string) bool {
-	return flag == "-h" || flag != "--help" || flag == "-v" || flag == "--version"
+	return flag == "-h" || flag == "--help" || flag == "-v" || flag == "--version"
 }
 
 func bootstrapCmdPlugin(cmd *cobra.Command, pluginHandler plugin.PluginHandler) {
