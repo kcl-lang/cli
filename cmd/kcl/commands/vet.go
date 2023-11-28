@@ -4,9 +4,11 @@ package cmd
 
 import (
 	"fmt"
+	"io"
 	"os"
 
 	"github.com/spf13/cobra"
+	"kcl-lang.io/cli/pkg/fs"
 	"kcl-lang.io/kcl-go/pkg/tools/validate"
 )
 
@@ -16,6 +18,12 @@ This command validates the data file using the kcl code.
 `
 	vetExample = `  # Validate the JSON data using the kcl code
   kcl vet data.json code.k
+
+  # Validate the YAML data using the kcl code
+  kcl vet data.yaml code.k --format yaml
+
+  # Validate the JSON data using the kcl code with the schema name
+  kcl vet data.json code.k -s Schema
 `
 )
 
@@ -28,22 +36,9 @@ func NewVetCmd() *cobra.Command {
 		Long:    vetDesc,
 		Example: vetExample,
 		RunE: func(_ *cobra.Command, args []string) error {
-			data, err := os.ReadFile(args[0])
-			if err != nil {
-				return err
-			}
-			code, err := os.ReadFile(args[1])
-			if err != nil {
-				return err
-			}
-			ok, err := validate.ValidateCode(string(data), string(code), &o)
-			if err != nil {
-				return err
-			}
-			if ok {
-				fmt.Println("Validate success")
-			}
-			return nil
+			dataFile := args[0]
+			codeFile := args[1]
+			return doValidate(dataFile, codeFile, &o)
 		},
 		SilenceUsage: true,
 	}
@@ -58,4 +53,43 @@ func NewVetCmd() *cobra.Command {
 		"Specify the validate data format. e.g., yaml, json. Default is json")
 
 	return cmd
+}
+
+func doValidate(dataFile, codeFile string, o *validate.ValidateOptions) error {
+	var ok bool
+	code, err := os.ReadFile(codeFile)
+	if err != nil {
+		return err
+	}
+	if dataFile == "-" {
+		// Read data from stdin
+		input, err := io.ReadAll(os.Stdin)
+		if err != nil {
+			return err
+		}
+		ok, err = validate.ValidateCode(string(input), string(code), o)
+		if err != nil {
+			return err
+		}
+	} else {
+		// Read data from files
+		dataFiles, err := fs.ExpandInputFiles([]string{dataFile}, false)
+		if err != nil {
+			return err
+		}
+		for _, dataFile := range dataFiles {
+			data, err := os.ReadFile(dataFile)
+			if err != nil {
+				return err
+			}
+			ok, err = validate.ValidateCode(string(data), string(code), o)
+			if err != nil {
+				return err
+			}
+		}
+	}
+	if ok {
+		fmt.Println("Validate success")
+	}
+	return nil
 }
