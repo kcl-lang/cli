@@ -57,13 +57,13 @@ func NewVetCmd() *cobra.Command {
 
 func doValidate(dataFile, codeFile string, o *validate.ValidateOptions) error {
 	var ok bool
-	code, err := os.ReadFile(codeFile)
-	if err != nil {
-		return err
-	}
 	if dataFile == "-" {
 		// Read data from stdin
 		input, err := io.ReadAll(os.Stdin)
+		if err != nil {
+			return err
+		}
+		code, err := os.ReadFile(codeFile)
 		if err != nil {
 			return err
 		}
@@ -78,18 +78,14 @@ func doValidate(dataFile, codeFile string, o *validate.ValidateOptions) error {
 			return err
 		}
 		for _, dataFile := range dataFiles {
-			data, err := os.ReadFile(dataFile)
-			if err != nil {
-				return err
-			}
-			ok, err = validate.ValidateCode(string(data), string(code), o)
+			ok, err = validate.Validate(dataFile, codeFile, o)
 			if err != nil {
 				return err
 			}
 		}
 	}
 	if ok {
-		fmt.Println("Validate success")
+		fmt.Println("Validate success!")
 	}
 	return nil
 }
