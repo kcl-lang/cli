@@ -47,7 +47,7 @@ brews:
     homepage: "https://github.com/kcl-lang/kcl"
     description: "KCL Command Line Interface"
     dependencies:
-      - name: "kcl-lsp@0.7.0"
+      - name: "kcl-lsp"
     license: "Apache License"
     skip_upload: false
     test: |
