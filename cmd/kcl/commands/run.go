@@ -8,8 +8,7 @@ import (
 )
 
 const (
-	runDesc = `
-This command runs the kcl code and displays the output. 'kcl run' takes multiple input for arguments.
+	runDesc = `This command runs the kcl code and displays the output. 'kcl run' takes multiple input for arguments.
 
 For example, 'kcl run path/to/kcl.k' will run the file named path/to/kcl.k 
 `
@@ -26,8 +25,7 @@ For example, 'kcl run path/to/kcl.k' will run the file named path/to/kcl.k
   kcl run oci://ghcr.io/kcl-lang/hello-world
   
   # Run the current package
-  kcl run
-  `
+  kcl run`
 )
 
 // NewRunCmd returns the run command.

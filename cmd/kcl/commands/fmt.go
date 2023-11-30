@@ -11,8 +11,7 @@ import (
 )
 
 const (
-	fmtDesc = `
-This command formats all kcl files of the current crate.
+	fmtDesc = `This command formats all kcl files of the current crate.
 `
 	fmtExample = `  # Format the single file
   kcl fmt /path/to/file.k

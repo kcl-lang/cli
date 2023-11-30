@@ -14,15 +14,14 @@ import (
 )
 
 const (
-	modInitDesc = `
-  This command initializes new kcl module in current directory.
-  `
+	modInitDesc = `This command initializes new kcl module in current directory.
+`
 	modInitExample = `  kcl mod init <command> [arguments]...
-	# Init one kcl module with the current folder name
-	kcl mod init
+  # Init one kcl module with the current folder name
+  kcl mod init
   
-	# Init one kcl module with the name
-	kcl mod init package-name`
+  # Init one kcl module with the name
+  kcl mod init package-name`
 )
 
 // NewModInitCmd returns the mod init command.

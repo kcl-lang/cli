@@ -13,12 +13,10 @@ import (
 )
 
 const (
-	cleanDesc = `
-This command cleans the kcl build cache.
+	cleanDesc = `This command cleans the kcl build cache.
 `
 	cleanExample = `  # Clean the build cache
-  kcl clean
-`
+  kcl clean`
 )
 
 // NewCleanCmd returns the clean command.

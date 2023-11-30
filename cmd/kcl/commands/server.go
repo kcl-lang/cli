@@ -9,8 +9,7 @@ import (
 )
 
 const (
-	serverDesc = `
-This command runs a kcl server with multiple REST APIs. See https://kcl-lang.io/docs/reference/xlang-api/rest-api for more information.
+	serverDesc = `This command runs a kcl server with multiple REST APIs. See https://kcl-lang.io/docs/reference/xlang-api/rest-api for more information.
 `
 	serverExample = `  # Run a kcl server
   kcl server
@@ -22,8 +21,7 @@ This command runs a kcl server with multiple REST APIs. See https://kcl-lang.io/
   curl -X POST http://127.0.0.1:2021/api:protorpc/BuiltinService.ListMethod --data '{}'
 
   # Use the Run API
-  curl -X POST http://127.0.0.1:2021/api:protorpc/KclvmService.ExecProgram -H  "accept: application/json" --data '{"k_filename_list": ["main.k"]}'
-  `
+  curl -X POST http://127.0.0.1:2021/api:protorpc/KclvmService.ExecProgram -H  "accept: application/json" --data '{"k_filename_list": ["main.k"]}'`
 )
 
 var (

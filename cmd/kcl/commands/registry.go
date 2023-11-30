@@ -7,15 +7,13 @@ import (
 )
 
 const (
-	registryDesc = `
-This command manages the kcl registry
+	registryDesc = `This command manages the kcl registry
 `
 	registryExample = `  # Login the registry
   kcl registry login docker.io
 
   # Logout the registry
-  kcl registry logout
-  `
+  kcl registry logout`
 )
 
 var (

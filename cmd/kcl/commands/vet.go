@@ -13,8 +13,7 @@ import (
 )
 
 const (
-	vetDesc = `
-This command validates the data file using the kcl code.
+	vetDesc = `This command validates the data file using the kcl code.
 `
 	vetExample = `  # Validate the JSON data using the kcl code
   kcl vet data.json code.k
@@ -23,8 +22,7 @@ This command validates the data file using the kcl code.
   kcl vet data.yaml code.k --format yaml
 
   # Validate the JSON data using the kcl code with the schema name
-  kcl vet data.json code.k -s Schema
-`
+  kcl vet data.json code.k -s Schema`
 )
 
 // NewVetCmd returns the vet command.

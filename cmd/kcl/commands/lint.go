@@ -8,8 +8,7 @@ import (
 )
 
 const (
-	lintDesc = `
-This command lints the kcl code. 'kcl lint' takes multiple input for arguments.
+	lintDesc = `This command lints the kcl code. 'kcl lint' takes multiple input for arguments.
 
 For example, 'kcl lint path/to/kcl.k' will lint the file named path/to/kcl.k 
 `
@@ -23,8 +22,7 @@ For example, 'kcl lint path/to/kcl.k' will lint the file named path/to/kcl.k
   kcl lint oci://ghcr.io/kcl-lang/hello-world
   
   # Lint the current package
-  kcl lint
-  `
+  kcl lint`
 )
 
 // NewLintCmd returns the lint command.

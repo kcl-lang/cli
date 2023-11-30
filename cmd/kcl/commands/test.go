@@ -12,8 +12,7 @@ import (
 )
 
 const (
-	testDesc = `
-This command automates testing the packages named by the import paths.
+	testDesc = `This command automates testing the packages named by the import paths.
 
 'KCL test' re-compiles each package along with any files with names matching
 the file pattern "*_test.k". These additional files can contain test functions
@@ -29,8 +28,7 @@ that starts with "test_*".
   kcl test ./... --fail-fast
 
   # Test with the regex expression filter 'test_func'
-  kcl test ./... --run test_func
-  `
+  kcl test ./... --run test_func`
 )
 
 // NewTestCmd returns the test command.

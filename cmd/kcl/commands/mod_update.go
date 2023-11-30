@@ -11,14 +11,13 @@ import (
 )
 
 const (
-	modUpdateDesc = `
-  This command updates dependencies listed in kcl.mod.lock based on kcl.mod.
-  `
+	modUpdateDesc = `This command updates dependencies listed in kcl.mod.lock based on kcl.mod.
+`
 	modUpdateExample = `  # Update the current module
-	kcl mod update
+  kcl mod update
   
-	# Update the module with the specified path
-	kcl mod update path/to/package`
+  # Update the module with the specified path
+  kcl mod update path/to/package`
 )
 
 // NewModUpdateCmd returns the mod update command.

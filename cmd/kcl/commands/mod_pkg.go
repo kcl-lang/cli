@@ -14,17 +14,16 @@ import (
 )
 
 const (
-	modPkgDesc = `
-  This command converts a kcl module into tar
-  `
+	modPkgDesc = `This command converts a kcl module into tar
+`
 	modPkgExample = `  # Package the current module
-	kcl mod pkg
+  kcl mod pkg
   
-	# Package the current module in the vendor mode
-	kcl mod pkg --vendor
+  # Package the current module in the vendor mode
+  kcl mod pkg --vendor
 	
-	# Package the current module into the target directory
-	kcl mod pkg --target /path/to/target_dir`
+  # Package the current module into the target directory
+  kcl mod pkg --target /path/to/target_dir`
 )
 
 // NewModPkgCmd returns the mod pkg command.

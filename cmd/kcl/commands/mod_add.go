@@ -16,17 +16,16 @@ import (
 )
 
 const (
-	modAddDesc = `
-  This command adds new dependency
-  `
+	modAddDesc = `This command adds new dependency
+`
 	modAddExample = `  # Add the module dependency named "k8s"
-	kcl mod add k8s
-  
-	# Add the module dependency named "k8s" with the version "1.28"
-	kcl mod add k8s:1.28
+  kcl mod add k8s
+
+  # Add the module dependency named "k8s" with the version "1.28"
+  kcl mod add k8s:1.28
 	
-	# Add a local dependency
-	kcl mod add /path/to/another_module`
+  # Add a local dependency
+  kcl mod add /path/to/another_module`
 )
 
 // NewModAddCmd returns the mod add command.

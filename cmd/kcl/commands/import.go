@@ -8,8 +8,7 @@ import (
 )
 
 const (
-	importDesc = `
-This command converts other formats to KCL file.
+	importDesc = `This command converts other formats to KCL file.
 
 Supported conversion modes:
 - json:            convert JSON data to KCL data
@@ -40,8 +39,7 @@ Supported conversion modes:
   kcl import -m terraformschema schema.json
 
   # Generate KCL models from Go structs
-  kcl import -m gostruct schema.go
-`
+  kcl import -m gostruct schema.go`
 )
 
 // NewImportCmd returns the import command.
