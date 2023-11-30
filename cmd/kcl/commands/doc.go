@@ -10,23 +10,12 @@ import (
 )
 
 const (
-	docDesc = `
-This command shows documentation for KCL package or symbol.
+	docDesc = `This command shows documentation for KCL modules or symbols.
 `
 	docExample = `  # Generate document for current package
-  kcl doc generate
-  `
-	docGenDesc = `  # Generate Markdown document for current package
-  kcl doc generate
+  kcl doc generate`
 
-  # Generate Html document for current package
-  kcl doc generate --format html
-
-  # Generate Markdown document for specific package
-  kcl doc generate --file-path <package path>
-
-  # Generate Markdown document for specific package to a <target directory>
-  kcl doc generate --file-path <package path> --target <target directory>
+	docGenDesc = `This command generates documents for KCL modules.
 `
 	docGenExample = `  # Generate Markdown document for current package
   kcl doc generate
@@ -38,8 +27,7 @@ This command shows documentation for KCL package or symbol.
   kcl doc generate --file-path <package path>
 
   # Generate Markdown document for specific package to a <target directory>
-  kcl doc generate --file-path <package path> --target <target directory>
-`
+  kcl doc generate --file-path <package path> --target <target directory>`
 )
 
 // NewDocCmd returns the doc command.

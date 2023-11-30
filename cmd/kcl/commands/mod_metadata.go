@@ -13,17 +13,16 @@ import (
 )
 
 const (
-	modMetadataDesc = `
-  This command outputs the resolved dependencies of a package
-  `
+	modMetadataDesc = `This command outputs the resolved dependencies of a package
+`
 	modMetadataExample = `  # Output the resolved dependencies the current module
-	kcl mod metadata
+  kcl mod metadata
   
-	# Output the resolved dependencies the current module in the vendor mode
-	kcl mod metadata --vendor
+  # Output the resolved dependencies the current module in the vendor mode
+  kcl mod metadata --vendor
 	
-	# Output the resolved dependencies the current module with the update check
-	kcl mod metadata --update`
+  # Output the resolved dependencies the current module with the update check
+  kcl mod metadata --update`
 )
 
 // NewModMetadataCmd returns the mod metadata command.

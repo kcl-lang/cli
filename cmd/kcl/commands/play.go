@@ -12,8 +12,7 @@ import (
 )
 
 const (
-	playDesc = `
-This command opens the kcl playground in the browser.
+	playDesc = `This command opens the kcl playground in the browser.
 `
 	playExample = `  # Open in the localhost:80 and open the browser.
   kcl play --open

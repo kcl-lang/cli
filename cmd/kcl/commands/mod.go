@@ -7,8 +7,7 @@ import (
 )
 
 const (
-	modDesc = `
-This command manages the kcl module
+	modDesc = `This command manages the kcl module
 `
 	modExample = `  kcl mod <command> [arguments]...
   # Init one kcl module

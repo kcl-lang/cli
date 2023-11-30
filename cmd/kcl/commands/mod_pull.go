@@ -6,11 +6,10 @@ import (
 )
 
 const (
-	modPullDesc = `
-  This command pulls kcl modules from the registry.
-  `
+	modPullDesc = `This command pulls kcl modules from the registry.
+`
 	modPullExample = `  # Pull the the module named "k8s" to the local path from the registry
-	kcl mod pull k8s`
+  kcl mod pull k8s`
 )
 
 // NewModPullCmd returns the mod pull command.

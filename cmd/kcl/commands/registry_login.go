@@ -8,18 +8,17 @@ import (
 )
 
 const (
-	registryLoginDesc = `
-  This command can be used to login to a registry.
-  `
+	registryLoginDesc = `This command can be used to login to a registry.
+`
 	registryLoginExample = `  # Login the docker hub
-	kcl registry login docker.io
+  kcl registry login docker.io
 
-	# Login the GitHub container registry
-	kcl registry login ghcr.io
+  # Login the GitHub container registry
+  kcl registry login ghcr.io
 
-	# Login a localhost registry
-	kcl registry login https://localhost:5001
-	`
+  # Login a localhost registry
+  kcl registry login https://localhost:5001
+`
 )
 
 // NewRegistryLoginCmd returns the registry login command.

@@ -16,14 +16,13 @@ import (
 )
 
 const (
-	modPushDesc = `
-  This command pushes kcl modules to the registry.
-  `
+	modPushDesc = `This command pushes kcl modules to the registry.
+`
 	modPushExample = `  # Push the current module to the registry
-	kcl mod push
+  kcl mod push
   
-	# Push the current module to the registry in the vendor mode
-	kcl mod push --vendor`
+  # Push the current module to the registry in the vendor mode
+  kcl mod push --vendor`
 )
 
 // NewModPushCmd returns the mod push command.

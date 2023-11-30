@@ -7,12 +7,11 @@ import (
 )
 
 const (
-	registryLogoutDesc = `
-  This command can be used to logout from the current registry.
-  `
+	registryLogoutDesc = `This command can be used to logout from the current registry.
+`
 	registryLogoutExample = `  # Logout the registry
-	kcl registry logout docker.io
-	`
+  kcl registry logout docker.io
+`
 )
 
 // NewRegistryLogoutCmd returns the registry logout command.
