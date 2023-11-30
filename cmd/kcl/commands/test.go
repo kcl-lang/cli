@@ -3,9 +3,11 @@
 package cmd
 
 import (
+	"errors"
 	"fmt"
 	"os"
 
+	"github.com/acarl005/stripansi"
 	"github.com/spf13/cobra"
 	"kcl-lang.io/cli/pkg/options"
 	kcl "kcl-lang.io/kcl-go"
@@ -79,6 +81,9 @@ func test(o *kcl.TestOptions, runOpts *options.RunOptions) error {
 		*depsOpt,
 	)
 	if err != nil {
+		if runOpts.NoStyle {
+			err = errors.New(stripansi.Strip(err.Error()))
+		}
 		return err
 	}
 	if len(result.Info) == 0 {
