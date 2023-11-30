@@ -16,6 +16,7 @@ import (
 	"kcl-lang.io/kpm/pkg/api"
 	"kcl-lang.io/kpm/pkg/client"
 	"kcl-lang.io/kpm/pkg/opt"
+	pkg "kcl-lang.io/kpm/pkg/package"
 	"kcl-lang.io/kpm/pkg/runner"
 )
 
@@ -265,4 +266,37 @@ func CompileOptionFromCli(o *RunOptions) *opt.CompileOptions {
 	opts.Merge(kcl.WithLogger(os.Stdout))
 
 	return opts
+}
+
+// LoadDepsFrom parses the kcl external package option from a path.
+// It will find `kcl.mod` recursively from the path, resolve deps
+// in the `kcl.mod` and return the option. If not found, return the
+// empty option.
+func LoadDepsFrom(path string, quiet bool) (*kcl.Option, error) {
+	o := kcl.NewOption()
+	entry, errEvent := runner.FindRunEntryFrom([]string{path})
+	if errEvent != nil {
+		return o, errEvent
+	}
+	if entry.IsLocalFileWithKclMod() {
+		cli, err := client.NewKpmClient()
+		if err != nil {
+			return o, err
+		}
+		if quiet {
+			cli.SetLogWriter(nil)
+		}
+		pkg, err := pkg.LoadKclPkg(entry.PackageSource())
+		if err != nil {
+			return o, err
+		}
+		depsMap, err := cli.ResolveDepsIntoMap(pkg)
+		if err != nil {
+			return o, err
+		}
+		for depName, depPath := range depsMap {
+			o.Merge(kcl.WithExternalPkgs(fmt.Sprintf("%s=%s", depName, depPath)))
+		}
+	}
+	return o, nil
 }

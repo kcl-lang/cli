@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
+	"kcl-lang.io/cli/pkg/options"
 	kcl "kcl-lang.io/kcl-go"
 	"kcl-lang.io/kcl-go/pkg/tools/testing"
 )
@@ -36,6 +37,7 @@ that starts with "test_*".
 // NewTestCmd returns the test command.
 func NewTestCmd() *cobra.Command {
 	o := new(kcl.TestOptions)
+	runOpts := options.NewRunOptions()
 	cmd := &cobra.Command{
 		Use:     "test",
 		Short:   "KCL test tool",
@@ -46,17 +48,7 @@ func NewTestCmd() *cobra.Command {
 				args = append(args, ".")
 			}
 			o.PkgList = args
-			result, err := kcl.Test(o)
-			if err != nil {
-				return err
-			}
-			if len(result.Info) == 0 {
-				fmt.Println("no test files")
-				return nil
-			} else {
-				reporter := testing.DefaultReporter(os.Stdout)
-				return reporter.Report(&result)
-			}
+			return test(o, runOpts)
 		},
 		SilenceUsage: true,
 		Aliases:      []string{"t"},
@@ -67,6 +59,33 @@ func NewTestCmd() *cobra.Command {
 		"Exist when meet the first fail test case in the test process.")
 	flags.StringVar(&o.RunRegRxp, "run", "",
 		"If specified, only run tests containing this string in their names.")
+	appendRunnerFlags(runOpts, flags)
 
 	return cmd
+}
+
+func test(o *kcl.TestOptions, runOpts *options.RunOptions) error {
+	pwd, err := os.Getwd()
+	if err != nil {
+		return err
+	}
+	depsOpt, err := options.LoadDepsFrom(pwd, runOpts.Quiet)
+	if err != nil {
+		return err
+	}
+	result, err := kcl.Test(
+		o,
+		*options.CompileOptionFromCli(runOpts).Option,
+		*depsOpt,
+	)
+	if err != nil {
+		return err
+	}
+	if len(result.Info) == 0 {
+		fmt.Println("no test files")
+		return nil
+	} else {
+		reporter := testing.DefaultReporter(os.Stdout)
+		return reporter.Report(&result)
+	}
 }
