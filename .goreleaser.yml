@@ -4,6 +4,7 @@ before:
   hooks:
     # You may remove this if you don't use go modules.
     - go mod tidy
+    - ./scripts/install-kcl-lsp-all.sh
 
 # .goreleaser.yml
 builds:
@@ -30,6 +31,9 @@ archives:
     format_overrides:
       - goos: windows
         format: zip
+  # Put kcl-language-server binaries into add to the kcl archive.
+  - files:
+      - ./bin/kcl-lsp-v{{ .Version }}-{{ .Os }}-{{ .Arch }}/*
 
 brews:
   - tap:
