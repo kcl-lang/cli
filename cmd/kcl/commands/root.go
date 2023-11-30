@@ -117,12 +117,11 @@ func New() *cobra.Command {
 	// Module & Registry commands
 	cmd.AddCommand(NewModCmd())
 	cmd.AddCommand(NewRegistryCmd())
-	// Server commands
+	// Server command
 	cmd.AddCommand(NewServerCmd())
-	// Version & Help commands
+	// Version command
 	cmd.AddCommand(NewVersionCmd())
-	cmd.SetHelpCommand(&cobra.Command{}) // Disable the help command
-	// Plugin commands
+	// Plugin commands e.g. kcl language server for kcl-language-server
 	bootstrapCmdPlugin(cmd, plugin.NewDefaultPluginHandler([]string{cmdName}))
 
 	return cmd
