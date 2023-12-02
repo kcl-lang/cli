@@ -129,26 +129,33 @@ downloadFile() {
 
     info "Build kcl language server artifact..."
 
-    INSTALL_FOLDER="./kcl-lsp-${OS}-${ARCH}"
+    INSTALL_FOLDER="kcl-lsp-${OS}-${ARCH}"
     mkdir -p "./bin/$INSTALL_FOLDER"
 
-    tar xf $ARTIFACT_TMP_FILE -C $KCL_TMP_ROOT
-    local tmp_kclvm_folder=$KCL_TMP_ROOT/kclvm
-
-    if [ ! -f "$tmp_kclvm_folder/bin/kcl-language-server" ]; then
-        error "Failed to unpack KCL language server executable."
-        exit 1
-    fi
-
-    # Copy kcl-languge-server in the temp folder into the target installation directory.
-    info "Copy the kcl language server binary $tmp_kclvm_folder/bin/kcl-language-server into the target installation directory ./bin"
-    cp -f $tmp_kclvm_folder/bin/kcl-language-server "./bin/$INSTALL_FOLDER"
     cd ./bin
     if [ "$OS" == "windows" ]; then
+        unzip $ARTIFACT_TMP_FILE -d $KCL_TMP_ROOT
+        local tmp_kclvm_folder=$KCL_TMP_ROOT
+        if [ ! -f "$tmp_kclvm_folder/bin/kcl-language-server.exe" ]; then
+            error "Failed to unpack KCL language server executable."
+            exit 1
+        fi
+        # Copy kcl-languge-server in the temp folder into the target installation directory.
+        info "Copy the kcl language server binary $tmp_kclvm_folder/bin/kcl-language-server into the target installation directory ./bin"
+        cp -f $tmp_kclvm_folder/bin/kcl-language-server.exe $INSTALL_FOLDER
         TARBALL="./kcl-lsp-${LATEST_RELEASE_TAG}-${OS}-${ARCH}.zip"
         info "Zip $TARBALL..."
         zip -r $TARBALL $INSTALL_FOLDER
     else
+        tar xf $ARTIFACT_TMP_FILE -C $KCL_TMP_ROOT
+        local tmp_kclvm_folder=$KCL_TMP_ROOT/kclvm
+        if [ ! -f "$tmp_kclvm_folder/bin/kcl-language-server" ]; then
+            error "Failed to unpack KCL language server executable."
+            exit 1
+        fi
+        # Copy kcl-languge-server in the temp folder into the target installation directory.
+        info "Copy the kcl language server binary $tmp_kclvm_folder/bin/kcl-language-server into the target installation directory ./bin"
+        cp -f $tmp_kclvm_folder/bin/kcl-language-server $INSTALL_FOLDER
         TARBALL="./kcl-lsp-${LATEST_RELEASE_TAG}-${OS}-${ARCH}.tar.gz"
         info "Tar $TARBALL..."
         tar -zcf $TARBALL $INSTALL_FOLDER
