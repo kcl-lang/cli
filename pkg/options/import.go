@@ -68,21 +68,25 @@ func (o *ImportOptions) Run() error {
 			if err := opts.EnsureDefaults(); err != nil {
 				return err
 			}
-
+			var specs []string
 			// when the spec is a crd, get openapi spec file from it
 			if mode == Crd {
-				spec, err := crdGen.GetSpec(&crdGen.GenOpts{
+				specs, err = crdGen.GetSpecs(&crdGen.GenOpts{
 					Spec: opts.Spec,
 				})
 				if err != nil {
 					return err
 				}
-				opts.Spec = spec
 				// do not run validate spec on spec file generated from crd
 				opts.ValidateSpec = false
+			} else {
+				specs = []string{opts.Spec}
 			}
-			if err := generator.Generate(opts); err != nil {
-				return err
+			for _, spec := range specs {
+				opts.Spec = spec
+				if err := generator.Generate(opts); err != nil {
+					return err
+				}
 			}
 		}
 		return nil
