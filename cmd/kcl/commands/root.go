@@ -97,11 +97,12 @@ scenarios. The KCL website: https://kcl-lang.io
 // New creates a new cobra client
 func New() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:          cmdName,
-		Short:        "The KCL Command Line Interface (CLI).",
-		Long:         rootDesc,
-		SilenceUsage: true,
-		Version:      version.GetVersionString(),
+		Use:           cmdName,
+		Short:         "The KCL Command Line Interface (CLI).",
+		Long:          rootDesc,
+		SilenceUsage:  true,
+		SilenceErrors: true,
+		Version:       version.GetVersionString(),
 	}
 	// Language commands
 	cmd.AddCommand(NewRunCmd())
