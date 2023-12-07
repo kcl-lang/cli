@@ -123,8 +123,12 @@ func (o *RunOptions) Run() error {
 				entries := pkg.GetPkgProfile().Entries
 				if len(entries) > 0 {
 					opts.SetEntries(entries)
+					opts.SetPkgPath(transformedEntries[0])
+				} else {
+					// Multiple entries with the kcl.mod file and deps.
+					opts.SetEntries(transformedEntries)
+					opts.SetPkgPath(entry.PackageSource())
 				}
-				opts.SetPkgPath(transformedEntries[0])
 			} else {
 				// Multiple entries with the kcl.mod file and deps.
 				opts.SetEntries(transformedEntries)
