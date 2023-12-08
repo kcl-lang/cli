@@ -7,7 +7,7 @@ on:
     branches:
      - main
 jobs:
-  example-e2e-test:
+  ubuntu:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -15,9 +15,45 @@ jobs:
         with:
           go-version: "1.19"
 
-      - name: kcl Installation
+      - name: KCL Installation
         run: go install ./cmd/kcl
 
       - name: Example tests
         shell: bash -ieo pipefail {0}
         run: PATH=$PATH:$HOME/go/bin ./examples/test.sh
+
+  macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v1
+        with:
+          go-version: "1.19"
+  
+      - name: KCL Installation
+        run: go install ./cmd/kcl
+
+      - name: e2e tests
+        run: PATH=$PATH:$HOME/go/bin kcl ./examples/kubernetes.k
+
+      - name: Example tests
+        shell: bash -ieo pipefail {0}
+        run: PATH=$PATH:$HOME/go/bin ./examples/test.sh
+
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Make
+        run: choco install make -y
+
+      - name: KCL Installation and Tests
+        shell: powershell
+        run: |
+          iwr -useb get.scoop.sh -outfile 'install.ps1'
+          .\install.ps1 -RunAsAdmin
+          scoop bucket add kcl-lang https://github.com/kcl-lang/scoop-bucket.git
+          scoop install kcl-lang/kcl
+          kcl.exe .\examples\kubernetes.k
+          .\examples\test.ps1
