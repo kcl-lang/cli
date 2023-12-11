@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"kcl-lang.io/cli/pkg/fs"
+	"kcl-lang.io/kcl-go/pkg/logger"
 	"kcl-lang.io/kcl-go/pkg/tools/gen"
 	crdGen "kcl-lang.io/kcl-openapi/pkg/kube_resource/generator"
 	"kcl-lang.io/kcl-openapi/pkg/swagger/generator"
@@ -75,7 +76,7 @@ func (o *ImportOptions) Run() error {
 					Spec: opts.Spec,
 				})
 				if err != nil {
-					return err
+					logger.GetLogger().Error(err)
 				}
 				// do not run validate spec on spec file generated from crd
 				opts.ValidateSpec = false
@@ -85,7 +86,7 @@ func (o *ImportOptions) Run() error {
 			for _, spec := range specs {
 				opts.Spec = spec
 				if err := generator.Generate(opts); err != nil {
-					return err
+					logger.GetLogger().Error(err)
 				}
 			}
 		}
