@@ -1286,8 +1286,8 @@ k8s.io/utils v0.0.0-20230406110748-d93618cff8a2 h1:qY1Ad8PODbnymg2pRbkyMT/ylpTrC
 k8s.io/utils v0.0.0-20230406110748-d93618cff8a2/go.mod h1:OLgZIPagt7ERELqWJFomSt595RzquPNLL48iOWgYOg0=
 kcl-lang.io/kcl-go v0.7.1-0.20231210062110-2c7216748ca8 h1:5/byA+145YBI9FjMqTtmKGI8KNDNkv/ZUjOWBlK/fuc=
 kcl-lang.io/kcl-go v0.7.1-0.20231210062110-2c7216748ca8/go.mod h1:xcGpqeGzHYMv1BQ/9pPhAUSHNIClEoKRUKqeGiq2or8=
-kcl-lang.io/kcl-openapi v0.5.3 h1:+0nmrvIRpCf+GpNz6gswq00UCU2/c2k8JPF5s2Tem4w=
-kcl-lang.io/kcl-openapi v0.5.3/go.mod h1:Ai9mFztCVKkRSFabczO/r5hCNdqaNtAc2ZIRxTeV0Mk=
+kcl-lang.io/kcl-openapi v0.5.4-0.20231211135748-249fb77aa628 h1:vmrNvwaoI7ZSL2/h+w6GOCjEh3tC+wPZSxBQIHqstFg=
+kcl-lang.io/kcl-openapi v0.5.4-0.20231211135748-249fb77aa628/go.mod h1:Ai9mFztCVKkRSFabczO/r5hCNdqaNtAc2ZIRxTeV0Mk=
 kcl-lang.io/kcl-playground v0.5.1-0.20230919072953-347ab8959295 h1:RUY3w6jNAB6GoMo27CO1oS4C4gjyWdMXfOTNpTEnkjs=
 kcl-lang.io/kcl-playground v0.5.1-0.20230919072953-347ab8959295/go.mod h1:3aMvkPRLMZeORiQ/sHxXQCopwr8L1MMSSXMPC+hxwPA=
 kcl-lang.io/kpm v0.4.2 h1:rEjfUdX+2kmwwuBaYvsNURQ5D97C3qLNBYAd+XT+DbU=
