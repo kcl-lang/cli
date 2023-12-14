@@ -11,17 +11,47 @@ schema MonacoManifestSchema:
     ----------
     manifest_version : str, required
         The schema version this manifest conforms to - e.g. 1.0
-    projects : [items], required
+    projects : [MonacoManifestSchemaProjectsItems0], required
         The projects grouped by this manifest
-    environment_groups : [items], required
+    environment_groups : [MonacoManifestSchemaEnvironmentGroupsItems0], required
         The Environment groups to which projects in this manifest are deployed
     """
 
     manifest_version: str
-    projects: [items]
-    environment_groups: [items]
+    projects: [MonacoManifestSchemaProjectsItems0]
+    environment_groups: [MonacoManifestSchemaEnvironmentGroupsItems0]
 
-schema Url:
+schema MonacoManifestSchemaEnvironmentGroupsItems0:
+    """
+    MonacoManifestSchemaEnvironmentGroupsItems0
+
+    Attributes
+    ----------
+    name : str, optional
+        The name of this environment group
+    environments : [MonacoManifestSchemaEnvironmentGroupsItems0EnvironmentsItems0], optional
+        The environments in this group
+    """
+
+    name?: str
+    environments?: [MonacoManifestSchemaEnvironmentGroupsItems0EnvironmentsItems0]
+
+schema MonacoManifestSchemaEnvironmentGroupsItems0EnvironmentsItems0:
+    """
+    MonacoManifestSchemaEnvironmentGroupsItems0EnvironmentsItems0
+
+    Attributes
+    ----------
+    name : str, optional
+        The name of this environment
+    url : MonacoManifestSchemaEnvironmentGroupsItems0EnvironmentsItems0Url, optional
+        The URL of this environment
+    """
+
+    name?: str
+    url?: MonacoManifestSchemaEnvironmentGroupsItems0EnvironmentsItems0Url
+
+schema MonacoManifestSchemaEnvironmentGroupsItems0EnvironmentsItems0Url:
     """
     The URL of this environment
 
@@ -35,4 +65,22 @@ schema Url:
 
     type?: str
     value?: str
+
+schema MonacoManifestSchemaProjectsItems0:
+    """
+    MonacoManifestSchemaProjectsItems0
+
+    Attributes
+    ----------
+    name : str, required
+        The name of this project
+    type : str, optional
+        Optional Type of this project. Default: Simple
+    path : str, optional
+        Optional filepath of the project relative to the manifest.yaml location. Defaults to name
+    """
+
+    name: str
+    type?: str
+    path?: str
 
