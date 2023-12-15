@@ -24,8 +24,8 @@ func appendLangFlags(o *options.RunOptions, flags *pflag.FlagSet) {
 }
 
 func appendRunnerFlags(o *options.RunOptions, flags *pflag.FlagSet) {
-	flags.StringSliceVarP(&o.Arguments, "argument", "D", []string{},
-		"Specify the top-level argument")
+	flags.StringArrayVarP(&o.Arguments, "argument", "D", []string{},
+			"Specify the top-level argument")
 	flags.StringSliceVarP(&o.Settings, "setting", "Y", []string{},
 		"Specify the command line setting files")
 	flags.StringSliceVarP(&o.Overrides, "overrides", "O", []string{},
