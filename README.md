@@ -11,6 +11,7 @@
 <img src="https://coveralls.io/repos/github/kcl-lang/cli/badge.svg">
 <img src="https://img.shields.io/badge/license-Apache--2.0-green">
 <img src="https://img.shields.io/badge/PRs-welcome-brightgreen">
+<img src="https://img.shields.io/github/downloads/kcl-lang/cli/total?label=Github%20downloads&logo=github">
 </p>
 
 ## Introduction
