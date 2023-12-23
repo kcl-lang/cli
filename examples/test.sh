@@ -12,7 +12,7 @@ pwd=$(
     pwd
 )
 
-for path in "configuration" "validation" "abstraction" "definition" "konfig" "mutation" "data-integration" "automation" "package-management" "kubernetes" "codelab" "server"; do
+for path in "configuration" "validation" "abstraction" "definition" "konfig" "mutation" "data-integration" "automation" "package-management" "kubernetes" "codelab" "server" "source"; do
     echo "\033[1mTesting $path ...\033[0m"
     if (cd $pwd/$path && make test); then
         echo "\033[32mTest SUCCESSED - $path\033[0m\n"
