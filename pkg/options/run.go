@@ -76,21 +76,36 @@ func NewRunOptions() *RunOptions {
 func (o *RunOptions) Run() error {
 	var result *kcl.KCLResultList
 	var err error
-	opts := CompileOptionFromCli(o)
 	cli, err := client.NewKpmClient()
+	if err != nil {
+		return err
+	}
+	// acquire the lock of the package cache.
+	err = cli.AcquirePackageCacheLock()
+	if err != nil {
+		return err
+	}
+	defer func() {
+		// release the lock of the package cache after the function returns.
+		releaseErr := cli.ReleasePackageCacheLock()
+		if releaseErr != nil && err == nil {
+			err = releaseErr
+		}
+	}()
+	opts := CompileOptionFromCli(o)
 	if o.Quiet {
 		cli.SetLogWriter(nil)
 	}
 	if err != nil {
 		return err
 	}
-	pwd, err := os.Getwd()
-	if err != nil {
-		return err
-	}
 	entry, errEvent := runner.FindRunEntryFrom(opts.Entries())
 	if errEvent != nil {
 		return errEvent
+	}
+	pwd, err := os.Getwd()
+	if err != nil {
+		return err
 	}
 	if entry.IsEmpty() {
 		// kcl compiles the current package under '$pwd'.
@@ -137,9 +152,11 @@ func (o *RunOptions) Run() error {
 			result, err = cli.CompileWithOpts(opts)
 		} else if entry.IsTar() {
 			// kcl compiles the package from the kcl package tar.
+			opts.SetEntries([]string{})
 			result, err = cli.CompileTarPkg(entry.PackageSource(), opts)
 		} else if entry.IsUrl() {
 			// kcl compiles the package from the OCI reference or url.
+			opts.SetEntries([]string{})
 			result, err = cli.CompileOciPkg(entry.PackageSource(), o.Tag, opts)
 		} else {
 			// If there is only kcl file without kcl package (kcl.mod)
