@@ -2,4 +2,4 @@
 name = "abstraction"
 
 [dependencies]
-k8s = "1.28"
+k8s = "1.29"
