@@ -18,6 +18,7 @@
 
 `kcl` is a command-line interface that includes language core features, IDE features, package management tools, community integration, and other tools. It now integrates the following tools:
 
++ [KCL Go SDK](https://github.com/kcl-lang/kcl-go)
 + [Open API Tool](https://github.com/kcl-lang/kcl-openapi)
 + [Package Manage Tool](https://github.com/kcl-lang/kpm)
 + [KCL Playground](https://github.com/kcl-lang/kcl-playground)
