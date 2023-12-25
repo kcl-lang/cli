@@ -135,7 +135,7 @@ func (o *RunOptions) Run() error {
 			}
 			// Maybe a single KCL module folder, use the kcl.mod entry profile to run.
 			if pkg, e := api.GetKclPackage(transformedEntries[0]); e == nil && fs.IsDir(transformedEntries[0]) {
-				entries := *pkg.GetPkgProfile().Entries
+				entries := pkg.GetPkgProfile().GetEntries()
 				if len(entries) > 0 {
 					opts.SetEntries(entries)
 					opts.SetPkgPath(transformedEntries[0])
