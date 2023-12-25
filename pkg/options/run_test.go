@@ -2,7 +2,10 @@ package options
 
 import (
 	"bytes"
+	"strings"
 	"testing"
+
+	"gotest.tools/v3/assert"
 )
 
 func TestRunOptions_Run(t *testing.T) {
@@ -138,4 +141,18 @@ func TestRunOptions_Validate(t *testing.T) {
 			t.Errorf("unexpected error message:\nexpected: %s\ngot: %s", expectedError, err.Error())
 		}
 	}
+}
+
+func TestRunPkg(t *testing.T) {
+	var buf bytes.Buffer
+	options := NewRunOptions()
+	options.Entries = []string{"./testdata/run_pkg"}
+	options.Writer = &buf
+
+	err := options.Run()
+	assert.Equal(t, err, nil)
+	resStr := strings.ReplaceAll(buf.String(), "\r\n", "")
+	resStr = strings.ReplaceAll(resStr, "\n", "")
+	
+	assert.Equal(t, resStr, "The_first_kcl_program: Hello World!")
 }
