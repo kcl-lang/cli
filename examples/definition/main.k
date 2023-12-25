@@ -1,4 +1,4 @@
-import .app_module  # A relative path import
+import app_module  # A relative path import
 
 app: app_module.App {
     domainType = "Standard"

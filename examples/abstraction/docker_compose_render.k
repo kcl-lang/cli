@@ -1,6 +1,6 @@
 import manifests
 
-import .app
+import app
 
 # Convert the `App` model into the docker compose config.
 dockerComposeRender = lambda a: app.App {

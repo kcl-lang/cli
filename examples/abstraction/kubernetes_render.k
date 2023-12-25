@@ -1,6 +1,6 @@
 import manifests
 
-import .app
+import app
 
 # Convert the `App` model into Kubernetes Deployment and Service Manifests
 kubernetesRender = lambda a: app.App {

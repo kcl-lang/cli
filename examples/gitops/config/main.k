@@ -1,4 +1,4 @@
-import .app
+import app
 
 config = app.App {
     name = "kcl-guestbook-ui"

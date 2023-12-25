@@ -1,4 +1,4 @@
-import .app
+import app
 
 app.App {
     name = "app"
