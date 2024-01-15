@@ -31,12 +31,11 @@ func getVersion(version string) string {
 	return fmt.Sprintf("%s-%s-%s", version, runtime.GOOS, runtime.GOARCH)
 }
 
-// All the kpm versions.
 const (
-	VersionTypeLatest = Version_0_7_3
+	VersionTypeLatest = Version_0_7_4
 
+	Version_0_7_4         VersionType = "0.7.4"
 	Version_0_7_3         VersionType = "0.7.3"
-	Version_0_7_3_alpha_1 VersionType = "0.7.3-alpha.1"
 	Version_0_7_2         VersionType = "0.7.2"
 	Version_0_7_1         VersionType = "0.7.1"
 	Version_0_7_0         VersionType = "0.7.0"
