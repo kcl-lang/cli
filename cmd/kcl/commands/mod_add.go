@@ -23,7 +23,10 @@ const (
 
   # Add the module dependency named "k8s" with the version "1.28"
   kcl mod add k8s:1.28
-	
+
+  # Add the module dependency from the GitHub
+  kcl mod add --git https://github.com/kcl-lang/konfig --tag v0.4.0
+
   # Add a local dependency
   kcl mod add /path/to/another_module`
 )
@@ -43,6 +46,7 @@ func NewModAddCmd(cli *client.KpmClient) *cobra.Command {
 
 	cmd.Flags().StringVar(&git, "git", "", "git repository location")
 	cmd.Flags().StringVar(&tag, "tag", "", "git repository tag")
+	cmd.Flags().StringVar(&commit, "commit", "", "git repository commit")
 
 	return cmd
 }
@@ -115,14 +119,14 @@ func ModAdd(cli *client.KpmClient, args []string) error {
 
 // parseAddOptions will parse the user cli inputs.
 func parseAddOptions(cli *client.KpmClient, localPath string, args []string) (*opt.AddOptions, error) {
-	// parse from 'kpm add -git https://xxx/xxx.git -tag v0.0.1'.
 	if len(args) == 0 {
 		return &opt.AddOptions{
 			LocalPath: localPath,
 			RegistryOpts: opt.RegistryOptions{
 				Git: &opt.GitOptions{
-					Url: git,
-					Tag: tag,
+					Url:    git,
+					Tag:    tag,
+					Commit: commit,
 				},
 			},
 		}, nil

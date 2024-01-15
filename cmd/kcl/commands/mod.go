@@ -29,6 +29,7 @@ var (
 	update bool
 	git    string
 	tag    string
+	commit string
 	target string
 )
 
