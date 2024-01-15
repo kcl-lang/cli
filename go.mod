@@ -5,10 +5,10 @@ go 1.21
 require (
 	github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d
 	github.com/spf13/cobra v1.7.0
-	kcl-lang.io/kcl-go v0.7.2-0.20240108110337-6bb63b78ebb8
+	kcl-lang.io/kcl-go v0.7.3
 	kcl-lang.io/kcl-openapi v0.5.5
 	kcl-lang.io/kcl-playground v0.5.1
-	kcl-lang.io/kpm v0.5.0
+	kcl-lang.io/kpm v0.6.0
 )
 
 require (
@@ -99,7 +99,7 @@ require (
 	github.com/bahlo/generic-list-go v0.2.0 // indirect
 	github.com/boltdb/bolt v1.3.1 // indirect
 	github.com/buger/jsonparser v1.1.1 // indirect
-	github.com/cloudflare/circl v1.3.3 // indirect
+	github.com/cloudflare/circl v1.3.7 // indirect
 	github.com/emirpasic/gods v1.18.1 // indirect
 	github.com/fatih/color v1.10.0 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
@@ -144,13 +144,13 @@ require (
 	github.com/wk8/go-ordered-map/v2 v2.1.8 // indirect
 	github.com/xanzy/ssh-agent v0.3.3 // indirect
 	go.mongodb.org/mongo-driver v1.9.1 // indirect
-	golang.org/x/crypto v0.16.0 // indirect
+	golang.org/x/crypto v0.17.0 // indirect
 	golang.org/x/mod v0.12.0 // indirect
 	golang.org/x/tools v0.13.0 // indirect
 	golang.org/x/xerrors v0.0.0-20220907171357-04be3eba64a2 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 	gotest.tools/v3 v3.5.1
-	kcl-lang.io/lib v0.7.4 // indirect
+	kcl-lang.io/lib v0.7.5 // indirect
 	oras.land/oras-go v1.2.3 // indirect
 	oras.land/oras-go/v2 v2.3.0 // indirect
 )
