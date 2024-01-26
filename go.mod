@@ -5,7 +5,7 @@ go 1.21
 require (
 	github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d
 	github.com/spf13/cobra v1.7.0
-	kcl-lang.io/kcl-go v0.7.5-0.20240115152116-b5f04eedd30d
+	kcl-lang.io/kcl-go v0.7.5
 	kcl-lang.io/kcl-openapi v0.5.5
 	kcl-lang.io/kcl-playground v0.5.1
 	kcl-lang.io/kpm v0.6.0
@@ -150,7 +150,7 @@ require (
 	golang.org/x/xerrors v0.0.0-20220907171357-04be3eba64a2 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 	gotest.tools/v3 v3.5.1
-	kcl-lang.io/lib v0.7.7 // indirect
+	kcl-lang.io/lib v0.7.8 // indirect
 	oras.land/oras-go v1.2.3 // indirect
 	oras.land/oras-go/v2 v2.3.0 // indirect
 )
