@@ -153,6 +153,6 @@ func TestRunPkg(t *testing.T) {
 	assert.Equal(t, err, nil)
 	resStr := strings.ReplaceAll(buf.String(), "\r\n", "")
 	resStr = strings.ReplaceAll(resStr, "\n", "")
-	
+
 	assert.Equal(t, resStr, "The_first_kcl_program: Hello World!")
 }
