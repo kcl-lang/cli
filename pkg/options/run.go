@@ -15,6 +15,7 @@ import (
 	"kcl-lang.io/kcl-go/pkg/kcl"
 	"kcl-lang.io/kpm/pkg/api"
 	"kcl-lang.io/kpm/pkg/client"
+	"kcl-lang.io/kpm/pkg/git"
 	"kcl-lang.io/kpm/pkg/opt"
 	pkg "kcl-lang.io/kpm/pkg/package"
 	"kcl-lang.io/kpm/pkg/runner"
@@ -154,6 +155,10 @@ func (o *RunOptions) Run() error {
 			// kcl compiles the package from the kcl package tar.
 			opts.SetEntries([]string{})
 			result, err = cli.CompileTarPkg(entry.PackageSource(), opts)
+		} else if entry.IsGit() {
+			gitOpts := git.NewCloneOptions(entry.PackageSource(), "", o.Tag, "", "", nil)
+			// 'kpm run' compile the package from the git url
+			result, err = cli.CompileGitPkg(gitOpts, opts)
 		} else if entry.IsUrl() {
 			// kcl compiles the package from the OCI reference or url.
 			opts.SetEntries([]string{})
