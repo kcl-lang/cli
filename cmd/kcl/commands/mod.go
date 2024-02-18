@@ -20,7 +20,10 @@ const (
   kcl mod pull k8s
 
   # Push the module
-  kcl mod push`
+  kcl mod push
+  
+  # Print the current module dependency graph.
+  kcl mod graph`
 )
 
 var (
@@ -61,6 +64,7 @@ func NewModCmd() *cobra.Command {
 	cmd.AddCommand(NewModPushCmd(cli))
 	cmd.AddCommand(NewModPullCmd(cli))
 	cmd.AddCommand(NewModUpdateCmd(cli))
+	cmd.AddCommand(NewModGraphCmd(cli))
 
 	return cmd
 }
