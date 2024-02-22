@@ -1325,8 +1325,8 @@ k8s.io/utils v0.0.0-20210802155522-efc7438f0176/go.mod h1:jPW/WVKK9YHAvNhRxK0md/
 k8s.io/utils v0.0.0-20220210201930-3a6ce19ff2f9/go.mod h1:jPW/WVKK9YHAvNhRxK0md/EJ228hCsBRufyofKtW8HA=
 k8s.io/utils v0.0.0-20230406110748-d93618cff8a2 h1:qY1Ad8PODbnymg2pRbkyMT/ylpTrCM8P2RJ0yroCyIk=
 k8s.io/utils v0.0.0-20230406110748-d93618cff8a2/go.mod h1:OLgZIPagt7ERELqWJFomSt595RzquPNLL48iOWgYOg0=
-kcl-lang.io/kcl-go v0.8.0-alpha.1 h1:T02YoAs2MobKXDozjwVTcAC8hKMKhfSlh4NFlcsXm30=
-kcl-lang.io/kcl-go v0.8.0-alpha.1/go.mod h1:SCaK7BEK9158VWzIX1X8rVqCstmB/aKQdOD+GYjtW9E=
+kcl-lang.io/kcl-go v0.8.0-alpha.1.0.20240222103725-9868c9e39e75 h1:OTCg+G1OMC/qGZvC0+mAOVDiMbTye0Z5uqWaLhmKprY=
+kcl-lang.io/kcl-go v0.8.0-alpha.1.0.20240222103725-9868c9e39e75/go.mod h1:SCaK7BEK9158VWzIX1X8rVqCstmB/aKQdOD+GYjtW9E=
 kcl-lang.io/kcl-openapi v0.5.5 h1:6LSbiy53nczagm7Ohgdy1DVgQ+5ffMihsOUY7PGkbh0=
 kcl-lang.io/kcl-openapi v0.5.5/go.mod h1:Ai9mFztCVKkRSFabczO/r5hCNdqaNtAc2ZIRxTeV0Mk=
 kcl-lang.io/kcl-playground v0.5.1 h1:MKQQUHgt4+2QyU2NVwa73oksOaBJGDi4keGoggA0MiU=

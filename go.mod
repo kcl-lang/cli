@@ -5,7 +5,7 @@ go 1.21
 require (
 	github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d
 	github.com/spf13/cobra v1.8.0
-	kcl-lang.io/kcl-go v0.8.0-alpha.1
+	kcl-lang.io/kcl-go v0.8.0-alpha.1.0.20240222103725-9868c9e39e75
 	kcl-lang.io/kcl-openapi v0.5.5
 	kcl-lang.io/kcl-playground v0.5.1
 	kcl-lang.io/kpm v0.7.1-0.20240218044217-0224b99dc9f7
