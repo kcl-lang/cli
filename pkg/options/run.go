@@ -152,15 +152,16 @@ func (o *RunOptions) Run() error {
 			}
 			result, err = cli.CompileWithOpts(opts)
 		} else if entry.IsTar() {
-			// kcl compiles the package from the kcl package tar.
+			// compiles the package from the kcl package tar.
 			opts.SetEntries([]string{})
 			result, err = cli.CompileTarPkg(entry.PackageSource(), opts)
 		} else if entry.IsGit() {
+			opts.SetEntries([]string{})
 			gitOpts := git.NewCloneOptions(entry.PackageSource(), "", o.Tag, "", "", nil)
-			// 'kpm run' compile the package from the git url
+			// compiles the package from the git url
 			result, err = cli.CompileGitPkg(gitOpts, opts)
 		} else if entry.IsUrl() {
-			// kcl compiles the package from the OCI reference or url.
+			// compiles the package from the OCI reference or url.
 			opts.SetEntries([]string{})
 			result, err = cli.CompileOciPkg(entry.PackageSource(), o.Tag, opts)
 		} else {

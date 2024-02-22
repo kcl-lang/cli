@@ -24,6 +24,9 @@ For example, 'kcl run path/to/kcl.k' will run the file named path/to/kcl.k
   # Run OCI packages
   kcl run oci://ghcr.io/kcl-lang/hello-world
   
+  # Run remote Git repo
+  kcl run https://github.com/kcl-lang/flask-demo-kcl-manifests
+
   # Run the current package
   kcl run`
 )
