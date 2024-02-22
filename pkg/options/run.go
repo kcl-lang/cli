@@ -49,6 +49,8 @@ type RunOptions struct {
 	Vendor bool
 	// SortKeys denotes sorting the output result keys, e.g., `{b = 1, a = 2} => {a = 2, b = 1}`.
 	SortKeys bool
+	// ShowHidden denotes output the hidden attribute in the result.
+	ShowHidden bool
 	// DisableNone denotes running kcl and disable dumping None values.
 	DisableNone bool
 	// Debug denotes running kcl in debug mode.
@@ -280,6 +282,9 @@ func CompileOptionFromCli(o *RunOptions) *opt.CompileOptions {
 
 	// --sort_keys, -k
 	opts.Merge(kcl.WithSortKeys(o.SortKeys))
+
+	// --show_hidden, -H
+	opts.Merge(kcl.WithShowHidden(o.ShowHidden))
 
 	// --strict_range_check, -r
 	opts.StrictRangeCheck = o.StrictRangeCheck

@@ -20,6 +20,8 @@ func appendLangFlags(o *options.RunOptions, flags *pflag.FlagSet) {
 		"Run in debug mode")
 	flags.BoolVarP(&o.SortKeys, "sort_keys", "k", false,
 		"Sort output result keys")
+	flags.BoolVarP(&o.ShowHidden, "show_hidden", "H", false,
+		"Display hidden attributes")
 	appendRunnerFlags(o, flags)
 }
 

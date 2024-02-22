@@ -4,7 +4,7 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
-	runtime "kcl-lang.io/kcl-go/pkg/kclvm_runtime"
+	"kcl-lang.io/kcl-go/pkg/runtime"
 	"kcl-lang.io/kcl-go/pkg/service"
 )
 
