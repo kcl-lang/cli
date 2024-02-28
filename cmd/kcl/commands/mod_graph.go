@@ -71,7 +71,7 @@ func ModGraph(cli *client.KpmClient, args []string) error {
 		return err
 	}
 
-	depGraph, err := cli.GetDependencyGraph(kclPkg)
+	_, depGraph, err := cli.InitGraphAndDownloadDeps(kclPkg)
 	if err != nil {
 		return err
 	}
