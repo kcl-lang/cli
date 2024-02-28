@@ -8,7 +8,7 @@ require (
 	kcl-lang.io/kcl-go v0.8.0-alpha.1.0.20240226075641-82bc1e0436cc
 	kcl-lang.io/kcl-openapi v0.5.5
 	kcl-lang.io/kcl-playground v0.5.1
-	kcl-lang.io/kpm v0.7.1-0.20240218044217-0224b99dc9f7
+	kcl-lang.io/kpm v0.7.1-0.20240228025732-53aece1beb1c
 )
 
 require google.golang.org/genproto/googleapis/rpc v0.0.0-20240123012728-ef4313101c80 // indirect
