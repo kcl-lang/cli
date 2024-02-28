@@ -5,10 +5,10 @@ go 1.21
 require (
 	github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d
 	github.com/spf13/cobra v1.8.0
-	kcl-lang.io/kcl-go v0.8.0-alpha.1.0.20240226075641-82bc1e0436cc
+	kcl-lang.io/kcl-go v0.8.0-beta.1
 	kcl-lang.io/kcl-openapi v0.5.5
 	kcl-lang.io/kcl-playground v0.5.1
-	kcl-lang.io/kpm v0.7.1-0.20240228025732-53aece1beb1c
+	kcl-lang.io/kpm v0.8.0-beta.1
 )
 
 require google.golang.org/genproto/googleapis/rpc v0.0.0-20240123012728-ef4313101c80 // indirect
@@ -146,7 +146,7 @@ require (
 	k8s.io/klog/v2 v2.100.1 // indirect
 	k8s.io/kube-openapi v0.0.0-20230717233707-2695361300d9 // indirect
 	k8s.io/utils v0.0.0-20230406110748-d93618cff8a2 // indirect
-	kcl-lang.io/lib v0.8.0-alpha.3 // indirect
+	kcl-lang.io/lib v0.8.0-beta.1 // indirect
 	oras.land/oras-go v1.2.3 // indirect
 	oras.land/oras-go/v2 v2.3.0 // indirect
 	sigs.k8s.io/json v0.0.0-20221116044647-bc3834ca7abd // indirect
