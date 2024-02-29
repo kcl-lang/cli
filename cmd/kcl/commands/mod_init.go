@@ -35,7 +35,7 @@ func NewModInitCmd(cli *client.KpmClient) *cobra.Command {
 			pwd, err := os.Getwd()
 
 			if err != nil {
-				reporter.Fatal("kpm: internal bugs, please contact us to fix it")
+				reporter.Fatal("internal bugs, please contact us to fix it")
 			}
 
 			var pkgName string
@@ -83,7 +83,7 @@ func NewModInitCmd(cli *client.KpmClient) *cobra.Command {
 				return err
 			}
 
-			reporter.ReportMsgTo(fmt.Sprintf("kpm: package '%s' init finished", pkgName), cli.GetLogWriter())
+			reporter.ReportMsgTo(fmt.Sprintf("package '%s' init finished", pkgName), cli.GetLogWriter())
 			return nil
 		},
 		SilenceUsage: true,

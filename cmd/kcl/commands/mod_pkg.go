@@ -45,13 +45,13 @@ func NewModPkgCmd(cli *client.KpmClient) *cobra.Command {
 			pwd, err := os.Getwd()
 
 			if err != nil {
-				reporter.ExitWithReport("kpm: internal bug: failed to load working directory")
+				reporter.ExitWithReport("internal bug: failed to load working directory")
 			}
 
 			kclPkg, err := pkg.LoadKclPkg(pwd)
 
 			if err != nil {
-				reporter.ExitWithReport("kpm: failed to load package in " + pwd + ".")
+				reporter.ExitWithReport("failed to load package in " + pwd + ".")
 				return err
 			}
 

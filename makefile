@@ -82,3 +82,11 @@ release: lint dist
 .PHONY: tag
 tag:
 	scripts/tag.sh v$(VERSION)
+
+.PHONY: e2e
+e2e: ## Run e2e test
+	scripts/e2e/e2e.sh
+
+.PHONY: e2e-init
+e2e-init:
+	scripts/e2e/e2e-init.sh $(TS)

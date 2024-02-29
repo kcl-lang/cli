@@ -1,0 +1,3 @@
+start to pull 'helloworld:0.1.1'
+pulling 'test/helloworld:0.1.1' from 'localhost:5001/test/helloworld'
+pulled 'helloworld:0.1.1' in '<workspace>/test_space/localhost:5001/test/helloworld/0.1.1' successfully

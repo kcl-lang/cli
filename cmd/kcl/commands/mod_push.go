@@ -174,7 +174,7 @@ func pushPackage(ociUrl string, kclPkg *pkg.KclPkg, vendorMode bool, cli *client
 		return err
 	}
 
-	reporter.ReportMsgTo(fmt.Sprintf("kpm: package '%s' will be pushed", kclPkg.GetPkgName()), cli.GetLogWriter())
+	reporter.ReportMsgTo(fmt.Sprintf("package '%s' will be pushed", kclPkg.GetPkgName()), cli.GetLogWriter())
 	// 4. Push it.
 	err = cli.PushToOci(tarPath, ociOpts)
 	if err != (*reporter.KpmEvent)(nil) {

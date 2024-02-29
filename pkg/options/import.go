@@ -92,7 +92,7 @@ func (o *ImportOptions) Run() error {
 		}
 		return nil
 	default:
-		return fmt.Errorf("kpm: invalid mode: %s", o.Mode)
+		return fmt.Errorf("invalid mode: %s", o.Mode)
 	}
 
 	if o.Output == "-" {
