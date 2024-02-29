@@ -1,0 +1,7 @@
+creating new :<workspace>/test_space/kcl.mod
+'<workspace>/test_space/kcl.mod' already exists
+creating new :<workspace>/test_space/kcl.mod.lock
+'<workspace>/test_space/kcl.mod.lock' already exists
+creating new :<workspace>/test_space/main.k
+'<workspace>/test_space/main.k' already exists
+package 'test_space' init finished
