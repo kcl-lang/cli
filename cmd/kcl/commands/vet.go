@@ -3,12 +3,15 @@
 package cmd
 
 import (
+	"errors"
 	"fmt"
 	"io"
 	"os"
 
 	"github.com/spf13/cobra"
 	"kcl-lang.io/cli/pkg/fs"
+	"kcl-lang.io/kcl-go/pkg/service"
+	"kcl-lang.io/kcl-go/pkg/spec/gpyrpc"
 	"kcl-lang.io/kcl-go/pkg/tools/validate"
 )
 
@@ -76,7 +79,7 @@ func doValidate(dataFile, codeFile string, o *validate.ValidateOptions) error {
 			return err
 		}
 		for _, dataFile := range dataFiles {
-			ok, err = validate.Validate(dataFile, codeFile, o)
+			ok, err = validateFile(dataFile, codeFile, o)
 			if err != nil {
 				return err
 			}
@@ -86,4 +89,26 @@ func doValidate(dataFile, codeFile string, o *validate.ValidateOptions) error {
 		fmt.Println("Validate success!")
 	}
 	return nil
+}
+
+func validateFile(dataFile, codeFile string, opts *validate.ValidateOptions) (ok bool, err error) {
+	if opts == nil {
+		opts = &validate.ValidateOptions{}
+	}
+	client := service.NewKclvmServiceClient()
+	resp, err := client.ValidateCode(&gpyrpc.ValidateCode_Args{
+		Datafile:      dataFile,
+		File:          codeFile,
+		Schema:        opts.Schema,
+		AttributeName: opts.AttributeName,
+		Format:        opts.Format,
+	})
+	if err != nil {
+		return false, err
+	}
+	var e error = nil
+	if resp.ErrMessage != "" {
+		e = errors.New(resp.ErrMessage)
+	}
+	return resp.Success, e
 }

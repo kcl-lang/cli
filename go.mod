@@ -7,10 +7,10 @@ require (
 	github.com/onsi/ginkgo/v2 v2.15.0
 	github.com/onsi/gomega v1.30.0
 	github.com/spf13/cobra v1.8.0
-	kcl-lang.io/kcl-go v0.8.0-beta.1
+	kcl-lang.io/kcl-go v0.8.0
 	kcl-lang.io/kcl-openapi v0.5.5
 	kcl-lang.io/kcl-playground v0.5.1
-	kcl-lang.io/kpm v0.8.0-beta.1
+	kcl-lang.io/kpm v0.8.0
 )
 
 require (
@@ -160,7 +160,7 @@ require (
 	k8s.io/klog/v2 v2.100.1 // indirect
 	k8s.io/kube-openapi v0.0.0-20230717233707-2695361300d9 // indirect
 	k8s.io/utils v0.0.0-20230406110748-d93618cff8a2 // indirect
-	kcl-lang.io/lib v0.8.0-beta.1 // indirect
+	kcl-lang.io/lib v0.8.0 // indirect
 	oras.land/oras-go v1.2.3 // indirect
 	oras.land/oras-go/v2 v2.3.0 // indirect
 	sigs.k8s.io/json v0.0.0-20221116044647-bc3834ca7abd // indirect
