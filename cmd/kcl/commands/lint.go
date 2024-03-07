@@ -30,7 +30,7 @@ func NewLintCmd() *cobra.Command {
 	o := options.NewRunOptions()
 	cmd := &cobra.Command{
 		Use:     "lint",
-		Short:   "Run KCL codes.",
+		Short:   "Lint KCL codes.",
 		Long:    lintDesc,
 		Example: lintExample,
 		RunE: func(_ *cobra.Command, args []string) error {

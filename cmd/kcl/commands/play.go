@@ -21,8 +21,7 @@ const (
   kcl play --addr 127.0.0.1:80 --open
 
   # Only listen the address and do not open the the browser.
-  kcl play
-  `
+  kcl play`
 )
 
 var (
