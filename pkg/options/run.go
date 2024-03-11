@@ -274,6 +274,11 @@ func CompileOptionFromCli(o *RunOptions) *opt.CompileOptions {
 		opts.Merge(kcl.WithSelectors(o.PathSelectors...))
 	}
 
+	// --debug, -d
+	if o.Debug {
+		opts.Debug = 1
+	}
+
 	// --disable_none, -n
 	opts.Merge(kcl.WithDisableNone(o.DisableNone))
 
