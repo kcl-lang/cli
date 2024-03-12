@@ -6,9 +6,9 @@ import (
 	"path/filepath"
 
 	"github.com/spf13/cobra"
+	"kcl-lang.io/cli/pkg/options"
 	"kcl-lang.io/kpm/pkg/client"
 	"kcl-lang.io/kpm/pkg/env"
-	"kcl-lang.io/kpm/pkg/opt"
 	pkg "kcl-lang.io/kpm/pkg/package"
 	"kcl-lang.io/kpm/pkg/reporter"
 )
@@ -54,7 +54,7 @@ func NewModInitCmd(cli *client.KpmClient) *cobra.Command {
 				}
 			}
 
-			initOpts := opt.InitOptions{
+			initOpts := options.ModInitOptions{
 				Name:     pkgName,
 				InitPath: pkgRootPath,
 			}
