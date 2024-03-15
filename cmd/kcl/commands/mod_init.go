@@ -21,11 +21,15 @@ const (
   kcl mod init
   
   # Init one kcl module with the name
-  kcl mod init package-name`
+  kcl mod init package-name
+
+  # Init one kcl module with the name and version
+  kcl mod init package-name --version 0.1.0`
 )
 
 // NewModInitCmd returns the mod init command.
 func NewModInitCmd(cli *client.KpmClient) *cobra.Command {
+	initOpts := opt.InitOptions{}
 	cmd := &cobra.Command{
 		Use:     "init",
 		Short:   "initialize new module in current directory",
@@ -54,10 +58,8 @@ func NewModInitCmd(cli *client.KpmClient) *cobra.Command {
 				}
 			}
 
-			initOpts := opt.InitOptions{
-				Name:     pkgName,
-				InitPath: pkgRootPath,
-			}
+			initOpts.Name = pkgName
+			initOpts.InitPath = pkgRootPath
 
 			err = initOpts.Validate()
 			if err != nil {
@@ -88,6 +90,8 @@ func NewModInitCmd(cli *client.KpmClient) *cobra.Command {
 		},
 		SilenceUsage: true,
 	}
+
+	cmd.Flags().StringVar(&initOpts.Version, "version", "", "init module version")
 
 	return cmd
 }
