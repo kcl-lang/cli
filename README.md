@@ -15,6 +15,8 @@
 </p>
 
 ## Introduction
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fkcl-lang%2Fcli.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fkcl-lang%2Fcli?ref=badge_shield)
+
 
 `kcl` is a command-line interface that includes language core features, IDE features, package management tools, community integration, and other tools. It now integrates the following tools:
 
@@ -99,3 +101,7 @@ kcl run ./examples/kubernetes.k
 ## Learn More
 
 - [KCL Website](https://kcl-lang.io)
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fkcl-lang%2Fcli.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fkcl-lang%2Fcli?ref=badge_large)
