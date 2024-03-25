@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d
-	github.com/onsi/ginkgo/v2 v2.16.0
+	github.com/onsi/ginkgo/v2 v2.17.1
 	github.com/onsi/gomega v1.30.0
 	github.com/spf13/cobra v1.8.0
 	kcl-lang.io/kcl-go v0.8.2-0.20240318062820-ee6c53ee4781
