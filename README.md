@@ -79,6 +79,12 @@ You can also get `kcl` from the [github release](https://github.com/kcl-lang/cli
 export PATH=$KCL_CLI_INSTALLATION_PATH:$PATH  
 ```
 
+### Docker
+
+```shell
+docker run -it kcllang/kcl
+```
+
 ### Build from Source Code
 
 ```shell
