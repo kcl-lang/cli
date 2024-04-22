@@ -14,6 +14,6 @@ RUN apt-get update
 RUN apt-get install gcc git -y
 # The reason for doing this below is to prevent the
 # container from not having write permissions.
-ENV KCL_GO_DISABLE_ARTIFACT=on
+ENV KCL_GO_DISABLE_INSTALL_ARTIFACT=true
 ENV KCL_PKG_PATH=/tmp
 ENV KCL_CACHE_PATH=/tmp
