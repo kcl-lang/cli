@@ -17,10 +17,10 @@ For example, 'kcl lint path/to/kcl.k' will lint the file named path/to/kcl.k
 
   # Lint multiple files
   kcl lint path/to/kcl1.k path/to/kcl2.k
-  
+
   # Lint OCI packages
   kcl lint oci://ghcr.io/kcl-lang/helloworld
-  
+
   # Lint the current package
   kcl lint`
 )
