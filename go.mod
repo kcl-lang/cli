@@ -7,7 +7,7 @@ require (
 	github.com/onsi/ginkgo/v2 v2.17.1
 	github.com/onsi/gomega v1.30.0
 	github.com/spf13/cobra v1.8.0
-	kcl-lang.io/kcl-go v0.8.5
+	kcl-lang.io/kcl-go v0.8.6-0.20240429200928-7db8b504239b
 	kcl-lang.io/kcl-openapi v0.6.1
 	kcl-lang.io/kcl-playground v0.5.1
 	kcl-lang.io/kpm v0.8.5

@@ -54,7 +54,7 @@ spec:
 	var buf2 bytes.Buffer
 	options.Writer = &buf2
 	options.Format = Json
-	options.SortKeys = false
+	options.SortKeys = true
 
 	err = options.Run()
 	if err != nil {
