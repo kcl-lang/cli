@@ -3,6 +3,8 @@
 package options
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"io"
 	"os"
@@ -205,12 +207,12 @@ func (o *RunOptions) writeResult(result *kcl.KCLResultList) error {
 	}
 	var output []byte
 	if strings.ToLower(o.Format) == Json {
-		// If we have multiple result, output the JSON array format, else output the single JSON object.
-		if result.Len() > 1 {
-			output = []byte(result.GetRawJsonResult() + "\n")
-		} else {
-			output = []byte(result.First().JSONString() + "\n")
+		var out bytes.Buffer
+		err := json.Indent(&out, []byte(result.GetRawJsonResult()), "", "    ")
+		if err != nil {
+			return err
 		}
+		output = []byte(out.String() + "\n")
 	} else {
 		// Both considering the raw YAML format and the YAML stream format that contains the `---` separator.
 		output = []byte(result.GetRawYamlResult() + "\n")
