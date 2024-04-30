@@ -118,13 +118,22 @@ func (o *RunOptions) Run() error {
 			opts.SetPkgPath(pwd)
 			result, err = cli.CompileWithOpts(opts)
 		} else {
-			// If there is only kcl file without kcl package (kcl.mod)
+			// TODO: refactor the entry search logic.
+			depsOpt, depErr := LoadDepsFrom(pwd, o.Quiet)
+			if depErr != nil {
+				return err
+			}
+			opts.Merge(*depsOpt)
 			result, err = api.RunWithOpt(opts)
 		}
 	} else {
 		// kcl compiles the package from the local file system, tar and OCI package, etc.
 		if entry.IsLocalFile() {
-			// If there is only kcl file without kcl package (kcl.mod)
+			depsOpt, depErr := LoadDepsFrom(pwd, o.Quiet)
+			if depErr != nil {
+				return err
+			}
+			opts.Merge(*depsOpt)
 			result, err = api.RunWithOpt(opts)
 		} else if entry.IsLocalFileWithKclMod() {
 			// Else compile the kcl package (kcl.mod)
