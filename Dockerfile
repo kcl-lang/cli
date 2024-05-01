@@ -17,3 +17,8 @@ RUN apt-get install gcc git -y
 ENV KCL_GO_DISABLE_INSTALL_ARTIFACT=true
 ENV KCL_PKG_PATH=/tmp
 ENV KCL_CACHE_PATH=/tmp
+
+# Install the tini
+ENV TINI_VERSION v0.19.0
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
+RUN chmod +x /tini
