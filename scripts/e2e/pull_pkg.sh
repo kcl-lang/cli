@@ -17,8 +17,8 @@ if [ ! -d "./ghcr.io/kcl-lang/k8s/1.28" ]; then
   $current_dir/bin/kcl mod pull k8s:1.28
 fi
 
-if [ ! -d "./ghcr.io/kcl-lang/helloworld" ]; then
-  $current_dir/bin/kcl mod pull helloworld
+if [ ! -d "./ghcr.io/kcl-lang/helloworld/0.1.1" ]; then
+  $current_dir/bin/kcl mod pull helloworld:0.1.1
 fi
 
 cd "$current_dir"
