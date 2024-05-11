@@ -1,9 +1,9 @@
-FROM golang:1.21 AS build
+FROM --platform=${BUILDPLATFORM} golang:1.21 AS build
 COPY / /src
 WORKDIR /src
 RUN --mount=type=cache,target=/go/pkg --mount=type=cache,target=/root/.cache/go-build make build
 
-FROM ubuntu:22.04 AS base
+FROM --platform=${BUILDPLATFORM} ubuntu:22.04 AS base
 ENV LANG=en_US.utf8
 
 FROM base
