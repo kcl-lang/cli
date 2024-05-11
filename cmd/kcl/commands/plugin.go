@@ -57,7 +57,7 @@ func bootstrapCmdPlugin(cmd *cobra.Command, pluginHandler plugin.PluginHandler) 
 			}
 			switch cmdName {
 			// Don't search for a plugin
-			case "help", cobra.ShellCompRequestCmd, cobra.ShellCompNoDescRequestCmd:
+			case "help", "completion", cobra.ShellCompRequestCmd, cobra.ShellCompNoDescRequestCmd:
 			default:
 				if !builtinSubCmdExist {
 					if err := plugin.HandlePluginCommand(pluginHandler, cmdPathPieces, false); err != nil {
