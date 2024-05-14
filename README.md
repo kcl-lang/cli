@@ -85,6 +85,12 @@ export PATH=$KCL_CLI_INSTALLATION_PATH:$PATH
 docker run -it kcllang/kcl
 ```
 
+### Docker for arm64
+
+```shell
+docker run -it kcllang/kcl-arm64
+```
+
 ### Build from Source Code
 
 ```shell

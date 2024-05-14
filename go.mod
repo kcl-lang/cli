@@ -7,10 +7,10 @@ require (
 	github.com/onsi/ginkgo/v2 v2.17.3
 	github.com/onsi/gomega v1.33.1
 	github.com/spf13/cobra v1.8.0
-	kcl-lang.io/kcl-go v0.8.7
+	kcl-lang.io/kcl-go v0.9.0-alpha.1
 	kcl-lang.io/kcl-openapi v0.6.1
 	kcl-lang.io/kcl-playground v0.5.1
-	kcl-lang.io/kpm v0.8.6
+	kcl-lang.io/kpm v0.8.7-0.20240511160903-faa726d7169b
 )
 
 require (
@@ -178,7 +178,7 @@ require (
 	golang.org/x/tools v0.20.0 // indirect
 	golang.org/x/xerrors v0.0.0-20220907171357-04be3eba64a2 // indirect
 	google.golang.org/grpc v1.63.2 // indirect
-	google.golang.org/protobuf v1.34.0 // indirect
+	google.golang.org/protobuf v1.34.1 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
@@ -191,7 +191,7 @@ require (
 	k8s.io/klog/v2 v2.100.1 // indirect
 	k8s.io/kube-openapi v0.0.0-20230717233707-2695361300d9 // indirect
 	k8s.io/utils v0.0.0-20230406110748-d93618cff8a2 // indirect
-	kcl-lang.io/lib v0.8.7 // indirect
+	kcl-lang.io/lib v0.9.0-alpha.1.0.20240513115021-7408627a80ec // indirect
 	oras.land/oras-go v1.2.3 // indirect
 	oras.land/oras-go/v2 v2.3.0 // indirect
 	sigs.k8s.io/json v0.0.0-20221116044647-bc3834ca7abd // indirect
