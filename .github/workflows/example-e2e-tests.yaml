@@ -22,6 +22,9 @@ jobs:
         shell: bash -ieo pipefail {0}
         run: PATH=$PATH:$HOME/go/bin ./examples/test.sh
 
+      - name: run concurrent e2e
+        run: PATH=$PATH:$HOME/go/bin ./scripts/concurrent_test.sh
+
   macos:
     strategy:
       matrix:
@@ -42,6 +45,9 @@ jobs:
       - name: Example tests
         shell: bash -ieo pipefail {0}
         run: PATH=$PATH:$HOME/go/bin ./examples/test.sh
+
+      - name: run concurrent e2e
+        run: PATH=$PATH:$HOME/go/bin ./scripts/concurrent_test.sh
 
   windows:
     runs-on: windows-latest

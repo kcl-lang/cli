@@ -14,10 +14,12 @@ RUN apt-get update
 RUN apt-get install gcc git -y
 # The reason for doing this below is to prevent the
 # container from not having write permissions.
-ENV KCL_GO_DISABLE_INSTALL_ARTIFACT=true
 ENV KCL_PKG_PATH=/tmp
 ENV KCL_CACHE_PATH=/tmp
-
+# In the image, we can generate a runtime in advance to
+# avoid writing files in the image
+ENV KCL_GO_DISABLE_INSTALL_ARTIFACT=true
+ENV KCL_GO_DISABLE_ARTIFACT_IN_PATH=false
 # Install the tini
 ENV TINI_VERSION v0.19.0
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
