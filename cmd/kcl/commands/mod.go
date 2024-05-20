@@ -27,13 +27,15 @@ const (
 )
 
 var (
-	quiet  bool
-	vendor bool
-	update bool
-	git    string
-	tag    string
-	commit string
-	target string
+	quiet      bool
+	vendor     bool
+	update     bool
+	git        string
+	tag        string
+	commit     string
+	target     string
+	rename     string
+	noSumCheck bool
 )
 
 // NewModCmd returns the mod command.
