@@ -6,6 +6,7 @@ import (
 
 	"github.com/dominikbraun/graph"
 	"github.com/spf13/cobra"
+	"golang.org/x/mod/module"
 	"kcl-lang.io/kpm/pkg/client"
 	"kcl-lang.io/kpm/pkg/env"
 	pkg "kcl-lang.io/kpm/pkg/package"
@@ -82,11 +83,11 @@ func ModGraph(cli *client.KpmClient, args []string) error {
 	}
 
 	// Print the dependency graph to stdout.
-	root := fmt.Sprintf("%s@%s", kclPkg.GetPkgName(), kclPkg.GetPkgVersion())
-	err = graph.BFS(depGraph, root, func(source string) bool {
+	root := module.Version{Path: kclPkg.GetPkgName(), Version: kclPkg.GetPkgVersion()}
+	err = graph.BFS(depGraph, root, func(source module.Version) bool {
 		for target := range adjMap[source] {
 			reporter.ReportMsgTo(
-				fmt.Sprint(source, " ", target),
+				fmt.Sprint(format(source), " ", format(target)),
 				cli.GetLogWriter(),
 			)
 		}
@@ -96,4 +97,12 @@ func ModGraph(cli *client.KpmClient, args []string) error {
 		return err
 	}
 	return nil
+}
+
+func format(m module.Version) string {
+	formattedMsg := m.Path
+	if m.Version != "" {
+		formattedMsg += "@" + m.Version
+	}
+	return formattedMsg
 }
