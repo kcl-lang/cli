@@ -47,8 +47,9 @@ func NewModAddCmd(cli *client.KpmClient) *cobra.Command {
 	cmd.Flags().StringVar(&git, "git", "", "git repository location")
 	cmd.Flags().StringVar(&tag, "tag", "", "git repository tag")
 	cmd.Flags().StringVar(&commit, "commit", "", "git repository commit")
+	cmd.Flags().StringVar(&rename, "rename", "", "rename the dependency")
 	cmd.Flags().BoolVarP(&quiet, "quiet", "q", false, "quiet (no output)")
-	cmd.Flags().BoolVar(&noSumCheck, "no_sum_check", false, "rename the dependency")
+	cmd.Flags().BoolVar(&noSumCheck, "no_sum_check", false, "do not check the checksum of the package and update kcl.mod.lock")
 
 	return cmd
 }
@@ -145,11 +146,15 @@ func parseAddOptions(cli *client.KpmClient, localPath string, args []string) (*o
 			return &opt.AddOptions{
 				LocalPath:    localPath,
 				RegistryOpts: *ociReg,
+				NoSumCheck:   noSumCheck,
+				NewPkgName:   rename,
 			}, nil
 		} else {
 			return &opt.AddOptions{
 				LocalPath:    localPath,
 				RegistryOpts: *localPkg,
+				NoSumCheck:   noSumCheck,
+				NewPkgName:   rename,
 			}, nil
 		}
 	}

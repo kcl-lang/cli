@@ -32,6 +32,9 @@ func NewModUpdateCmd(cli *client.KpmClient) *cobra.Command {
 		},
 		SilenceUsage: true,
 	}
+
+	cmd.Flags().BoolVar(&noSumCheck, "no_sum_check", false, "do not check the checksum of the package and update kcl.mod.lock")
+
 	return cmd
 }
 
@@ -45,7 +48,7 @@ func ModUpdate(cli *client.KpmClient, args []string) error {
 		}
 		pkgPath = pwd
 	}
-
+	cli.SetNoSumCheck(noSumCheck)
 	kclPkg, err := cli.LoadPkgFromPath(pkgPath)
 	if err != nil {
 		return err
