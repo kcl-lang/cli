@@ -1,7 +1,15 @@
 FROM --platform=${BUILDPLATFORM} golang:1.21 AS build
 COPY / /src
 WORKDIR /src
-RUN --mount=type=cache,target=/go/pkg --mount=type=cache,target=/root/.cache/go-build make build
+
+# The TARGETOS and TARGETARCH args are set by docker. We set GOOS and GOARCH to
+# these values to ask Go to compile a binary for these architectures. If
+# TARGETOS and TARGETOS are different from BUILDPLATFORM, Go will cross compile
+# for us (e.g. compile a linux/amd64 binary on a linux/arm64 build machine).
+ARG TARGETOS
+ARG TARGETARCH
+
+RUN --mount=type=cache,target=/go/pkg --mount=type=cache,target=/root/.cache/go-build GOOS=${TARGETOS} GOARCH=${TARGETARCH} make build
 
 FROM --platform=${BUILDPLATFORM} ubuntu:22.04 AS base
 ENV LANG=en_US.utf8
