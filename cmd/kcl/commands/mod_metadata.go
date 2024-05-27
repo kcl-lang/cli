@@ -8,7 +8,6 @@ import (
 	"kcl-lang.io/kpm/pkg/client"
 	"kcl-lang.io/kpm/pkg/env"
 	"kcl-lang.io/kpm/pkg/errors"
-	pkg "kcl-lang.io/kpm/pkg/package"
 	"kcl-lang.io/kpm/pkg/reporter"
 )
 
@@ -38,7 +37,8 @@ func NewModMetadataCmd(cli *client.KpmClient) *cobra.Command {
 				return errors.InternalBug
 			}
 
-			kclPkg, err := pkg.LoadKclPkg(pwd)
+			cli.SetLogWriter(nil)
+			kclPkg, err := cli.LoadPkgFromPath(pwd)
 			if err != nil {
 				return err
 			}

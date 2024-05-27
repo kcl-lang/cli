@@ -85,6 +85,9 @@ func (o *RunOptions) Run() error {
 	if err != nil {
 		return err
 	}
+	if o.Quiet {
+		cli.SetLogWriter(nil)
+	}
 	// acquire the lock of the package cache.
 	err = cli.AcquirePackageCacheLock()
 	if err != nil {
@@ -98,9 +101,6 @@ func (o *RunOptions) Run() error {
 		}
 	}()
 	opts := CompileOptionFromCli(o)
-	if o.Quiet {
-		cli.SetLogWriter(nil)
-	}
 	if err != nil {
 		return err
 	}
