@@ -33,6 +33,7 @@ var (
 	git        string
 	tag        string
 	commit     string
+	branch     string
 	target     string
 	rename     string
 	noSumCheck bool
