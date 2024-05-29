@@ -49,7 +49,6 @@ func NewModAddCmd(cli *client.KpmClient) *cobra.Command {
 	cmd.Flags().StringVar(&commit, "commit", "", "git repository commit")
 	cmd.Flags().StringVar(&branch, "branch", "", "git repository branch")
 	cmd.Flags().StringVar(&rename, "rename", "", "rename the dependency")
-	cmd.Flags().BoolVarP(&quiet, "quiet", "q", false, "quiet (no output)")
 	cmd.Flags().BoolVar(&noSumCheck, "no_sum_check", false, "do not check the checksum of the package and update kcl.mod.lock")
 
 	return cmd

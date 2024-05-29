@@ -31,7 +31,7 @@ func NewRegistryCmd() *cobra.Command {
 		SilenceUsage: true,
 	}
 
-	cmd.Flags().BoolVarP(&quiet, "quiet", "q", false, "quiet (no output)")
+	cmd.PersistentFlags().BoolVarP(&quiet, "quiet", "q", false, "Set the quiet mode (no output)")
 
 	reporter.InitReporter()
 	cli, err := client.NewKpmClient()
