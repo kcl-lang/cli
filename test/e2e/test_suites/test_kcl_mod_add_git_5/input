@@ -1,0 +1,1 @@
+kcl mod add --git git://github.com/kcl-lang/konfig --branch main
