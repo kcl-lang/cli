@@ -8,7 +8,7 @@ import (
 	"github.com/spf13/cobra"
 	"kcl-lang.io/kpm/pkg/client"
 	"kcl-lang.io/kpm/pkg/errors"
-	"kcl-lang.io/kpm/pkg/oci"
+	kpmoci "kcl-lang.io/kpm/pkg/oci"
 	"kcl-lang.io/kpm/pkg/opt"
 	pkg "kcl-lang.io/kpm/pkg/package"
 	"kcl-lang.io/kpm/pkg/reporter"
@@ -72,7 +72,7 @@ func genDefaultOciUrlForKclPkg(pkg *pkg.KclPkg, cli *client.KpmClient) (string, 
 	urlPath := utils.JoinPath(cli.GetSettings().DefaultOciRepo(), pkg.GetPkgName())
 
 	u := &url.URL{
-		Scheme: oci.OCI_SCHEME,
+		Scheme: kpmoci.OCI_SCHEME,
 		Host:   cli.GetSettings().DefaultOciRegistry(),
 		Path:   urlPath,
 	}
@@ -169,7 +169,7 @@ func pushPackage(ociUrl string, kclPkg *pkg.KclPkg, vendorMode bool, cli *client
 			"only support url scheme 'oci://'.",
 		)
 	}
-	ociOpts.Annotations, err = oci.GenOciManifestFromPkg(kclPkg)
+	ociOpts.Annotations, err = kpmoci.GenOciManifestFromPkg(kclPkg)
 	if err != nil {
 		return err
 	}

@@ -1,0 +1,1 @@
+kcl mod add --oci oci://localhost:5001/test/helloworld

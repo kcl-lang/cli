@@ -1,3 +1,2 @@
 adding dependency 'dep'
-downloading 'test/helloworld:0.1.1' from 'localhost:5001/test/helloworld:0.1.1'
 add dependency 'dep:0.0.1' successfully

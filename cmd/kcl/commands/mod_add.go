@@ -2,9 +2,9 @@ package cmd
 
 import (
 	"fmt"
+	"net/url"
 	"os"
 	"path/filepath"
-	"strings"
 
 	"github.com/spf13/cobra"
 	"kcl-lang.io/kpm/pkg/client"
@@ -24,11 +24,23 @@ const (
   # Add the module dependency named "k8s" with the version "1.28"
   kcl mod add k8s:1.28
 
-  # Add the module dependency from the GitHub
+  # Add the module dependency from the GitHub by git url
+  kcl mod add git://github.com/kcl-lang/konfig --tag v0.4.0
+
+  # Add the module dependency from the OCI Registry by oci url
+  kcl mod add oci://github.com/kcl-lang/konfig --tag v0.4.0
+
+  # Add the module dependency from the local file system by file url
+  kcl mod add /path/to/another_module
+
+  # Add the module dependency from the GitHub by flag
   kcl mod add --git https://github.com/kcl-lang/konfig --tag v0.4.0
 
-  # Add a local dependency
-  kcl mod add /path/to/another_module`
+  # Add the module dependency from the OCI Registry by flag
+  kcl mod add --oci https://ghcr.io/kcl-lang/helloworld --tag 0.1.0
+
+  # Add a local dependency by flag
+  kcl mod add --path /path/to/another_module`
 )
 
 // NewModAddCmd returns the mod add command.
@@ -45,7 +57,8 @@ func NewModAddCmd(cli *client.KpmClient) *cobra.Command {
 	}
 
 	cmd.Flags().StringVar(&git, "git", "", "git repository url")
-	cmd.Flags().StringVar(&tag, "tag", "", "git repository tag")
+	cmd.Flags().StringVar(&oci, "oci", "", "oci repository url")
+	cmd.Flags().StringVar(&tag, "tag", "", "git or oci repository tag")
 	cmd.Flags().StringVar(&commit, "commit", "", "git repository commit")
 	cmd.Flags().StringVar(&branch, "branch", "", "git repository branch")
 	cmd.Flags().StringVar(&rename, "rename", "", "rename the dependency")
@@ -122,31 +135,94 @@ func ModAdd(cli *client.KpmClient, args []string) error {
 
 // parseAddOptions will parse the user cli inputs.
 func parseAddOptions(cli *client.KpmClient, localPath string, args []string) (*opt.AddOptions, error) {
+	// parse the CLI command with the following style
+	// kcl mod add --git https://xxx/xxx --tag 0.0.1
+	// kcl mod add --oci https://xxx/xxx --tag 0.0.1
+	// kcl mod add --path /path/to/xxx
 	if len(args) == 0 {
-		return &opt.AddOptions{
-			LocalPath: localPath,
-			RegistryOpts: opt.RegistryOptions{
-				Git: &opt.GitOptions{
-					Url:    git,
-					Tag:    tag,
-					Commit: commit,
-					Branch: branch,
-				},
-			},
-			NoSumCheck: noSumCheck,
-			NewPkgName: rename,
-		}, nil
-	} else {
-		localPkg, err := parseLocalPathOptions(args)
-		if err != (*reporter.KpmEvent)(nil) {
-			// parse from 'kpm add xxx:0.0.1'.
-			ociReg, err := parseOciRegistryOptions(cli, args)
+		if len(git) != 0 {
+			gitUrl, err := url.Parse(git)
 			if err != nil {
 				return nil, err
 			}
+			gitOpt := opt.NewGitOptionsFromUrl(gitUrl)
+			if gitOpt == nil {
+				return nil, fmt.Errorf("invalid git url '%s'", git)
+			}
+
+			gitOpt.Tag = tag
+			gitOpt.Commit = commit
+			gitOpt.Branch = branch
+
 			return &opt.AddOptions{
 				LocalPath:    localPath,
-				RegistryOpts: *ociReg,
+				RegistryOpts: opt.RegistryOptions{Git: gitOpt},
+				NoSumCheck:   noSumCheck,
+				NewPkgName:   rename,
+			}, nil
+		} else if len(oci) != 0 {
+			ociUrl, err := url.Parse(oci)
+			if err != nil {
+				return nil, err
+			}
+			ociOpt := opt.NewOciOptionsFromUrl(ociUrl)
+			if ociOpt == nil {
+				return nil, fmt.Errorf("invalid oci url '%s'", oci)
+			}
+			ociOpt.Tag = tag
+
+			return &opt.AddOptions{
+				LocalPath:    localPath,
+				RegistryOpts: opt.RegistryOptions{Oci: ociOpt},
+				NoSumCheck:   noSumCheck,
+				NewPkgName:   rename,
+			}, nil
+		} else if len(path) != 0 {
+			pathUrl, err := url.Parse(path)
+			if err != nil {
+				return nil, err
+			}
+
+			pathOpt, err := opt.NewLocalOptionsFromUrl(pathUrl)
+			if err != (*reporter.KpmEvent)(nil) {
+				return nil, err
+			}
+
+			return &opt.AddOptions{
+				LocalPath:    localPath,
+				RegistryOpts: opt.RegistryOptions{Local: pathOpt},
+				NoSumCheck:   noSumCheck,
+				NewPkgName:   rename,
+			}, nil
+		}
+	} else {
+		// parse the CLI command with the following style
+		// kcl mod add k8s
+		// kcl mod add k8s:0.0.1
+		// kcl mod add /path/to/xxx
+		// kcl mod add https://xxx/xxx --tag 0.0.1
+		// kcl mod add oci://xxx/xxx --tag 0.0.1
+
+		localPkg, err := parseLocalPathOptions(args)
+		pkgSource := argsGet(args, 0)
+		if err != (*reporter.KpmEvent)(nil) {
+			// parse url and ref
+			regOpt, err := opt.NewRegistryOptionsFrom(pkgSource, cli.GetSettings())
+			if err != nil {
+				return nil, err
+			}
+
+			if regOpt.Git != nil {
+				regOpt.Git.Tag = tag
+				regOpt.Git.Commit = commit
+				regOpt.Git.Branch = branch
+			} else if regOpt.Oci != nil && len(tag) != 0 {
+				regOpt.Oci.Tag = tag
+			}
+
+			return &opt.AddOptions{
+				LocalPath:    localPath,
+				RegistryOpts: *regOpt,
 				NoSumCheck:   noSumCheck,
 				NewPkgName:   rename,
 			}, nil
@@ -159,24 +235,8 @@ func parseAddOptions(cli *client.KpmClient, localPath string, args []string) (*o
 			}, nil
 		}
 	}
-}
 
-// parseOciRegistryOptions will parse the oci registry information from user cli inputs.
-func parseOciRegistryOptions(cli *client.KpmClient, args []string) (*opt.RegistryOptions, error) {
-	ociPkgRef := argsGet(args, 0)
-	name, version, err := parseOciPkgNameAndVersion(ociPkgRef)
-	if err != nil {
-		return nil, err
-	}
-
-	return &opt.RegistryOptions{
-		Oci: &opt.OciOptions{
-			Reg:     cli.GetSettings().DefaultOciRegistry(),
-			Repo:    cli.GetSettings().DefaultOciRepo(),
-			PkgName: name,
-			Tag:     version,
-		},
-	}, nil
+	return nil, fmt.Errorf("invalid add options")
 }
 
 // parseLocalPathOptions will parse the local path information from user cli inputs.
@@ -195,23 +255,4 @@ func parseLocalPathOptions(args []string) (*opt.RegistryOptions, *reporter.KpmEv
 			},
 		}, nil
 	}
-}
-
-// parseOciPkgNameAndVersion will parse package name and version
-// from string "<pkg_name>:<pkg_version>".
-func parseOciPkgNameAndVersion(s string) (string, string, error) {
-	parts := strings.Split(s, ":")
-	if len(parts) == 1 {
-		return parts[0], "", nil
-	}
-
-	if len(parts) > 2 {
-		return "", "", reporter.NewErrorEvent(reporter.InvalidPkgRef, fmt.Errorf("invalid oci package reference '%s'", s))
-	}
-
-	if parts[1] == "" {
-		return "", "", reporter.NewErrorEvent(reporter.InvalidPkgRef, fmt.Errorf("invalid oci package reference '%s'", s))
-	}
-
-	return parts[0], parts[1], nil
 }

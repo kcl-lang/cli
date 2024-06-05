@@ -34,3 +34,7 @@ build/
 _kcl_test.k
 
 .DS_store
+
+# e2e test cases dir
+scripts/e2e/pkg_in_reg/*
+scripts/e2e/registry_auth/*

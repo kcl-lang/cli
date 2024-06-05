@@ -1,0 +1,1 @@
+kcl mod add --oci http://localhost:5001/test/helloworld --tag 0.1.1

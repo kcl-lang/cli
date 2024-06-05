@@ -17,7 +17,7 @@ $current_dir/bin/kcl mod push
 cd "$current_dir"
 
 # Push the package helloworld/0.1.1 to the registry
-cd ./scripts/pkg_in_reg/ghcr.io/kcl-lang/helloworld/0.1.1
+cd ./scripts/e2e/pkg_in_reg/ghcr.io/kcl-lang/helloworld/0.1.1
 $current_dir/bin/kcl mod push
 
 cd "$current_dir"

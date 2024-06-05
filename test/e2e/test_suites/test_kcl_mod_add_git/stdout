@@ -1,4 +1,1 @@
-adding dependency 'konfig'
-cloning 'https://github.com/kcl-lang/konfig' with tag 'v0.4.0'
-downloading 'test/k8s:1.28' from 'localhost:5001/test/k8s:1.28'
 add dependency 'konfig:v0.4.0' successfully

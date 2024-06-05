@@ -31,6 +31,8 @@ var (
 	vendor     bool
 	update     bool
 	git        string
+	oci        string
+	path       string
 	tag        string
 	commit     string
 	branch     string
