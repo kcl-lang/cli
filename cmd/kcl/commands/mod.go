@@ -43,24 +43,26 @@ var (
 
 // NewModCmd returns the mod command.
 func NewModCmd() *cobra.Command {
+	reporter.InitReporter()
+	cli, err := client.NewKpmClient()
+	if err != nil {
+		panic(err)
+	}
 	cmd := &cobra.Command{
 		Use:          "mod",
 		Short:        "KCL module management",
 		Long:         modDesc,
 		Example:      modExample,
 		SilenceUsage: true,
+		PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
+			if quiet {
+				cli.SetLogWriter(nil)
+			}
+			return nil
+		},
 	}
 
 	cmd.PersistentFlags().BoolVarP(&quiet, "quiet", "q", false, "Set the quiet mode (no output)")
-
-	reporter.InitReporter()
-	cli, err := client.NewKpmClient()
-	if err != nil {
-		panic(err)
-	}
-	if quiet {
-		cli.SetLogWriter(nil)
-	}
 
 	cmd.AddCommand(NewModInitCmd(cli))
 	cmd.AddCommand(NewModAddCmd(cli))
