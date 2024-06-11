@@ -101,6 +101,9 @@ func (o *RunOptions) Run() error {
 		}
 	}()
 	opts := CompileOptionFromCli(o)
+	if o.Quiet {
+		opts.SetLogWriter(nil)
+	}
 	if err != nil {
 		return err
 	}
