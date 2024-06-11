@@ -12,9 +12,12 @@ import (
 	"strings"
 
 	"github.com/acarl005/stripansi"
+	"github.com/goccy/go-yaml"
 	"github.com/pkg/errors"
 	"kcl-lang.io/cli/pkg/fs"
+	"kcl-lang.io/kcl-go/pkg/3rdparty/toml"
 	"kcl-lang.io/kcl-go/pkg/kcl"
+	"kcl-lang.io/kcl-go/pkg/tools/gen"
 	"kcl-lang.io/kpm/pkg/api"
 	"kcl-lang.io/kpm/pkg/client"
 	"kcl-lang.io/kpm/pkg/git"
@@ -202,8 +205,8 @@ func (o *RunOptions) Complete(args []string) error {
 
 // Validate validates the options.
 func (o *RunOptions) Validate() error {
-	if o.Format != "" && strings.ToLower(o.Format) != Json && strings.ToLower(o.Format) != Yaml {
-		return fmt.Errorf("invalid output format, expected %v, got %v", []string{Json, Yaml}, o.Format)
+	if o.Format != "" && strings.ToLower(o.Format) != Json && strings.ToLower(o.Format) != Yaml && strings.ToLower(o.Format) != Toml {
+		return fmt.Errorf("invalid output format, expected %v, got %v", []string{Json, Yaml, Toml}, o.Format)
 	}
 	for _, setting := range o.Settings {
 		if _, err := os.Stat(setting); err != nil {
@@ -225,6 +228,26 @@ func (o *RunOptions) writeResult(result *kcl.KCLResultList) error {
 			return err
 		}
 		output = []byte(out.String() + "\n")
+	} else if strings.ToLower(o.Format) == Toml {
+		var out []byte
+		var err error
+		if o.SortKeys {
+			yamlData := make(map[string]any)
+			if err := yaml.UnmarshalWithOptions([]byte(result.GetRawYamlResult()), &yamlData); err != nil {
+				return err
+			}
+			out, err = toml.Marshal(&yamlData)
+		} else {
+			yamlData := &yaml.MapSlice{}
+			if err := yaml.UnmarshalWithOptions([]byte(result.GetRawYamlResult()), yamlData, yaml.UseOrderedMap()); err != nil {
+				return err
+			}
+			out, err = gen.MarshalTOML(yamlData)
+		}
+		if err != nil {
+			return err
+		}
+		output = []byte(string(out) + "\n")
 	} else {
 		// Both considering the raw YAML format and the YAML stream format that contains the `---` separator.
 		output = []byte(result.GetRawYamlResult() + "\n")
