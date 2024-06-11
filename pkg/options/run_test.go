@@ -136,7 +136,7 @@ func TestRunOptions_Validate(t *testing.T) {
 	if err == nil {
 		t.Errorf("RunOptions.Validate() did not return an error")
 	} else {
-		expectedError := "invalid output format, expected [json yaml], got invalid_format"
+		expectedError := "invalid output format, expected [json yaml toml], got invalid_format"
 		if err.Error() != expectedError {
 			t.Errorf("unexpected error message:\nexpected: %s\ngot: %s", expectedError, err.Error())
 		}
