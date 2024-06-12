@@ -32,6 +32,9 @@ Supported conversion modes:
   # Generate KCL models from YAML
   kcl import data.yaml
 
+  # Generate KCL models from TOML
+  kcl import data.toml
+
   # Generate KCL models from JSON Schema
   kcl import -m jsonschema schema.json
 

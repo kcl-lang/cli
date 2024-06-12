@@ -45,6 +45,8 @@ func (o *ImportOptions) Run() error {
 		opts.Mode = gen.ModeJson
 	case Yaml:
 		opts.Mode = gen.ModeYaml
+	case Toml:
+		opts.Mode = gen.ModeToml
 	case GoStruct:
 		opts.Mode = gen.ModeGoStruct
 	case JsonSchema:
