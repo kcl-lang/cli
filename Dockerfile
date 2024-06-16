@@ -15,11 +15,13 @@ FROM --platform=${BUILDPLATFORM} ubuntu:22.04 AS base
 ENV LANG=en_US.utf8
 
 FROM base
+
+ARG TARGETARCH
+
 COPY --from=build /src/bin/kcl /usr/local/bin/kcl
 RUN /usr/local/bin/kcl
 RUN cp -r /root/go/bin/* /usr/local/bin/
-RUN apt-get update
-RUN apt-get install gcc git -y
+RUN apt-get update && apt-get install gcc git -y && rm -rf /var/lib/apt/lists/*
 # The reason for doing this below is to prevent the
 # container from not having write permissions.
 ENV KCL_PKG_PATH=/tmp
@@ -30,5 +32,5 @@ ENV KCL_GO_DISABLE_INSTALL_ARTIFACT=true
 ENV KCL_GO_DISABLE_ARTIFACT_IN_PATH=false
 # Install the tini
 ENV TINI_VERSION v0.19.0
-ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-${TARGETARCH} /tini
 RUN chmod +x /tini
