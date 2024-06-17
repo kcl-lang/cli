@@ -39,7 +39,7 @@ jobs:
         with:
           images: kcllang/kcl
       - name: Build and push Docker image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
           platforms: linux/amd64
@@ -87,7 +87,7 @@ jobs:
         with:
           images: kcllang/kcl-arm64
       - name: Build and push Docker image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
           platforms: linux/arm64
