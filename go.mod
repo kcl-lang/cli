@@ -30,6 +30,7 @@ require (
 	github.com/containers/ocicrypt v1.1.10 // indirect
 	github.com/containers/storage v1.54.0 // indirect
 	github.com/distribution/reference v0.6.0 // indirect
+	github.com/elliotchance/orderedmap/v2 v2.2.0 // indirect
 	github.com/emicklei/proto v1.13.2 // indirect
 	github.com/felixge/httpsnoop v1.0.4 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.2 // indirect
@@ -207,4 +208,9 @@ require (
 	sigs.k8s.io/json v0.0.0-20221116044647-bc3834ca7abd // indirect
 	sigs.k8s.io/structured-merge-diff/v4 v4.2.3 // indirect
 	sigs.k8s.io/yaml v1.3.0 // indirect
+)
+
+replace (
+	kcl-lang.io/kpm => /Users/zongz/Workspace/kusionstack/kpm
+	kcl-lang.io/kpm v0.9.0-rc.2 => kcl-lang.io/kpm v0.9.0-rc.2.0.20240704123051-efc7b9c78ae8
 )
