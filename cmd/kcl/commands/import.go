@@ -13,6 +13,7 @@ const (
 Supported conversion modes:
 - json:            convert JSON data to KCL data
 - yaml:            convert YAML data to KCL data
+- toml:            convert TOML data to KCL data
 - gostruct:        convert Go struct to KCL schema
 - jsonschema:      convert JSON schema to KCL schema
 - terraformschema: convert Terraform schema to KCL schema

@@ -8,7 +8,7 @@ require (
 	github.com/onsi/gomega v1.33.1
 	github.com/spf13/cobra v1.8.1
 	kcl-lang.io/kcl-go v0.9.0-rc.1.0.20240612024548-8d927747bd42
-	kcl-lang.io/kcl-openapi v0.6.1
+	kcl-lang.io/kcl-openapi v0.6.2
 	kcl-lang.io/kcl-playground v0.5.1
 	kcl-lang.io/kpm v0.9.0-rc.1
 )
