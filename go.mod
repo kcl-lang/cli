@@ -7,8 +7,8 @@ require (
 	github.com/onsi/ginkgo/v2 v2.19.0
 	github.com/onsi/gomega v1.33.1
 	github.com/spf13/cobra v1.8.1
-	kcl-lang.io/kcl-go v0.9.0-rc.1.0.20240612024548-8d927747bd42
-	kcl-lang.io/kcl-openapi v0.6.2
+	kcl-lang.io/kcl-go v0.9.0-rc.1.0.20240624023057-31e2e97dee06
+	kcl-lang.io/kcl-openapi v0.6.3
 	kcl-lang.io/kcl-playground v0.5.1
 	kcl-lang.io/kpm v0.9.0-rc.1
 )
@@ -99,7 +99,7 @@ require (
 	github.com/dominikbraun/graph v0.23.0
 	github.com/emirpasic/gods v1.18.1 // indirect
 	github.com/fatih/color v1.17.0
-	github.com/getkin/kin-openapi v0.124.0 // indirect
+	github.com/getkin/kin-openapi v0.125.0 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/gin-gonic/gin v1.9.1 // indirect
 	github.com/go-git/gcfg v1.5.1-0.20230307220236-3a3c6141e376 // indirect
@@ -175,7 +175,7 @@ require (
 	github.com/ugorji/go/codec v1.2.11 // indirect
 	github.com/wk8/go-ordered-map/v2 v2.1.8 // indirect
 	github.com/xanzy/ssh-agent v0.3.3 // indirect
-	github.com/yuin/goldmark v1.7.1 // indirect
+	github.com/yuin/goldmark v1.7.2 // indirect
 	go.mongodb.org/mongo-driver v1.14.0 // indirect
 	go.opentelemetry.io/otel v1.24.0 // indirect
 	go.opentelemetry.io/otel/trace v1.24.0 // indirect
@@ -188,7 +188,7 @@ require (
 	golang.org/x/tools v0.21.0 // indirect
 	golang.org/x/xerrors v0.0.0-20231012003039-104605ab7028 // indirect
 	google.golang.org/grpc v1.64.0 // indirect
-	google.golang.org/protobuf v1.34.1 // indirect
+	google.golang.org/protobuf v1.34.2 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
