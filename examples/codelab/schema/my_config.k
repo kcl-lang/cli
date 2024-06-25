@@ -2,8 +2,6 @@ import regex
 
 schema Deployment[priority]:
     name: str
-    cpu: int = _cpu
-    memory: int = _cpu * 2
     volumes?: [Volume]
     image: str
     service?: Service
@@ -19,6 +17,9 @@ schema Deployment[priority]:
         _cpu = 1024
     else:
         _cpu = 2048
+
+    cpu: int = _cpu
+    memory: int = _cpu * 2
 
     check:
         multiplyof(cpu, 256), "cpu must be a multiplier of 256"
