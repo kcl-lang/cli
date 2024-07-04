@@ -10,7 +10,7 @@ require (
 	kcl-lang.io/kcl-go v0.9.0-rc.2
 	kcl-lang.io/kcl-openapi v0.6.3
 	kcl-lang.io/kcl-playground v0.5.1
-	kcl-lang.io/kpm v0.9.0-rc.2
+	kcl-lang.io/kpm v0.9.0
 )
 
 require (
@@ -209,5 +209,3 @@ require (
 	sigs.k8s.io/structured-merge-diff/v4 v4.2.3 // indirect
 	sigs.k8s.io/yaml v1.3.0 // indirect
 )
-
-replace kcl-lang.io/kpm v0.9.0-rc.2 => kcl-lang.io/kpm v0.9.0-rc.2.0.20240704123051-efc7b9c78ae8
