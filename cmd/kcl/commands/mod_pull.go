@@ -13,13 +13,13 @@ const (
   kcl mod pull k8s
 
   # Pull the module dependency named "k8s" with the version "1.28"
-  kcl mod add k8s:1.28
+  kcl mod pull k8s:1.28
 
   # Pull the module from the GitHub by git url
   kcl mod pull git://github.com/kcl-lang/konfig --tag v0.4.0
 
   # Pull the module from the OCI Registry by oci url
-  kcl mod pull oci://ghcr.io/kcl-lang/helloworld --tag v0.1.0
+  kcl mod pull oci://ghcr.io/kcl-lang/helloworld --tag 0.1.0
 
   # Pull the module from the GitHub by flag
   kcl mod pull --git https://github.com/kcl-lang/konfig --tag v0.4.0
