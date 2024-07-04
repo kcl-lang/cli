@@ -210,7 +210,4 @@ require (
 	sigs.k8s.io/yaml v1.3.0 // indirect
 )
 
-replace (
-	kcl-lang.io/kpm => /Users/zongz/Workspace/kusionstack/kpm
-	kcl-lang.io/kpm v0.9.0-rc.2 => kcl-lang.io/kpm v0.9.0-rc.2.0.20240704123051-efc7b9c78ae8
-)
+replace kcl-lang.io/kpm v0.9.0-rc.2 => kcl-lang.io/kpm v0.9.0-rc.2.0.20240704123051-efc7b9c78ae8
