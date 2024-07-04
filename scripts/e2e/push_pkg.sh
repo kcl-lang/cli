@@ -11,13 +11,13 @@ echo $current_dir
 
 $current_dir/bin/kcl registry login -u test -p 1234 localhost:5001
 
-cd ./scripts/e2e/pkg_in_reg/ghcr.io/kcl-lang/k8s/1.28
+cd ./scripts/e2e/pkg_in_reg/oci/ghcr.io/kcl-lang/k8s/1.28
 $current_dir/bin/kcl mod push
 
 cd "$current_dir"
 
 # Push the package helloworld/0.1.1 to the registry
-cd ./scripts/e2e/pkg_in_reg/ghcr.io/kcl-lang/helloworld/0.1.1
+cd ./scripts/e2e/pkg_in_reg/oci/ghcr.io/kcl-lang/helloworld/0.1.1
 $current_dir/bin/kcl mod push
 
 cd "$current_dir"
