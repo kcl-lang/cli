@@ -1,4 +1,4 @@
-start to pull 'helloworld'
-the lastest version '0.1.1' will be pulled
-pulling 'test/helloworld:0.1.1' from 'localhost:5001/test/helloworld'
-pulled 'helloworld' in '<workspace>/test_space/localhost:5001/test/helloworld' successfully
+start to pull oci://localhost:5001/test/helloworld
+the lastest version '0.1.1' will be downloaded
+downloading 'test/helloworld:0.1.1' from 'localhost:5001/test/helloworld:0.1.1'
+pulled helloworld 0.1.1 successfully

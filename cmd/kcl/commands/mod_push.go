@@ -169,7 +169,7 @@ func pushPackage(ociUrl string, kclPkg *pkg.KclPkg, vendorMode bool, cli *client
 			"only support url scheme 'oci://'.",
 		)
 	}
-	ociOpts.Annotations, err = kpmoci.GenOciManifestFromPkg(kclPkg)
+	ociOpts.Annotations, err = kclPkg.GenOciManifestFromPkg()
 	if err != nil {
 		return err
 	}

@@ -13,11 +13,11 @@ cd ./scripts/e2e/pkg_in_reg/
 
 
 # Check if file exists
-if [ ! -d "./ghcr.io/kcl-lang/k8s/1.28" ]; then
+if [ ! -d "./oci/ghcr.io/kcl-lang/k8s/1.28" ]; then
   $current_dir/bin/kcl mod pull k8s:1.28
 fi
 
-if [ ! -d "./ghcr.io/kcl-lang/helloworld/0.1.1" ]; then
+if [ ! -d "./oci/ghcr.io/kcl-lang/helloworld/0.1.1" ]; then
   $current_dir/bin/kcl mod pull helloworld:0.1.1
 fi
 

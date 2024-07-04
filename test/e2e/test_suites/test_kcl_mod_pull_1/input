@@ -1,1 +1,1 @@
-kcl mod pull oci://localhost:5001/test/helloworld:0.1.1
+kcl mod pull oci://localhost:5001/test/helloworld --tag 0.1.1

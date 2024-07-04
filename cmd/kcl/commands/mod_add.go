@@ -28,7 +28,7 @@ const (
   kcl mod add git://github.com/kcl-lang/konfig --tag v0.4.0
 
   # Add the module dependency from the OCI Registry by oci url
-  kcl mod add oci://github.com/kcl-lang/konfig --tag v0.4.0
+  kcl mod add oci://ghcr.io/kcl-lang/helloworld --tag 0.1.0
 
   # Add the module dependency from the local file system by file url
   kcl mod add /path/to/another_module
