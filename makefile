@@ -54,7 +54,7 @@ docker-run-release: export pkg=/go/src/github.com/kcl-lang/cli
 docker-run-release:
 	git checkout main
 	git push
-	docker run -it --rm -e GITHUB_TOKEN -v $(shell pwd):$(pkg) -w $(pkg) golang:1.21 make bootstrap release
+	docker run -it --rm -e GITHUB_TOKEN -v $(shell pwd):$(pkg) -w $(pkg) golang:1.22 make bootstrap release
 
 .PHONY: dist
 dist: export COPYFILE_DISABLE=1 #teach OSX tar to not put ._* files in tar archive
