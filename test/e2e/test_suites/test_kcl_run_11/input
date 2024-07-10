@@ -1,0 +1,1 @@
+kcl run --oci https://localhost:5001/test/helloworld

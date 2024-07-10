@@ -1,0 +1,4 @@
+kcl_cli_configs:
+  files:
+    - kcl_6/main.k
+    - kcl_7/main.k

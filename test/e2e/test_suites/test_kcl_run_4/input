@@ -1,0 +1,1 @@
+kcl run oci://ghcr.io/kcl-lang/helloworld --tag 0.1.0

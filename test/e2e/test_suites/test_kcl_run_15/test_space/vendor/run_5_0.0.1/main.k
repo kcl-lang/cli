@@ -1,0 +1,1 @@
+run5 = 'A package in vendor path'

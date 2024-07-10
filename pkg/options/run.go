@@ -7,8 +7,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"net/url"
 	"os"
-	"path/filepath"
 	"strings"
 
 	"github.com/acarl005/stripansi"
@@ -18,9 +18,8 @@ import (
 	"kcl-lang.io/kcl-go/pkg/3rdparty/toml"
 	"kcl-lang.io/kcl-go/pkg/kcl"
 	"kcl-lang.io/kcl-go/pkg/tools/gen"
-	"kcl-lang.io/kpm/pkg/api"
 	"kcl-lang.io/kpm/pkg/client"
-	"kcl-lang.io/kpm/pkg/git"
+	"kcl-lang.io/kpm/pkg/constants"
 	"kcl-lang.io/kpm/pkg/opt"
 	pkg "kcl-lang.io/kpm/pkg/package"
 	"kcl-lang.io/kpm/pkg/runner"
@@ -62,8 +61,16 @@ type RunOptions struct {
 	Debug bool
 	// StrictRangeCheck performs the 32-bit strict numeric range checks on numbers.
 	StrictRangeCheck bool
+	// Git Url is the package url of the Git artifact.
+	Git string
+	// Oci Url is the package url of the OCI artifact.
+	Oci string
 	// Tag is the package tag of the OCI or Git artifact.
 	Tag string
+	// Commit is the package commit of the Git artifact.
+	Commit string
+	// Branch is the package branch of the Git artifact.
+	Branch string
 	// CompileOnly is used to check a local package and all of its dependencies for errors.
 	CompileOnly bool
 	// Format is the output type, e.g., Json, Yaml, etc. Default is Yaml.
@@ -103,91 +110,26 @@ func (o *RunOptions) Run() error {
 			err = releaseErr
 		}
 	}()
-	opts := CompileOptionFromCli(o)
 	if o.Quiet {
-		opts.SetLogWriter(nil)
+		cli.SetLogWriter(nil)
 	}
-	if err != nil {
-		return err
-	}
-	entry, errEvent := runner.FindRunEntryFrom(opts.Entries())
-	if errEvent != nil {
-		return errEvent
-	}
-	pwd, err := os.Getwd()
-	if err != nil {
-		return err
-	}
-	if entry.IsEmpty() {
-		// kcl compiles the current package under '$pwd'.
-		if _, e := api.GetKclPackage(pwd); e == nil {
-			opts.SetPkgPath(pwd)
-			result, err = cli.CompileWithOpts(opts)
-		} else {
-			// TODO: refactor the entry search logic.
-			depsOpt, depErr := LoadDepsFrom(pwd, o.Quiet)
-			if depErr != nil {
-				return err
-			}
-			opts.Merge(*depsOpt)
-			result, err = api.RunWithOpt(opts)
-		}
-	} else {
-		// kcl compiles the package from the local file system, tar and OCI package, etc.
-		if entry.IsLocalFile() {
-			depsOpt, depErr := LoadDepsFrom(pwd, o.Quiet)
-			if depErr != nil {
-				return err
-			}
-			opts.Merge(*depsOpt)
-			result, err = api.RunWithOpt(opts)
-		} else if entry.IsLocalFileWithKclMod() {
-			// Else compile the kcl package (kcl.mod)
-			var transformedEntries []string
-			for _, entry := range opts.Entries() {
-				if !filepath.IsAbs(entry) {
-					entry, err = filepath.Abs(entry)
-					if err != nil {
-						return err
-					}
-				}
-				transformedEntries = append(transformedEntries, entry)
-			}
-			// Maybe a single KCL module folder, use the kcl.mod entry profile to run.
-			if pkg, e := api.GetKclPackage(transformedEntries[0]); e == nil && fs.IsDir(transformedEntries[0]) {
-				entries := pkg.GetPkgProfile().GetEntries()
-				if len(entries) > 0 {
-					opts.SetEntries(entries)
-					opts.SetPkgPath(transformedEntries[0])
-				} else {
-					// Multiple entries with the kcl.mod file and deps.
-					opts.SetEntries(transformedEntries)
-					opts.SetPkgPath(entry.PackageSource())
-				}
-			} else {
-				// Multiple entries with the kcl.mod file and deps.
-				opts.SetEntries(transformedEntries)
-				opts.SetPkgPath(entry.PackageSource())
-			}
-			result, err = cli.CompileWithOpts(opts)
-		} else if entry.IsTar() {
-			// compiles the package from the kcl package tar.
-			opts.SetEntries([]string{})
-			result, err = cli.CompileTarPkg(entry.PackageSource(), opts)
-		} else if entry.IsGit() {
-			opts.SetEntries([]string{})
-			gitOpts := git.NewCloneOptions(entry.PackageSource(), "", o.Tag, "", "", nil)
-			// compiles the package from the git url
-			result, err = cli.CompileGitPkg(gitOpts, opts)
-		} else if entry.IsUrl() {
-			// compiles the package from the OCI reference or url.
-			opts.SetEntries([]string{})
-			result, err = cli.CompileOciPkg(entry.PackageSource(), o.Tag, opts)
-		} else {
-			// If there is only kcl file without kcl package (kcl.mod)
-			result, err = api.RunWithOpt(opts)
-		}
-	}
+
+	result, err = cli.Run(
+		client.WithRunSourceUrls(o.Entries),
+		client.WithSettingFiles(o.Settings),
+		client.WithArguments(o.Arguments),
+		client.WithOverrides(o.Overrides, o.Debug),
+		client.WithPathSelectors(o.PathSelectors),
+		client.WithExternalPkgs(o.ExternalPackages),
+		client.WithVendor(o.Vendor),
+		client.WithSortKeys(o.SortKeys),
+		client.WithShowHidden(o.ShowHidden),
+		client.WithDisableNone(o.DisableNone),
+		client.WithDebug(o.Debug),
+		client.WithStrictRange(o.StrictRangeCheck),
+		client.WithCompileOnly(o.CompileOnly),
+	)
+
 	if err != nil {
 		if o.NoStyle {
 			err = errors.New(stripansi.Strip(err.Error()))
@@ -199,7 +141,62 @@ func (o *RunOptions) Run() error {
 
 // Complete completes the options based on the provided arguments.
 func (o *RunOptions) Complete(args []string) error {
-	o.Entries = args
+	if len(o.Git) != 0 {
+		gitUrl, err := url.Parse(o.Git)
+		if err != nil {
+			return err
+		}
+		if gitUrl.Scheme == constants.HttpsScheme || gitUrl.Scheme == constants.HttpScheme {
+			gitUrl.Scheme = constants.GitScheme
+		}
+		query := gitUrl.Query()
+		if o.Tag != "" {
+			query.Set("tag", o.Tag)
+		}
+		if o.Commit != "" {
+			query.Set("commit", o.Commit)
+		}
+		if o.Branch != "" {
+			query.Set("branch", o.Branch)
+		}
+		gitUrl.RawQuery = query.Encode()
+		o.Entries = append(o.Entries, gitUrl.String())
+	}
+
+	if len(o.Oci) != 0 {
+		ociUrl, err := url.Parse(o.Oci)
+		if err != nil {
+			return err
+		}
+		if ociUrl.Scheme == constants.HttpsScheme || ociUrl.Scheme == constants.HttpScheme {
+			ociUrl.Scheme = constants.OciScheme
+		}
+		query := ociUrl.Query()
+		if o.Tag != "" {
+			query.Set("tag", o.Tag)
+		}
+		ociUrl.RawQuery = query.Encode()
+		o.Entries = append(o.Entries, ociUrl.String())
+	}
+
+	for _, arg := range args {
+		argUrl, err := url.Parse(arg)
+		if err != nil {
+			return err
+		}
+		query := argUrl.Query()
+		if o.Tag != "" {
+			query.Set("tag", o.Tag)
+		}
+		if o.Commit != "" {
+			query.Set("commit", o.Commit)
+		}
+		if o.Branch != "" {
+			query.Set("branch", o.Branch)
+		}
+		argUrl.RawQuery = query.Encode()
+		o.Entries = append(o.Entries, argUrl.String())
+	}
 	return nil
 }
 
