@@ -50,8 +50,9 @@ func NewTestCmd() *cobra.Command {
 			o.PkgList = args
 			return test(o, runOpts)
 		},
-		SilenceUsage: true,
-		Aliases:      []string{"t"},
+		SilenceErrors: true,
+		SilenceUsage:  true,
+		Aliases:       []string{"t"},
 	}
 
 	flags := cmd.Flags()
@@ -89,6 +90,15 @@ func test(o *kcl.TestOptions, runOpts *options.RunOptions) error {
 		return nil
 	} else {
 		reporter := testing.DefaultReporter(os.Stdout)
-		return reporter.Report(&result)
+		err := reporter.Report(&result)
+		if err != nil {
+			return err
+		}
+		for _, info := range result.Info {
+			if info.ErrMessage != "" && !info.Skip() {
+				return errors.New("")
+			}
+		}
+		return nil
 	}
 }

@@ -29,6 +29,7 @@ func NewRegistryCmd() *cobra.Command {
 		Long:         registryDesc,
 		Example:      registryExample,
 		SilenceUsage: true,
+		Aliases:      []string{"reg", "r"},
 	}
 
 	cmd.PersistentFlags().BoolVarP(&quiet, "quiet", "q", false, "Set the quiet mode (no output)")
