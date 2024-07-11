@@ -1,0 +1,1 @@
+kcl run git://github.com/kcl-lang/flask-demo-kcl-manifests --tag v0.1.0

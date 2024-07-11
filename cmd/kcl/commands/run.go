@@ -12,7 +12,10 @@ const (
 
 For example, 'kcl run path/to/kcl.k' will run the file named path/to/kcl.k 
 `
-	runExample = `  # Run a single file and output YAML
+	runExample = `  # Run the current package
+  kcl run
+
+  # Run a single file and output YAML
   kcl run path/to/kcl.k
 
   # Run a single file and output JSON
@@ -25,13 +28,16 @@ For example, 'kcl run path/to/kcl.k' will run the file named path/to/kcl.k
   kcl run path/to/kcl1.k path/to/kcl2.k
 
   # Run OCI packages
-  kcl run oci://ghcr.io/kcl-lang/helloworld
+  kcl run oci://ghcr.io/kcl-lang/helloworld --tag 0.1.0
 
   # Run remote Git repo
-  kcl run https://github.com/kcl-lang/flask-demo-kcl-manifests
+  kcl run git://github.com/kcl-lang/flask-demo-kcl-manifests --commit ade147b
 
-  # Run the current package
-  kcl run`
+  # Run OCI packages by flag
+  kcl run --oci https://ghcr.io/kcl-lang/helloworld --tag 0.1.0
+
+  # Run remote module from Git with branch repo by flag
+  kcl run --git https://github.com/kcl-lang/flask-demo-kcl-manifests --branch main`
 )
 
 // NewRunCmd returns the run command.

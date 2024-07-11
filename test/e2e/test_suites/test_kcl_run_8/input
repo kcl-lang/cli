@@ -1,0 +1,1 @@
+kcl run --git https://github.com/kcl-lang/flask-demo-kcl-manifests --branch main

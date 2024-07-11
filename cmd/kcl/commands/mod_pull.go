@@ -21,7 +21,7 @@ const (
   # Pull the module from the OCI Registry by oci url
   kcl mod pull oci://ghcr.io/kcl-lang/helloworld --tag 0.1.0
 
-  # Pull the module from the GitHub by flag
+  # Pull the module from the Git by flag
   kcl mod pull --git https://github.com/kcl-lang/konfig --tag v0.4.0
 
   # Pull the module from the OCI Registry by flag

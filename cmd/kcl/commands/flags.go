@@ -10,8 +10,16 @@ func appendLangFlags(o *options.RunOptions, flags *pflag.FlagSet) {
 		"Specify the path selectors")
 	flags.StringVarP(&o.Output, "output", "o", "",
 		"Specify the YAML/JSON output file path")
+	flags.StringVarP(&o.Git, "git", "", "",
+		"Specify the KCL module git url")
+	flags.StringVarP(&o.Oci, "oci", "", "",
+		"Specify the KCL module oci url")
 	flags.StringVarP(&o.Tag, "tag", "t", "",
 		"Specify the tag for the OCI or Git artifact")
+	flags.StringVarP(&o.Commit, "commit", "c", "",
+		"Specify the commit for the Git artifact")
+	flags.StringVarP(&o.Branch, "branch", "b", "",
+		"Specify the branch for the Git artifact")
 	flags.StringVar(&o.Format, "format", "yaml",
 		"Specify the output format")
 	flags.BoolVarP(&o.DisableNone, "disable_none", "n", false,
