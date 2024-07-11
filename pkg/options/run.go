@@ -202,6 +202,40 @@ func (o *RunOptions) Complete(args []string) error {
 
 // Validate validates the options.
 func (o *RunOptions) Validate() error {
+
+	if len(o.Tag) != 0 || len(o.Commit) != 0 || len(o.Branch) != 0 {
+		// Tag, commit, and branch are only valid with a single module.
+		if len(o.Entries) > 1 {
+			return fmt.Errorf("cannot specify tag, commit, or branch with multiple modules %s", o.Entries)
+		}
+
+		// Tag, commit, and branch must be specified with a module.
+		if len(o.Entries) == 0 {
+			return fmt.Errorf("cannot specify tag, commit, or branch without modules")
+		}
+
+		// Check that only one of tag, commit, or branch is specified
+		specCount := 0
+		if len(o.Tag) != 0 {
+			specCount++
+		}
+		if len(o.Commit) != 0 {
+			specCount++
+		}
+		if len(o.Branch) != 0 {
+			specCount++
+		}
+		if specCount > 1 {
+			return fmt.Errorf("only one of tag, commit, or branch can be specified")
+		}
+	}
+
+	if len(o.Git) != 0 || len(o.Oci) != 0 {
+		if len(o.Entries) > 1 {
+			return fmt.Errorf("cannot specify multiple KCL modules %s", o.Entries)
+		}
+	}
+
 	if o.Format != "" && strings.ToLower(o.Format) != Json && strings.ToLower(o.Format) != Yaml && strings.ToLower(o.Format) != Toml {
 		return fmt.Errorf("invalid output format, expected %v, got %v", []string{Json, Yaml, Toml}, o.Format)
 	}
