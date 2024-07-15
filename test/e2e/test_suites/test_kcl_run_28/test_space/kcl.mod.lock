@@ -1,0 +1,5 @@
+[dependencies]
+  [dependencies.helloworld]
+    name = "helloworld"
+    full_name = "helloworld_0.1.0"
+    version = "0.1.0"
