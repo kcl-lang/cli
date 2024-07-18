@@ -37,10 +37,7 @@ const (
   kcl mod add --git https://github.com/kcl-lang/konfig --tag v0.4.0
 
   # Add the module dependency from the OCI Registry by flag
-  kcl mod add --oci https://ghcr.io/kcl-lang/helloworld --tag 0.1.0
-
-  # Add a local dependency by flag
-  kcl mod add --path /path/to/another_module`
+  kcl mod add --oci https://ghcr.io/kcl-lang/helloworld --tag 0.1.0`
 )
 
 // NewModAddCmd returns the mod add command.
