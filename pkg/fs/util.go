@@ -2,6 +2,7 @@ package fs
 
 import (
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 )
@@ -55,4 +56,32 @@ func FileExists(path string) bool {
 		return false
 	}
 	return true
+}
+
+// IsEmptyDir checks if a directory is empty.
+// It takes a string parameter `name` representing the directory path.
+// It returns a boolean value indicating whether the directory is empty or not,
+// and an error if any occurred during the process.
+//
+// Parameters:
+// - name: The path of the directory to check.
+//
+// Returns:
+// - bool: True if the directory is empty, false otherwise.
+// - error: An error if the directory cannot be read.
+//
+// Example usage:
+// empty, err := IsEmptyDir("/path/to/directory")
+func IsEmptyDir(name string) (bool, error) {
+	f, err := os.Open(name)
+	if err != nil {
+		return false, err
+	}
+	defer f.Close()
+
+	_, err = f.Readdirnames(1)
+	if err == io.EOF {
+		return true, nil
+	}
+	return false, err
 }

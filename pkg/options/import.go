@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"kcl-lang.io/cli/pkg/fs"
+	"kcl-lang.io/cli/pkg/import/crd"
 	"kcl-lang.io/kcl-go/pkg/logger"
 	"kcl-lang.io/kcl-go/pkg/tools/gen"
 	crdGen "kcl-lang.io/kcl-openapi/pkg/kube_resource/generator"
@@ -58,7 +59,7 @@ func (o *ImportOptions) Run() error {
 	case Crd, OpenAPI:
 		for _, p := range files {
 			opts := new(generator.GenOpts)
-			// cli opts to generator.GenOpts
+			// Convert CLI options to generator.GenOpts
 			opts.Spec = p
 			if o.Output != "" {
 				opts.Target = o.Output
@@ -67,12 +68,12 @@ func (o *ImportOptions) Run() error {
 			}
 			opts.ValidateSpec = !o.SkipValidation
 			opts.ModelPackage = o.ModelPackage
-			// set default configurations
+			// Set default configurations
 			if err := opts.EnsureDefaults(); err != nil {
 				return err
 			}
 			var specs []string
-			// when the spec is a crd, get openapi spec file from it
+			// When the spec is a crd, get OpenAPI spec file from it
 			if mode == Crd {
 				specs, err = crdGen.GetSpecs(&crdGen.GenOpts{
 					Spec: opts.Spec,
@@ -85,10 +86,18 @@ func (o *ImportOptions) Run() error {
 			} else {
 				specs = []string{opts.Spec}
 			}
+			// Generate specs to KCL files
 			for _, spec := range specs {
 				opts.Spec = spec
 				if err := generator.Generate(opts); err != nil {
 					logger.GetLogger().Error(err)
+				}
+			}
+			// Group by the api version
+			if mode == Crd {
+				err := crd.GroupByKclFiles(opts.ModelPackage)
+				if err != nil {
+					return err
 				}
 			}
 		}
