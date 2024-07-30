@@ -7,6 +7,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"kcl-lang.io/kcl-go/pkg/tools/gen"
+	"kcl-lang.io/kpm/pkg/api"
 )
 
 const (
@@ -64,12 +65,20 @@ func NewDocGenerateCmd() *cobra.Command {
 				return err
 			}
 
-			err = genContext.GenDoc()
+			pkg, err := api.GetKclPackage(genContext.PackagePath)
 			if err != nil {
-				fmt.Println(fmt.Errorf("generate failed: %s", err))
+				return err
+			}
+			spec, err := pkg.ExportSwaggerV2Spec()
+			if err != nil {
+				return err
+			}
+			err = genContext.RenderSwaggerV2(spec)
+			if err != nil {
+				fmt.Println(fmt.Errorf("doc generate failed: %s", err))
 				return err
 			} else {
-				fmt.Printf("Generate Complete! Check generated docs in %s\n", genContext.Target)
+				fmt.Printf("doc generate complete and check generated docs in %s\n", genContext.Target)
 				return nil
 			}
 		},

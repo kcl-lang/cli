@@ -9,10 +9,10 @@ require (
 	github.com/onsi/ginkgo/v2 v2.19.1
 	github.com/onsi/gomega v1.34.0
 	github.com/spf13/cobra v1.8.1
-	kcl-lang.io/kcl-go v0.9.3
+	kcl-lang.io/kcl-go v0.10.0-alpha.1.0.20240730084238-c647f95196d2
 	kcl-lang.io/kcl-openapi v0.6.3
 	kcl-lang.io/kcl-playground v0.5.1
-	kcl-lang.io/kpm v0.9.3
+	kcl-lang.io/kpm v0.9.4-0.20240730115858-1fb33d5051a8
 )
 
 require (
@@ -72,7 +72,7 @@ require (
 	google.golang.org/genproto v0.0.0-20240227224415-6ceb2ff114de // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20240528184218-531527333157 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240528184218-531527333157 // indirect
-	kcl-lang.io/lib v0.9.3 // indirect
+	kcl-lang.io/lib v0.10.0-alpha.1 // indirect
 )
 
 require (
@@ -125,7 +125,7 @@ require (
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/go-playground/validator/v10 v10.14.0 // indirect
 	github.com/goccy/go-yaml v1.12.0
-	github.com/gofrs/flock v0.12.0 // indirect
+	github.com/gofrs/flock v0.12.1 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang-collections/collections v0.0.0-20130729185459-604e922904d3 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
