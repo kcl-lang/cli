@@ -31,8 +31,6 @@ schema Server(Deployment):
 
 schema Deployment[priority: int]:
     name: str
-    cpu: int = _cpu
-    memory: int = _cpu * 2
     volumes?: [Volume]
     image: str
     service?: Service
@@ -48,6 +46,9 @@ schema Deployment[priority: int]:
         _cpu = 1024
     else:
         _cpu = 2048
+
+    cpu: int = _cpu
+    memory: int = _cpu * 2
 
     check:
         multiplyof(cpu, 256), "CPU must be a multiple of 256"

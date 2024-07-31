@@ -1,0 +1,13 @@
+kcl_cli_configs:
+  files:
+    - file.k
+kcl_options:
+  - key: env-type
+    value: TEST
+  - key: deploy-topology
+    value:
+      - cluster: my-cluster
+        idc: my-idc
+        replicas: 2
+        workspace: my-workspace
+        zone: my-zone

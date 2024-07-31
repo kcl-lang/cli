@@ -1,8 +1,15 @@
 [dependencies]
+  [dependencies.k8s]
+    name = "k8s"
+    full_name = "k8s_1.28"
+    version = "1.28"
+    sum = "aTxPUVZyr9MdiB3YdiY/8pCh9sC55yURnZdGlJsKG6Q="
+    reg = "ghcr.io"
+    repo = "kcl-lang/k8s"
+    oci_tag = "1.28"
   [dependencies.konfig]
     name = "konfig"
-    full_name = "konfig_v0.0.1"
-    version = "v0.0.1"
-    sum = "XFvHdBAoY/+qpJWmj8cjwOwZO8a3nX/7SE35cTxQOFU="
-    url = "https://github.com/awesome-kusion/konfig.git"
-    git_tag = "v0.0.1"
+    full_name = "konfig_0.6.0"
+    version = "0.6.0"
+    url = "https://github.com/kcl-lang/konfig.git"
+    git_tag = "v0.6.0"

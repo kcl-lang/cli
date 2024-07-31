@@ -5,7 +5,7 @@
 $ErrorActionPreference = "Stop"
 $pwd = Split-Path -Parent $MyInvocation.MyCommand.Path
 
-$paths = @("configuration", "validation", "abstraction", "definition", "konfig", "mutation", "data-integration", "automation", "package-management", "kubernetes", "codelab", "server", "source")
+$paths = @("configuration", "validation", "abstraction", "definition", "konfig", "mutation", "data-integration", "automation", "package-management", "kubernetes", "codelab", "server", "settings", "source")
 foreach ($path in $paths) {
     Write-Host "Testing $path ..."
     Set-Location -Path "$pwd\$path"

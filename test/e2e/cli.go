@@ -49,7 +49,7 @@ func GetWorkDir() string {
 	return dir
 }
 
-// GetKpmCLIBin return kusion binary path in e2e test
+// GetKpmCLIBin return kpm binary path in e2e test
 func GetKpmCLIBin() string {
 	dir, _ := os.Getwd()
 	binPath := filepath.Join(dir, "../..", "bin")
@@ -83,7 +83,7 @@ func ExecWithWorkDir(cli, dir string) (string, error) {
 	return string(s.Out.Contents()) + string(s.Err.Contents()), nil
 }
 
-// ExecKpm executes kusion command
+// ExecKpm executes command
 func ExecKpm(cli string) (string, error) {
 	var output []byte
 	c := strings.Fields(cli)
