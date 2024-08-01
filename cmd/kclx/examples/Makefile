@@ -1,0 +1,2 @@
+run:
+	kclx main.k
