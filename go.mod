@@ -9,10 +9,10 @@ require (
 	github.com/onsi/ginkgo/v2 v2.19.1
 	github.com/onsi/gomega v1.34.1
 	github.com/spf13/cobra v1.8.1
-	kcl-lang.io/kcl-go v0.10.0-alpha.1.0.20240730084238-c647f95196d2
+	kcl-lang.io/kcl-go v0.9.3
 	kcl-lang.io/kcl-openapi v0.6.5
 	kcl-lang.io/kcl-playground v0.5.1
-	kcl-lang.io/kpm v0.9.4
+	kcl-lang.io/kpm v0.9.5
 )
 
 require (
@@ -73,7 +73,7 @@ require (
 	google.golang.org/genproto v0.0.0-20240227224415-6ceb2ff114de // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20240528184218-531527333157 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240528184218-531527333157 // indirect
-	kcl-lang.io/lib v0.10.0-alpha.1 // indirect
+	kcl-lang.io/lib v0.9.3 // indirect
 )
 
 require (
