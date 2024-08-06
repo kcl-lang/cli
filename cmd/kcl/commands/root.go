@@ -114,7 +114,6 @@ func New() *cobra.Command {
 	cmd.AddCommand(NewVetCmd())
 	cmd.AddCommand(NewCleanCmd())
 	cmd.AddCommand(NewImportCmd())
-	cmd.AddCommand(NewPlayCmd())
 	// Module & Registry commands
 	cmd.AddCommand(NewModCmd())
 	cmd.AddCommand(NewRegistryCmd())
