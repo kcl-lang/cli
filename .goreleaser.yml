@@ -18,8 +18,8 @@ builds:
     goarch:
       - amd64
       - arm64
-    env:
-      - CGO_ENABLED=0
+    flags: 
+    - -tags=rpc
     ldflags:
       - "-X kcl-lang.io/cli/pkg/version.version={{.Version}}"
 

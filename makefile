@@ -2,6 +2,7 @@ VERSION := $(shell cat VERSION)
 
 PKG:= kcl-lang.io/cli
 LDFLAGS := -X $(PKG)/pkg/version.version=$(VERSION)
+TAGS := rpc
 COVER_FILE			?= coverage.out
 SOURCE_PATHS		?= ./pkg/...
 MAIN_FILE := ./cmd/kcl/main.go
@@ -63,16 +64,16 @@ dist:
 	rm -rf build/kcl/* release/*
 	mkdir -p build/kcl/bin release/
 	cp -f README.md LICENSE build/kcl
-	GOOS=linux GOARCH=amd64 $(GO) build -o build/kcl/bin/kcl -trimpath -ldflags="$(LDFLAGS)" $(MAIN_FILE)
+	GOOS=linux GOARCH=amd64 $(GO) build -o build/kcl/bin/kcl -trimpath -ldflags="$(LDFLAGS)" -tags="$(TAGS)" $(MAIN_FILE)
 	tar -C build/ -zcvf $(CURDIR)/release/kcl-linux-amd64.tgz kcl/
-	GOOS=linux GOARCH=arm64 $(GO) build -o build/kcl/bin/kcl -trimpath -ldflags="$(LDFLAGS)" $(MAIN_FILE)
+	GOOS=linux GOARCH=arm64 $(GO) build -o build/kcl/bin/kcl -trimpath -ldflags="$(LDFLAGS)" -tags="$(TAGS)" $(MAIN_FILE)
 	tar -C build/ -zcvf $(CURDIR)/release/kcl-linux-arm64.tgz kcl/
-	GOOS=darwin GOARCH=amd64 $(GO) build -o build/kcl/bin/kcl -trimpath -ldflags="$(LDFLAGS)" $(MAIN_FILE)
+	GOOS=darwin GOARCH=amd64 $(GO) build -o build/kcl/bin/kcl -trimpath -ldflags="$(LDFLAGS)" -tags="$(TAGS)" $(MAIN_FILE)
 	tar -C build/ -zcvf $(CURDIR)/release/kcl-macos-amd64.tgz kcl/
-	GOOS=darwin GOARCH=arm64 $(GO) build -o build/kcl/bin/kcl -trimpath -ldflags="$(LDFLAGS)" $(MAIN_FILE)
+	GOOS=darwin GOARCH=arm64 $(GO) build -o build/kcl/bin/kcl -trimpath -ldflags="$(LDFLAGS)" -tags="$(TAGS)" $(MAIN_FILE)
 	tar -C build/ -zcvf $(CURDIR)/release/kcl-macos-arm64.tgz kcl/
 	rm build/kcl/bin/kcl
-	GOOS=windows GOARCH=amd64 $(GO) build -o build/kcl/bin/kcl.exe -trimpath -ldflags="$(LDFLAGS)" $(MAIN_FILE)
+	GOOS=windows GOARCH=amd64 $(GO) build -o build/kcl/bin/kcl.exe -trimpath -ldflags="$(LDFLAGS)" -tags="$(TAGS)" $(MAIN_FILE)
 	tar -C build/ -zcvf $(CURDIR)/release/kcl-windows-amd64.tgz kcl/
 
 .PHONY: release
