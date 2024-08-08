@@ -73,7 +73,7 @@ type RunOptions struct {
 	Branch string
 	// CompileOnly is used to check a local package and all of its dependencies for errors.
 	CompileOnly bool
-	// Format is the output type, e.g., Json, Yaml, etc. Default is Yaml.
+	// Format is the output type, e.g., Json, Yaml, Toml etc. Default is Yaml.
 	Format string
 	// Writer is used to output the run result. Default is os.Stdout.
 	Writer io.Writer
