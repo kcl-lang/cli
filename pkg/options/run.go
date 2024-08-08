@@ -110,10 +110,6 @@ func (o *RunOptions) Run() error {
 			err = releaseErr
 		}
 	}()
-	if o.Quiet {
-		cli.SetLogWriter(nil)
-	}
-
 	result, err = cli.Run(
 		client.WithRunSourceUrls(o.Entries),
 		client.WithSettingFiles(o.Settings),
