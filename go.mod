@@ -10,7 +10,7 @@ require (
 	github.com/onsi/gomega v1.34.1
 	github.com/spf13/cobra v1.8.1
 	kcl-lang.io/kcl-go v0.10.0-alpha.3
-	kcl-lang.io/kcl-openapi v0.6.5
+	kcl-lang.io/kcl-openapi v0.6.6
 	kcl-lang.io/kpm v0.10.0-alpha.1
 )
 
