@@ -96,8 +96,13 @@ scenarios. The KCL website: https://kcl-lang.io
 
 // New creates a new cobra client
 func New() *cobra.Command {
+	return NewWithName(cmdName)
+}
+
+// NewWithName creates a new KCL CLI with the name
+func NewWithName(name string) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:           cmdName,
+		Use:           name,
 		Short:         "The KCL Command Line Interface (CLI).",
 		Long:          rootDesc,
 		SilenceUsage:  true,
