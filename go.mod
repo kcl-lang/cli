@@ -12,7 +12,7 @@ require (
 	kcl-lang.io/kcl-go v0.9.3
 	kcl-lang.io/kcl-openapi v0.6.6
 	kcl-lang.io/kcl-playground v0.5.1
-	kcl-lang.io/kpm v0.9.7
+	kcl-lang.io/kpm v0.9.8
 )
 
 require (
