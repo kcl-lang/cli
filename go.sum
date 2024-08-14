@@ -436,8 +436,8 @@ github.com/go-openapi/analysis v0.23.0 h1:aGday7OWupfMs+LbmLZG4k0MYXIANxcuBTYUC0
 github.com/go-openapi/analysis v0.23.0/go.mod h1:9mz9ZWaSlV8TvjQHLl2mUW2PbZtemkE8yA5v22ohupo=
 github.com/go-openapi/errors v0.22.0 h1:c4xY/OLxUBSTiepAg3j/MHuAv5mJhnf53LLMWFB+u/w=
 github.com/go-openapi/errors v0.22.0/go.mod h1:J3DmZScxCDufmIMsdOuDHxJbdOGC0xtUynjIx092vXE=
-github.com/go-openapi/inflect v0.19.0 h1:9jCH9scKIbHeV9m12SmPilScz6krDxKRasNNSNPXu/4=
-github.com/go-openapi/inflect v0.19.0/go.mod h1:lHpZVlpIQqLyKwJ4N+YSc9hchQy/i12fJykb83CRBH4=
+github.com/go-openapi/inflect v0.21.0 h1:FoBjBTQEcbg2cJUWX6uwL9OyIW8eqc9k4KhN4lfbeYk=
+github.com/go-openapi/inflect v0.21.0/go.mod h1:INezMuUu7SJQc2AyR3WO0DqqYUJSj8Kb4hBd7WtjlAw=
 github.com/go-openapi/jsonpointer v0.19.3/go.mod h1:Pl9vOtqEWErmShwVjC8pYs9cog34VGT37dQOVbmoatg=
 github.com/go-openapi/jsonpointer v0.19.5/go.mod h1:Pl9vOtqEWErmShwVjC8pYs9cog34VGT37dQOVbmoatg=
 github.com/go-openapi/jsonpointer v0.21.0 h1:YgdVicSA9vH5RiHs9TZW5oyafXZFc6+2Vc1rr/O9oNQ=
@@ -1690,10 +1690,10 @@ k8s.io/utils v0.0.0-20210802155522-efc7438f0176/go.mod h1:jPW/WVKK9YHAvNhRxK0md/
 k8s.io/utils v0.0.0-20220210201930-3a6ce19ff2f9/go.mod h1:jPW/WVKK9YHAvNhRxK0md/EJ228hCsBRufyofKtW8HA=
 k8s.io/utils v0.0.0-20230406110748-d93618cff8a2 h1:qY1Ad8PODbnymg2pRbkyMT/ylpTrCM8P2RJ0yroCyIk=
 k8s.io/utils v0.0.0-20230406110748-d93618cff8a2/go.mod h1:OLgZIPagt7ERELqWJFomSt595RzquPNLL48iOWgYOg0=
-kcl-lang.io/kcl-go v0.10.0-alpha.3 h1:01grUuyy/XfBZDRoMqUesU6OdzVPk0WF9WDOvuY70ZI=
-kcl-lang.io/kcl-go v0.10.0-alpha.3/go.mod h1:kfHDBqsLNT+9T6VorS/EVbriZzix1rjIq0w6WCJ7GbA=
-kcl-lang.io/kcl-openapi v0.6.6 h1:iTsPTh1T6jDdwCKFFP6def9r66Sq8nAbATEbIL+XT+8=
-kcl-lang.io/kcl-openapi v0.6.6/go.mod h1:Ai9mFztCVKkRSFabczO/r5hCNdqaNtAc2ZIRxTeV0Mk=
+kcl-lang.io/kcl-go v0.10.0-alpha.4 h1:lfR8nom+uP9+N5JnONf8I1Sb2uTNNecJSx7Yw+NXq/k=
+kcl-lang.io/kcl-go v0.10.0-alpha.4/go.mod h1:eJa+MHlbkjnUpZStaw0jxWI05PPkPIAokrQFI/OMPTY=
+kcl-lang.io/kcl-openapi v0.7.0 h1:0LL4d8UdZQ+H9n+2s2plDrKv9Ntr/2x1znpWYcXaN5c=
+kcl-lang.io/kcl-openapi v0.7.0/go.mod h1:ifq8MrgYQVIkJZctPYWgOxlR0+RSpSYgvEPW1/zMdEU=
 kcl-lang.io/kcl-plugin v0.6.0 h1:rBdoqKDPdOtojeOHCFnXoB/I7ltFjV61r0KkfOcL5sE=
 kcl-lang.io/kcl-plugin v0.6.0/go.mod h1:LoIouleHYRKAvFcdW30yUlhsMYH2W9zD5Ji1XHfbht4=
 kcl-lang.io/kpm v0.10.0-alpha.3 h1:1lFC63/CEOFFEhyyAw6QVLTubru6c/HHC2H/axqiZVg=

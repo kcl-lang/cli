@@ -9,8 +9,8 @@ require (
 	github.com/onsi/ginkgo/v2 v2.20.0
 	github.com/onsi/gomega v1.34.1
 	github.com/spf13/cobra v1.8.1
-	kcl-lang.io/kcl-go v0.10.0-alpha.3
-	kcl-lang.io/kcl-openapi v0.6.6
+	kcl-lang.io/kcl-go v0.10.0-alpha.4
+	kcl-lang.io/kcl-openapi v0.7.0
 	kcl-lang.io/kcl-plugin v0.6.0
 	kcl-lang.io/kpm v0.10.0-alpha.3
 )
@@ -106,7 +106,7 @@ require (
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-openapi/analysis v0.23.0 // indirect
 	github.com/go-openapi/errors v0.22.0 // indirect
-	github.com/go-openapi/inflect v0.19.0 // indirect
+	github.com/go-openapi/inflect v0.21.0 // indirect
 	github.com/go-openapi/jsonpointer v0.21.0 // indirect
 	github.com/go-openapi/jsonreference v0.21.0 // indirect
 	github.com/go-openapi/loads v0.22.0 // indirect
