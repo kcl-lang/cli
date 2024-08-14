@@ -95,7 +95,7 @@ func (o *ImportOptions) Run() error {
 			}
 			// Group by the api version
 			if mode == Crd {
-				err := crd.GroupByKclFiles(opts.ModelPackage)
+				err := crd.GroupByKclFiles(opts.Target, opts.ModelPackage)
 				if err != nil {
 					return err
 				}
