@@ -33,7 +33,8 @@ const unknownVersion = "unknown"
 //
 // Parameters:
 // - baseDir: The base directory to search for files.
-func GroupByKclFiles(baseDir string) error {
+func GroupByKclFiles(target string, packageName string) error {
+	baseDir := filepath.Join(target, packageName)
 	entries, err := os.ReadDir(baseDir)
 	if err != nil {
 		return err
