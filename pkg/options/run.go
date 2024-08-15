@@ -98,7 +98,7 @@ func (o *RunOptions) Run() error {
 	if o.Quiet {
 		cli.SetLogWriter(nil)
 	}
-	// acquire the lock of the package cache.
+	// Acquire the lock of the package cache.
 	err = cli.AcquirePackageCacheLock()
 	if err != nil {
 		return err
@@ -110,6 +110,18 @@ func (o *RunOptions) Run() error {
 			err = releaseErr
 		}
 	}()
+	// Generate temp entries from os.Stdin
+	tempEntries := []string{}
+	for i, entry := range o.Entries {
+		if entry == "-" {
+			entry, err := fs.GenTempFileFromStdin()
+			if err != nil {
+				return err
+			}
+			tempEntries = append(tempEntries, entry)
+			o.Entries[i] = entry
+		}
+	}
 	result, err = cli.Run(
 		client.WithRunSourceUrls(o.Entries),
 		client.WithSettingFiles(o.Settings),
@@ -132,6 +144,10 @@ func (o *RunOptions) Run() error {
 			err = errors.New(stripansi.Strip(err.Error()))
 		}
 		return err
+	}
+	// Remove temp entries
+	for _, entry := range tempEntries {
+		_ = os.Remove(entry)
 	}
 	return o.writeResult(result)
 }
