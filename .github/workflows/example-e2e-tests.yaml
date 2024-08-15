@@ -1,4 +1,4 @@
-name: example-e2e-test
+name: example-e2e-tests
 on:
   pull_request:
     branches:
@@ -22,7 +22,7 @@ jobs:
         shell: bash -ieo pipefail {0}
         run: PATH=$PATH:$HOME/go/bin ./examples/test.sh
 
-      - name: run concurrent e2e
+      - name: Run concurrent e2e tests
         run: PATH=$PATH:$HOME/go/bin ./scripts/concurrent_test.sh
 
   macos:
@@ -46,7 +46,7 @@ jobs:
         shell: bash -ieo pipefail {0}
         run: PATH=$PATH:$HOME/go/bin ./examples/test.sh
 
-      - name: run concurrent e2e
+      - name: Run concurrent e2e tests
         run: PATH=$PATH:$HOME/go/bin ./scripts/concurrent_test.sh
 
   windows:

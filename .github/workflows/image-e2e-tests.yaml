@@ -1,0 +1,30 @@
+name: image-e2e-tests
+on:
+  pull_request:
+    branches:
+     - main
+  push:
+    branches:
+     - main
+
+jobs:
+  build-and-test:
+    name: Test
+    runs-on: ubuntu-latest
+    container: 
+      image: kcllang/kcl
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+         submodules: 'true'
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - name: Install dependencies
+        run: apt update && apt install make
+      - name: Example tests
+        run: ./examples/test.sh
+      - name: Run concurrent e2e tests
+        run: ./scripts/concurrent_test.sh
