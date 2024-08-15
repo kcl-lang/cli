@@ -7,6 +7,18 @@ import (
 	"path/filepath"
 )
 
+func GenTempFileFromStdin() (string, error) {
+	tempFile, err := os.CreateTemp("", "stdin")
+	if err != nil {
+		return "", err
+	}
+	_, err = io.Copy(tempFile, os.Stdin)
+	if err != nil {
+		return "", err
+	}
+	return tempFile.Name(), nil
+}
+
 func GetAllFilesInFolder(folderPath string, recursive bool) ([]string, error) {
 	var fileList []string
 
