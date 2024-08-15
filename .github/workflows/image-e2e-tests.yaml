@@ -22,6 +22,10 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version-file: go.mod
+      - name: Show KCL version
+        run: kcl version
+      - name: test Git deps
+        run: git clone https://github.com/kcl-lang/flask-demo-kcl-manifests
       - name: Install dependencies
         run: apt update && apt install make
       - name: Example tests
