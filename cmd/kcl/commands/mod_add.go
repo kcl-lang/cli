@@ -18,10 +18,10 @@ import (
 const (
 	modAddDesc = `This command adds new dependency
 `
-	modAddExample = `  # Add the module dependency named "k8s"
+	modAddExample = `  # Add the module dependency named "k8s" from the default OCI registry
   kcl mod add k8s
 
-  # Add the module dependency named "k8s" with the version "1.28"
+  # Add the module dependency named "k8s" with the version "1.28" from the default OCI registry
   kcl mod add k8s:1.28
 
   # Add the module dependency from the GitHub by git url
@@ -33,10 +33,13 @@ const (
   # Add the module dependency from the local file system by file url
   kcl mod add /path/to/another_module
 
-  # Add the module dependency from the GitHub by flag
+  # Add the module dependency from the GitHub by the tag flag
   kcl mod add --git https://github.com/kcl-lang/konfig --tag v0.4.0
 
-  # Add the module dependency from the OCI Registry by flag
+  # Add the sub module dependency named "helloworld" from the Git repo by the tag flag
+  kcl mod add helloworld --git https://github.com/kcl-lang/modules --tag v0.1.0
+
+  # Add the module dependency from the OCI registry named "" by the tag flag
   kcl mod add --oci https://ghcr.io/kcl-lang/helloworld --tag 0.1.0`
 )
 
@@ -58,6 +61,7 @@ func NewModAddCmd(cli *client.KpmClient) *cobra.Command {
 	cmd.Flags().StringVar(&tag, "tag", "", "git or oci repository tag")
 	cmd.Flags().StringVar(&commit, "commit", "", "git repository commit")
 	cmd.Flags().StringVar(&branch, "branch", "", "git repository branch")
+	cmd.Flags().StringVar(&path, "path", "", "filesystem path to local dependency to add")
 	cmd.Flags().StringVar(&rename, "rename", "", "rename the dependency")
 	cmd.Flags().BoolVar(&noSumCheck, "no_sum_check", false, "do not check the checksum of the package and update kcl.mod.lock")
 
@@ -133,73 +137,80 @@ func ModAdd(cli *client.KpmClient, args []string) error {
 // parseAddOptions will parse the user cli inputs.
 func parseAddOptions(cli *client.KpmClient, localPath string, args []string) (*opt.AddOptions, error) {
 	// parse the CLI command with the following style
+	// kcl mod add <package>
+	// kcl mod add <package>:<version>
+	// kcl mod add /path/to/xxx
+	// kcl mod add https://xxx/xxx --tag 0.0.1
+	// kcl mod add oci://xxx/xxx --tag 0.0.1
+	//
 	// kcl mod add --git https://xxx/xxx --tag 0.0.1
+	// kcl mod add <sub_package> --git https://xxx/xxx --tag 0.0.1
 	// kcl mod add --oci https://xxx/xxx --tag 0.0.1
+	// kcl mod add <sub_package> --oci https://xxx/xxx --tag 0.0.1
 	// kcl mod add --path /path/to/xxx
-	if len(args) == 0 {
-		if len(git) != 0 {
-			gitUrl, err := url.Parse(git)
-			if err != nil {
-				return nil, err
-			}
-			gitOpt := opt.NewGitOptionsFromUrl(gitUrl)
-			if gitOpt == nil {
-				return nil, fmt.Errorf("invalid git url '%s'", git)
-			}
-
-			gitOpt.Tag = tag
-			gitOpt.Commit = commit
-			gitOpt.Branch = branch
-
-			return &opt.AddOptions{
-				LocalPath:    localPath,
-				RegistryOpts: opt.RegistryOptions{Git: gitOpt},
-				NoSumCheck:   noSumCheck,
-				NewPkgName:   rename,
-			}, nil
-		} else if len(oci) != 0 {
-			ociUrl, err := url.Parse(oci)
-			if err != nil {
-				return nil, err
-			}
-			ociOpt := opt.NewOciOptionsFromUrl(ociUrl)
-			if ociOpt == nil {
-				return nil, fmt.Errorf("invalid oci url '%s'", oci)
-			}
-			ociOpt.Tag = tag
-
-			return &opt.AddOptions{
-				LocalPath:    localPath,
-				RegistryOpts: opt.RegistryOptions{Oci: ociOpt},
-				NoSumCheck:   noSumCheck,
-				NewPkgName:   rename,
-			}, nil
-		} else if len(path) != 0 {
-			pathUrl, err := url.Parse(path)
-			if err != nil {
-				return nil, err
-			}
-
-			pathOpt, err := opt.NewLocalOptionsFromUrl(pathUrl)
-			if err != (*reporter.KpmEvent)(nil) {
-				return nil, err
-			}
-
-			return &opt.AddOptions{
-				LocalPath:    localPath,
-				RegistryOpts: opt.RegistryOptions{Local: pathOpt},
-				NoSumCheck:   noSumCheck,
-				NewPkgName:   rename,
-			}, nil
+	// kcl mod add <sub_package> --path /path/to/xxx
+	if len(git) != 0 {
+		gitUrl, err := url.Parse(git)
+		if err != nil {
+			return nil, err
 		}
+		gitOpts := opt.NewGitOptionsFromUrl(gitUrl)
+		if gitOpts == nil {
+			return nil, fmt.Errorf("invalid git url '%s'", git)
+		}
+		gitOpts.Tag = tag
+		gitOpts.Commit = commit
+		gitOpts.Branch = branch
+		// Git sub package.
+		if len(args) > 0 {
+			gitOpts.Package = args[len(args)-1]
+		}
+		return &opt.AddOptions{
+			LocalPath:    localPath,
+			RegistryOpts: opt.RegistryOptions{Git: gitOpts},
+			NoSumCheck:   noSumCheck,
+			NewPkgName:   rename,
+		}, nil
+	} else if len(oci) != 0 {
+		ociUrl, err := url.Parse(oci)
+		if err != nil {
+			return nil, err
+		}
+		ociOpts := opt.NewOciOptionsFromUrl(ociUrl)
+		if ociOpts == nil {
+			return nil, fmt.Errorf("invalid oci url '%s'", oci)
+		}
+		ociOpts.Tag = tag
+		// OCI sub package
+		if len(args) > 0 {
+			ociOpts.Package = args[len(args)-1]
+		}
+		return &opt.AddOptions{
+			LocalPath:    localPath,
+			RegistryOpts: opt.RegistryOptions{Oci: ociOpts},
+			NoSumCheck:   noSumCheck,
+			NewPkgName:   rename,
+		}, nil
+	} else if len(path) != 0 {
+		pathUrl, err := url.Parse(path)
+		if err != nil {
+			return nil, err
+		}
+		pathOpts, err := opt.NewLocalOptionsFromUrl(pathUrl)
+		if err != (*reporter.KpmEvent)(nil) {
+			return nil, err
+		}
+		// Local path sub package
+		if len(args) > 0 {
+			pathOpts.Package = args[len(args)-1]
+		}
+		return &opt.AddOptions{
+			LocalPath:    localPath,
+			RegistryOpts: opt.RegistryOptions{Local: pathOpts},
+			NoSumCheck:   noSumCheck,
+			NewPkgName:   rename,
+		}, nil
 	} else {
-		// parse the CLI command with the following style
-		// kcl mod add k8s
-		// kcl mod add k8s:0.0.1
-		// kcl mod add /path/to/xxx
-		// kcl mod add https://xxx/xxx --tag 0.0.1
-		// kcl mod add oci://xxx/xxx --tag 0.0.1
-
 		localPkg, err := parseLocalPathOptions(args)
 		pkgSource := argsGet(args, 0)
 		if err != (*reporter.KpmEvent)(nil) {
@@ -232,8 +243,6 @@ func parseAddOptions(cli *client.KpmClient, localPath string, args []string) (*o
 			}, nil
 		}
 	}
-
-	return nil, fmt.Errorf("invalid add options")
 }
 
 // parseLocalPathOptions will parse the local path information from user cli inputs.
