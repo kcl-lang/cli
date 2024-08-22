@@ -20,7 +20,10 @@ const (
 `
 	modPushExample = `  # Push the current module to the registry
   kcl mod push
-  
+
+  # Push the current module to the specified registry
+  kcl mod push oci://ghcr.io/<some_repo>/<some_package>
+
   # Push the current module to the registry in the vendor mode
   kcl mod push --vendor`
 )
