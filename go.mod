@@ -6,7 +6,7 @@ toolchain go1.22.5
 
 require (
 	github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d
-	github.com/onsi/ginkgo/v2 v2.20.0
+	github.com/onsi/ginkgo/v2 v2.20.1
 	github.com/onsi/gomega v1.34.1
 	github.com/spf13/cobra v1.8.1
 	kcl-lang.io/kcl-go v0.10.0-beta.2
