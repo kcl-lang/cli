@@ -226,6 +226,10 @@ func parseAddOptions(cli *client.KpmClient, localPath string, args []string) (*o
 				regOpt.Git.Branch = branch
 			} else if regOpt.Oci != nil && len(tag) != 0 {
 				regOpt.Oci.Tag = tag
+			} else if regOpt.Registry != nil && len(tag) != 0 {
+				if regOpt.Registry.Tag == "" {
+					regOpt.Registry.Tag = tag
+				}
 			}
 
 			return &opt.AddOptions{
