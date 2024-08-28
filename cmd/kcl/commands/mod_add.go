@@ -226,23 +226,10 @@ func parseAddOptions(cli *client.KpmClient, localPath string, args []string) (*o
 				regOpt.Git.Branch = branch
 			} else if regOpt.Oci != nil && len(tag) != 0 {
 				regOpt.Oci.Tag = tag
-			} else if regOpt.Registry != nil {
-				var invalidFlag string
-				if len(tag) != 0 {
-					invalidFlag = tag
-				} else if len(commit) != 0 {
-					invalidFlag = commit
-				} else if len(branch) != 0 {
-					invalidFlag = branch
+			} else if regOpt.Registry != nil && len(tag) != 0 {
+				if regOpt.Registry.Tag == "" {
+					regOpt.Registry.Tag = tag
 				}
-				var diagMsg string
-				if len(invalidFlag) != 0 {
-					diagMsg = fmt.Sprintf("invalid flag '%s' for oci registry ref", invalidFlag)
-				}
-				if len(tag) != 0 {
-					diagMsg = fmt.Sprintf("%s, try 'kcl mod add %s:%s'", diagMsg, pkgSource, tag)
-				}
-				return nil, fmt.Errorf(diagMsg)
 			}
 
 			return &opt.AddOptions{
