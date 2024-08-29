@@ -37,7 +37,10 @@ For example, 'kcl run path/to/kcl.k' will run the file named path/to/kcl.k
   kcl run --oci https://ghcr.io/kcl-lang/helloworld --tag 0.1.0
 
   # Run remote module from Git with branch repo by flag
-  kcl run --git https://github.com/kcl-lang/flask-demo-kcl-manifests --branch main`
+  kcl run --git https://github.com/kcl-lang/flask-demo-kcl-manifests --branch main
+
+  # Run remote module from Git with branch repo by flag with ssh url
+  kcl run --git ssh://github.com/kcl-lang/flask-demo-kcl-manifests --branch main`
 )
 
 // NewRunCmd returns the run command.

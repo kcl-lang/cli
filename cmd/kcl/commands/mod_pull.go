@@ -24,6 +24,9 @@ const (
   # Pull the module from the Git by flag
   kcl mod pull --git https://github.com/kcl-lang/konfig --tag v0.4.0
 
+  # Pull the module from the Git by flag with ssh url
+  kcl mod pull --git ssh://github.com/kcl-lang/konfig --tag v0.4.0
+
   # Pull the module from the OCI Registry by flag
   kcl mod pull --oci https://ghcr.io/kcl-lang/helloworld --tag 0.1.0`
 )
