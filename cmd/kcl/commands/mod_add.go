@@ -39,6 +39,9 @@ const (
   # Add the sub module dependency named "helloworld" from the Git repo by the tag flag
   kcl mod add helloworld --git https://github.com/kcl-lang/modules --tag v0.1.0
 
+  # Add the sub module dependency named "helloworld" from the Git repo by the tag flag with ssh url
+  kcl mod add helloworld --git ssh://github.com/kcl-lang/modules --tag v0.1.0
+
   # Add the module dependency from the OCI registry named "" by the tag flag
   kcl mod add --oci https://ghcr.io/kcl-lang/helloworld --tag 0.1.0`
 )
