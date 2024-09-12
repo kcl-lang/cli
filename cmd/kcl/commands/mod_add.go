@@ -67,6 +67,7 @@ func NewModAddCmd(cli *client.KpmClient) *cobra.Command {
 	cmd.Flags().StringVar(&path, "path", "", "filesystem path to local dependency to add")
 	cmd.Flags().StringVar(&rename, "rename", "", "rename the dependency")
 	cmd.Flags().BoolVar(&noSumCheck, "no_sum_check", false, "do not check the checksum of the package and update kcl.mod.lock")
+	cmd.Flags().BoolVar(&insecureSkipTLSverify, "insecure-skip-tls-verify", false, "skip tls certificate checks for the KCL module download")
 
 	return cmd
 }
@@ -85,6 +86,8 @@ func ModAdd(cli *client.KpmClient, args []string) error {
 			err = releaseErr
 		}
 	}()
+
+	cli.SetInsecureSkipTLSverify(insecureSkipTLSverify)
 
 	pwd, err := os.Getwd()
 

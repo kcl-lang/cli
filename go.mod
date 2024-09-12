@@ -9,10 +9,11 @@ require (
 	github.com/onsi/ginkgo/v2 v2.20.2
 	github.com/onsi/gomega v1.34.2
 	github.com/spf13/cobra v1.8.1
+	github.com/stretchr/testify v1.9.0
 	kcl-lang.io/kcl-go v0.10.0-rc.1
 	kcl-lang.io/kcl-openapi v0.9.0
 	kcl-lang.io/kcl-plugin v0.6.0
-	kcl-lang.io/kpm v0.10.0-rc.1
+	kcl-lang.io/kpm v0.10.0-rc.1.0.20240909165207-aca7d7a8a890
 )
 
 require (
@@ -31,6 +32,7 @@ require (
 	github.com/containers/libtrust v0.0.0-20230121012942-c1716e8a8d01 // indirect
 	github.com/containers/ocicrypt v1.2.0 // indirect
 	github.com/containers/storage v1.55.0 // indirect
+	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/distribution/reference v0.6.0 // indirect
 	github.com/elliotchance/orderedmap/v2 v2.4.0 // indirect
 	github.com/emicklei/proto v1.13.2 // indirect
@@ -52,6 +54,7 @@ require (
 	github.com/moby/sys/mountinfo v0.7.2 // indirect
 	github.com/moby/sys/user v0.2.0 // indirect
 	github.com/opencontainers/runtime-spec v1.2.0 // indirect
+	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/protocolbuffers/txtpbfmt v0.0.0-20240416193709-1e18ef0a7fdc // indirect
 	github.com/syndtr/gocapability v0.0.0-20200815063812-42c35b437635 // indirect
 	github.com/ulikunitz/xz v0.5.12 // indirect

@@ -50,6 +50,7 @@ func NewModPullCmd(cli *client.KpmClient) *cobra.Command {
 	cmd.Flags().StringVar(&tag, "tag", "", "git or oci repository tag")
 	cmd.Flags().StringVar(&commit, "commit", "", "git repository commit")
 	cmd.Flags().StringVar(&branch, "branch", "", "git repository branch")
+	cmd.Flags().BoolVar(&insecureSkipTLSverify, "insecure-skip-tls-verify", false, "skip tls certificate checks for the KCL module download")
 
 	return cmd
 }
@@ -64,6 +65,7 @@ func pull(cli *client.KpmClient, args []string, localPath string) error {
 		return err
 	}
 
+	cli.SetInsecureSkipTLSverify(insecureSkipTLSverify)
 	_, err = cli.Pull(
 		client.WithPullSource(source),
 		client.WithLocalPath(localPath),

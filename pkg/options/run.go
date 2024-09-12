@@ -49,6 +49,8 @@ type RunOptions struct {
 	NoStyle bool
 	// Quiet denotes disabling all the output information.
 	Quiet bool
+	// InsecureSkipTLSverify denotes skipping the TLS verification.
+	InsecureSkipTLSverify bool
 	// Vendor denotes running kcl in the vendor mode.
 	Vendor bool
 	// SortKeys denotes sorting the output result keys, e.g., `{b = 1, a = 2} => {a = 2, b = 1}`.
@@ -98,6 +100,7 @@ func (o *RunOptions) Run() error {
 	if o.Quiet {
 		cli.SetLogWriter(nil)
 	}
+	cli.SetInsecureSkipTLSverify(o.InsecureSkipTLSverify)
 	// Acquire the lock of the package cache.
 	err = cli.AcquirePackageCacheLock()
 	if err != nil {

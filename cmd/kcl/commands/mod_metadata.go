@@ -38,6 +38,7 @@ func NewModMetadataCmd(cli *client.KpmClient) *cobra.Command {
 			}
 
 			cli.SetLogWriter(nil)
+			cli.SetInsecureSkipTLSverify(insecureSkipTLSverify)
 			kclPkg, err := cli.LoadPkgFromPath(pwd)
 			if err != nil {
 				return err
@@ -76,6 +77,7 @@ func NewModMetadataCmd(cli *client.KpmClient) *cobra.Command {
 
 	cmd.Flags().BoolVar(&vendor, "vendor", false, "run in vendor mode (default: false)")
 	cmd.Flags().BoolVar(&update, "update", false, "check the local package and update and download the local package. (default: false)")
+	cmd.Flags().BoolVar(&insecureSkipTLSverify, "insecure-skip-tls-verify", false, "skip tls certificate checks for the KCL module download")
 
 	return cmd
 }

@@ -43,11 +43,13 @@ func NewModPushCmd(cli *client.KpmClient) *cobra.Command {
 
 	cmd.Flags().BoolVar(&vendor, "vendor", false, "run in vendor mode (default: false)")
 	cmd.Flags().StringVar(&target, "tar_path", "", "packaged target path that will be pushed")
+	cmd.Flags().BoolVar(&insecureSkipTLSverify, "insecure-skip-tls-verify", false, "skip tls certificate checks for the KCL module download")
 
 	return cmd
 }
 
 func ModPush(cli *client.KpmClient, args []string) error {
+	cli.SetInsecureSkipTLSverify(insecureSkipTLSverify)
 	localTarPath := target
 	ociUrl := argsGet(args, 0)
 

@@ -35,7 +35,7 @@ func NewRegistryLoginCmd(cli *client.KpmClient) *cobra.Command {
 			if err != nil {
 				return err
 			}
-
+			cli.SetInsecureSkipTLSverify(insecureSkipTLSverify)
 			err = cli.LoginOci(registry, username, password)
 			if err != nil {
 				return err
@@ -50,6 +50,6 @@ func NewRegistryLoginCmd(cli *client.KpmClient) *cobra.Command {
 
 	cmd.Flags().StringVarP(&username, "username", "u", "", "registry username")
 	cmd.Flags().StringVarP(&password, "password", "p", "", "registry password or identity token")
-
+	cmd.Flags().BoolVar(&insecureSkipTLSverify, "insecure-skip-tls-verify", false, "skip tls verification")
 	return cmd
 }
