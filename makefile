@@ -36,6 +36,7 @@ test:
 .PHONY: e2e-test
 e2e-test:
 	./examples/test.sh
+	go test -gcflags=all=-l -timeout=20m `go list ./cmd/...` -coverprofile $(COVER_FILE) ${TEST_FLAGS} -v
 
 .PHONY: cover
 cover: ## Generates coverage report

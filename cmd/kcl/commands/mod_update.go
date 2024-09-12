@@ -34,6 +34,7 @@ func NewModUpdateCmd(cli *client.KpmClient) *cobra.Command {
 	}
 
 	cmd.Flags().BoolVar(&noSumCheck, "no_sum_check", false, "do not check the checksum of the package and update kcl.mod.lock")
+	cmd.Flags().BoolVar(&insecureSkipTLSverify, "insecure-skip-tls-verify", false, "skip tls certificate checks for the KCL module download")
 
 	return cmd
 }
@@ -49,6 +50,7 @@ func ModUpdate(cli *client.KpmClient, args []string) error {
 		pkgPath = pwd
 	}
 	cli.SetNoSumCheck(noSumCheck)
+	cli.SetInsecureSkipTLSverify(insecureSkipTLSverify)
 	kclPkg, err := cli.LoadPkgFromPath(pkgPath)
 	if err != nil {
 		return err

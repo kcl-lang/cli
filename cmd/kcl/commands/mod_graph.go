@@ -33,10 +33,13 @@ func NewModGraphCmd(cli *client.KpmClient) *cobra.Command {
 		},
 		SilenceUsage: true,
 	}
+
+	cmd.Flags().BoolVar(&insecureSkipTLSverify, "insecure-skip-tls-verify", false, "skip tls certificate checks for the KCL module download")
 	return cmd
 }
 
 func ModGraph(cli *client.KpmClient, args []string) error {
+	cli.SetInsecureSkipTLSverify(insecureSkipTLSverify)
 	// acquire the lock of the package cache.
 	err := cli.AcquirePackageCacheLock()
 	if err != nil {
