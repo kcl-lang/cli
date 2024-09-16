@@ -10,7 +10,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"kcl-lang.io/cli/pkg/fs"
-	"kcl-lang.io/kcl-go/pkg/service"
+	"kcl-lang.io/kcl-go/pkg/kcl"
 	"kcl-lang.io/kcl-go/pkg/spec/gpyrpc"
 	"kcl-lang.io/kcl-go/pkg/tools/validate"
 )
@@ -95,7 +95,7 @@ func validateFile(dataFile, codeFile string, opts *validate.ValidateOptions) (ok
 	if opts == nil {
 		opts = &validate.ValidateOptions{}
 	}
-	client := service.NewKclvmServiceClient()
+	client := kcl.Service()
 	resp, err := client.ValidateCode(&gpyrpc.ValidateCode_Args{
 		Datafile:      dataFile,
 		File:          codeFile,
