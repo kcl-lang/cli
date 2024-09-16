@@ -8,67 +8,32 @@ before:
 
 # .goreleaser.yml
 builds:
-  - id: goreleaser-zig-cross-compilation-macos
+  - id: default
     main: ./cmd/kcl/main.go
     binary: kcl
     goos:
       - darwin
-    goarch:
-      - amd64
-      - arm64
-    ldflags:
-      - "-X kcl-lang.io/cli/pkg/version.version={{.Version}}"
-    env:
-    - CGO_ENABLED=1
-    - >-
-        {{- if eq .Os "darwin" }}
-          {{- if eq .Arch "amd64"}}CC=zig c++ -target x86_64-macos-none -F{{ .Env.SDK_PATH }}/System/Library/Frameworks{{- end }}
-          {{- if eq .Arch "arm64"}}CC=zig c++ -target aarch64-macos-none -F{{ .Env.SDK_PATH }}/System/Library/Frameworks{{- end }}
-        {{- end }}
-
-  - id: goreleaser-zig-cross-compilation-linux
-    main: ./cmd/kcl/main.go
-    binary: kcl
-    goos:
       - linux
+      - windows
     goarch:
       - amd64
       - arm64
+    flags: 
+    - -tags=rpc
     ldflags:
       - "-X kcl-lang.io/cli/pkg/version.version={{.Version}}"
-    env:
-    - CGO_ENABLED=1
-    - >-
-        {{- if eq .Os "linux" }}
-          {{- if eq .Arch "amd64" }}CC=zig c++ -target x86_64-linux-musl{{- end }}
-          {{- if eq .Arch "arm64"}}CC=zig c++ -target aarch64-linux-musl{{- end }}
-        {{- end }}
-
-  - id: goreleaser-zig-cross-compilation-windows
-    main: ./cmd/kcl/main.go
-    binary: kcl
-    goos:
-    - windows
-    goarch:
-    - amd64
-    ldflags:
-      - "-X kcl-lang.io/cli/pkg/version.version={{.Version}}"
-    env:
-    - CGO_ENABLED=1
-    - >-
-        {{- if eq .Os "windows" }}
-          {{- if eq .Arch "amd64" }}CC=zig c++ -target x86_64-windows-gnu{{- end }}
-          {{- if eq .Arch "arm64"}}CC=zig c++ -target aarch64-windows-gnu{{- end }}
-        {{- end }}
 
 archives:
-  - format: tar.gz
-    # this name template makes the OS and Arch compatible with the results of uname.
+  - id: default
+    builds:
+      - default
     name_template: "kcl-v{{ .Version }}-{{ .Os }}-{{ .Arch }}"
-    # use zip for windows archives
     format_overrides:
-    - goos: windows
-      format: zip
+      - goos: windows
+        format: zip
+    # Put kcl-language-server binaries into add to the kcl archive.
+    # files:
+    #   - ./bin/kcl-lsp-v{{ .Version }}-{{ .Os }}-{{ .Arch }}/*
 
 brews:
   - tap:

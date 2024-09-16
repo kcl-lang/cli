@@ -1,6 +1,8 @@
 module kcl-lang.io/cli
 
-go 1.23
+go 1.22.4
+
+toolchain go1.22.5
 
 require (
 	github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d
@@ -8,7 +10,7 @@ require (
 	github.com/onsi/gomega v1.34.2
 	github.com/spf13/cobra v1.8.1
 	github.com/stretchr/testify v1.9.0
-	kcl-lang.io/kcl-go v0.10.0-rc.2
+	kcl-lang.io/kcl-go v0.10.0-rc.1
 	kcl-lang.io/kcl-openapi v0.9.0
 	kcl-lang.io/kcl-plugin v0.6.0
 	kcl-lang.io/kpm v0.10.0-rc.1.0.20240913073358-31d2c0f714fb
@@ -70,7 +72,7 @@ require (
 	google.golang.org/genproto v0.0.0-20240227224415-6ceb2ff114de // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20240604185151-ef581f913117 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240701130421-f6361c86f094 // indirect
-	kcl-lang.io/lib v0.10.0-rc.2 // indirect
+	kcl-lang.io/lib v0.10.0-rc.1 // indirect
 )
 
 require (
