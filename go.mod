@@ -10,7 +10,7 @@ require (
 	github.com/onsi/gomega v1.34.2
 	github.com/spf13/cobra v1.8.1
 	github.com/stretchr/testify v1.9.0
-	kcl-lang.io/kcl-go v0.10.1
+	kcl-lang.io/kcl-go v0.10.2-0.20240918105252-6fc919ce5b6d
 	kcl-lang.io/kcl-openapi v0.9.0
 	kcl-lang.io/kcl-plugin v0.6.0
 	kcl-lang.io/kpm v0.10.0
@@ -34,6 +34,7 @@ require (
 	github.com/containers/storage v1.55.0 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/distribution/reference v0.6.0 // indirect
+	github.com/ebitengine/purego v0.7.1 // indirect
 	github.com/elliotchance/orderedmap/v2 v2.4.0 // indirect
 	github.com/emicklei/proto v1.13.2 // indirect
 	github.com/felixge/httpsnoop v1.0.4 // indirect
@@ -73,7 +74,7 @@ require (
 	google.golang.org/genproto v0.0.0-20240227224415-6ceb2ff114de // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20240604185151-ef581f913117 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240701130421-f6361c86f094 // indirect
-	kcl-lang.io/lib v0.10.0 // indirect
+	kcl-lang.io/lib v0.10.1-rc.3 // indirect
 )
 
 require (
@@ -158,7 +159,6 @@ require (
 	github.com/perimeterx/marshmallow v1.1.5 // indirect
 	github.com/pjbgf/sha1cd v0.3.0 // indirect
 	github.com/pkg/errors v0.9.1
-	github.com/powerman/rpc-codec v1.2.2 // indirect
 	github.com/prometheus/client_golang v1.20.0 // indirect
 	github.com/prometheus/client_model v0.6.1 // indirect
 	github.com/prometheus/common v0.55.0 // indirect

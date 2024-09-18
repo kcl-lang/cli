@@ -4,8 +4,7 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
-	"kcl-lang.io/kcl-go/pkg/runtime"
-	"kcl-lang.io/kcl-go/pkg/service"
+	"kcl-lang.io/kcl-go/pkg/server"
 )
 
 const (
@@ -37,8 +36,7 @@ func NewServerCmd() *cobra.Command {
 		Long:    serverDesc,
 		Example: serverExample,
 		RunE: func(_ *cobra.Command, args []string) error {
-			runtime.InitRuntime(processCount)
-			return service.RunRestServer(http)
+			return server.RunRestServer(http)
 		},
 		SilenceUsage: true,
 	}
