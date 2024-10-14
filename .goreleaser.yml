@@ -9,6 +9,8 @@ before:
 # .goreleaser.yml
 builds:
   - id: default
+    env:
+      - CGO_ENABLED=0
     main: ./cmd/kcl/main.go
     binary: kcl
     goos:
@@ -18,8 +20,6 @@ builds:
     goarch:
       - amd64
       - arm64
-    flags: 
-    - -tags=rpc
     ldflags:
       - "-X kcl-lang.io/cli/pkg/version.version={{.Version}}"
 

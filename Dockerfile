@@ -9,6 +9,8 @@ WORKDIR /src
 ARG TARGETOS
 ARG TARGETARCH
 
+ENV CGO_ENABLED=0
+
 RUN --mount=type=cache,target=/go/pkg --mount=type=cache,target=/root/.cache/go-build GOOS=${TARGETOS} GOARCH=${TARGETARCH} make build
 
 FROM --platform=${BUILDPLATFORM} ubuntu:22.04 AS base
@@ -20,16 +22,11 @@ ARG TARGETARCH
 
 COPY --from=build /src/bin/kcl /usr/local/bin/kcl
 RUN /usr/local/bin/kcl
-RUN cp -r /root/go/bin/* /usr/local/bin/
 RUN apt-get update && apt-get install make gcc git -y && rm -rf /var/lib/apt/lists/*
 # The reason for doing this below is to prevent the
 # container from not having write permissions.
 ENV KCL_PKG_PATH=/tmp
 ENV KCL_CACHE_PATH=/tmp
-# In the image, we can generate a runtime in advance to
-# avoid writing files in the image
-ENV KCL_GO_DISABLE_INSTALL_ARTIFACT=true
-ENV KCL_GO_DISABLE_ARTIFACT_IN_PATH=false
 # Install the tini
 ENV TINI_VERSION v0.19.0
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-${TARGETARCH} /tini
