@@ -4,4 +4,4 @@ edition = "0.0.1"
 version = "0.0.1"
 
 [dependencies]
-konfig = { git = "https://github.com/kcl-lang/konfig.git", tag = "v0.6.0" }
+konfig = { git = "https://github.com/kcl-lang/konfig.git", tag = "v0.10.0" }
