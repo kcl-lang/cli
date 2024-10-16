@@ -139,7 +139,7 @@ func (o *RunOptions) Run() error {
 		client.WithDebug(o.Debug),
 		client.WithStrictRange(o.StrictRangeCheck),
 		client.WithCompileOnly(o.CompileOnly),
-		client.WithLogger(o.Writer),
+		client.WithLogger(os.Stdout),
 	)
 
 	if err != nil {
