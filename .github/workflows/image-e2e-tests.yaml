@@ -32,3 +32,23 @@ jobs:
         run: ./examples/test.sh
       - name: Run concurrent e2e tests
         run: ./scripts/concurrent_test.sh
+
+  build-and-test-non-user:    
+    name: Test non user docker
+    runs-on: ubuntu-latest
+    steps:    
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          version: v0.11.2
+          install: true
+      - name: Test docker non-user
+        run: docker run --user=999 --rm kcllang/kcl sh -c "echo 'a=1' | kcl run -"

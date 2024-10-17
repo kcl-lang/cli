@@ -25,6 +25,7 @@ RUN /usr/local/bin/kcl
 RUN apt-get update && apt-get install make gcc git -y && rm -rf /var/lib/apt/lists/*
 # The reason for doing this below is to prevent the
 # container from not having write permissions.
+ENV KCL_LIB_HOME=/tmp
 ENV KCL_PKG_PATH=/tmp
 ENV KCL_CACHE_PATH=/tmp
 # Install the tini
