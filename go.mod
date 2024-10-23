@@ -10,7 +10,7 @@ require (
 	github.com/onsi/gomega v1.34.2
 	github.com/spf13/cobra v1.8.1
 	github.com/stretchr/testify v1.9.0
-	kcl-lang.io/kcl-go v0.10.3
+	kcl-lang.io/kcl-go v0.10.5
 	kcl-lang.io/kcl-openapi v0.9.0
 	kcl-lang.io/kcl-plugin v0.6.0
 	kcl-lang.io/kpm v0.10.0
@@ -74,7 +74,7 @@ require (
 	google.golang.org/genproto v0.0.0-20240227224415-6ceb2ff114de // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20240814211410-ddb44dafa142 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240814211410-ddb44dafa142 // indirect
-	kcl-lang.io/lib v0.10.3 // indirect
+	kcl-lang.io/lib v0.10.5 // indirect
 )
 
 require (
@@ -173,7 +173,7 @@ require (
 	github.com/ugorji/go/codec v1.2.11 // indirect
 	github.com/wk8/go-ordered-map/v2 v2.1.8 // indirect
 	github.com/xanzy/ssh-agent v0.3.3 // indirect
-	github.com/yuin/goldmark v1.7.4 // indirect
+	github.com/yuin/goldmark v1.7.8 // indirect
 	go.mongodb.org/mongo-driver v1.14.0 // indirect
 	go.opentelemetry.io/otel v1.28.0 // indirect
 	go.opentelemetry.io/otel/trace v1.28.0 // indirect
