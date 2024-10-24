@@ -76,11 +76,6 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Edit arm64 arch for Dockerfile
-        run: |
-          sed -i 's/ubuntu:22.04/arm64v8\/ubuntu:20.04/g' Dockerfile
-          echo "ENV KCL_FAST_EVAL=1" >> Dockerfile
-
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@v5
