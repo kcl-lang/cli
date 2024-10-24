@@ -13,15 +13,15 @@ ENV CGO_ENABLED=0
 
 RUN --mount=type=cache,target=/go/pkg --mount=type=cache,target=/root/.cache/go-build GOOS=${TARGETOS} GOARCH=${TARGETARCH} make build
 
-FROM gcr.io/distroless/base-debian11 AS image
+FROM debian:slim AS image
 
 COPY --from=build /src/bin/kcl /usr/local/bin/kcl
 # Show KCL version
-RUN /usr/local/bin/kcl version
+RUN kcl version
 # Enable kcl works fine
-RUN echo 'a=1' | /usr/local/bin/kcl run -
+RUN echo 'a=1' | kcl run -
 # Install Git Dependency
-RUN apt-get update && apt-get install git -y && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install git -y
 # The reason for doing this below is to prevent the
 # container from not having write permissions.
 ENV KCL_LIB_HOME=/tmp
