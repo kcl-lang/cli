@@ -47,7 +47,7 @@ jobs:
             kcllang/kcl
             ghcr.io/kcl-lang/kcl
           tags: |
-            type=raw,value=v0.10.6
+            type=raw,value=latest
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
