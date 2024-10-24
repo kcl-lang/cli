@@ -13,7 +13,7 @@ ENV CGO_ENABLED=0
 
 RUN --mount=type=cache,target=/go/pkg --mount=type=cache,target=/root/.cache/go-build GOOS=${TARGETOS} GOARCH=${TARGETARCH} make build
 
-FROM debian:slim AS image
+FROM debian:11-slim AS image
 
 COPY --from=build /src/bin/kcl /usr/local/bin/kcl
 # Verify KCL installation and basic functionality
