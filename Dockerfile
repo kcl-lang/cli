@@ -13,22 +13,25 @@ ENV CGO_ENABLED=0
 
 RUN --mount=type=cache,target=/go/pkg --mount=type=cache,target=/root/.cache/go-build GOOS=${TARGETOS} GOARCH=${TARGETARCH} make build
 
-FROM --platform=${BUILDPLATFORM} ubuntu:22.04 AS base
-ENV LANG=en_US.utf8
-
-FROM base
-
-ARG TARGETARCH
+FROM debian:11-slim AS image
 
 COPY --from=build /src/bin/kcl /usr/local/bin/kcl
-RUN /usr/local/bin/kcl
-RUN apt-get update && apt-get install make gcc git -y && rm -rf /var/lib/apt/lists/*
-# The reason for doing this below is to prevent the
-# container from not having write permissions.
-ENV KCL_LIB_HOME=/tmp
-ENV KCL_PKG_PATH=/tmp
-ENV KCL_CACHE_PATH=/tmp
-# Install the tini
-ENV TINI_VERSION v0.19.0
-ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-${TARGETARCH} /tini
-RUN chmod +x /tini
+# Verify KCL installation and basic functionality
+RUN kcl version && \
+    echo 'a=1' | kcl run -
+
+# Install git for KCL package management
+# Use best practices for apt-get commands
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends git && \
+    rm -rf /var/lib/apt/lists/*
+
+# Configure KCL runtime environment
+# Set temporary directories for write permissions
+ENV KCL_LIB_HOME=/tmp \
+    KCL_PKG_PATH=/tmp \
+    KCL_CACHE_PATH=/tmp \
+    LANG=en_US.utf8
+
+# Switch to non-root user for security
+USER nonroot:nonroot
