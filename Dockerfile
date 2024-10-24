@@ -32,6 +32,3 @@ ENV KCL_LIB_HOME=/tmp \
     KCL_PKG_PATH=/tmp \
     KCL_CACHE_PATH=/tmp \
     LANG=en_US.utf8
-
-# Switch to non-root user for security
-USER nonroot:nonroot
