@@ -16,16 +16,22 @@ RUN --mount=type=cache,target=/go/pkg --mount=type=cache,target=/root/.cache/go-
 FROM debian:slim AS image
 
 COPY --from=build /src/bin/kcl /usr/local/bin/kcl
-# Show KCL version
-RUN kcl version
-# Enable kcl works fine
-RUN echo 'a=1' | kcl run -
-# Install Git Dependency
-RUN apt-get update && apt-get install git -y
-# The reason for doing this below is to prevent the
-# container from not having write permissions.
-ENV KCL_LIB_HOME=/tmp
-ENV KCL_PKG_PATH=/tmp
-ENV KCL_CACHE_PATH=/tmp
-ENV LANG=en_US.utf8
+# Verify KCL installation and basic functionality
+RUN kcl version && \
+    echo 'a=1' | kcl run -
+
+# Install git for KCL package management
+# Use best practices for apt-get commands
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends git && \
+    rm -rf /var/lib/apt/lists/*
+
+# Configure KCL runtime environment
+# Set temporary directories for write permissions
+ENV KCL_LIB_HOME=/tmp \
+    KCL_PKG_PATH=/tmp \
+    KCL_CACHE_PATH=/tmp \
+    LANG=en_US.utf8
+
+# Switch to non-root user for security
 USER nonroot:nonroot
