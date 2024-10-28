@@ -8,32 +8,7 @@ on:
      - main
 
 jobs:
-  build-and-test:
-    name: Test
-    runs-on: ubuntu-latest
-    container: 
-      image: kcllang/kcl
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v4
-        with:
-         submodules: 'true'
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version-file: go.mod
-      - name: Show KCL version
-        run: kcl version
-      - name: test Git deps
-        run: git clone https://github.com/kcl-lang/flask-demo-kcl-manifests
-      - name: Install dependencies
-        run: apt update && apt install make
-      - name: Example tests
-        run: ./examples/test.sh
-      - name: Run concurrent e2e tests
-        run: ./scripts/concurrent_test.sh
-
-  build-and-test-non-user:    
+  test:    
     name: Test non user docker
     runs-on: ubuntu-latest
     steps:    
