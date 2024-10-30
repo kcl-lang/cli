@@ -10,7 +10,10 @@ on:
 jobs:
   test:    
     name: Test non user docker
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ macos-13, macos-latest, ubuntu-latest, windows-latest ]
+    runs-on: ${{ matrix.os }}
     steps:    
       - name: Checkout
         uses: actions/checkout@v4
@@ -25,5 +28,7 @@ jobs:
         with:
           version: v0.11.2
           install: true
-      - name: Test docker non-user
+      - name: Test docker non-user with KCL version
+        run: docker run --user=999 --rm kcllang/kcl sh -c "kcl --version"
+      - name: Test docker non-user with KCL running
         run: docker run --user=999 --rm kcllang/kcl sh -c "echo 'a=1' | kcl run -"
