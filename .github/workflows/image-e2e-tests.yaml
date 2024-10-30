@@ -25,13 +25,15 @@ jobs:
           go-version-file: go.mod
       - name: Setup QEMU
         uses: docker/setup-qemu-action@v3
+        with:
+          platforms: linux/amd64,linux/arm64
       - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v3
       - name: Test docker amd64 non-user with KCL version
-        run: docker run --user=999 --rm kcllang/kcl sh -c "kcl --version"
+        run: docker run --user=999 --rm kcllang/kcl sh -c "kcl version"
       - name: Test docker amd64 non-user with KCL running
         run: docker run --user=999 --rm kcllang/kcl sh -c "echo 'a=1' | kcl run -"
       - name: Test docker arm64 non-user with KCL version
-        run: docker run --platform linux/arm64 --user=999 --rm kcllang/kcl sh -c "kcl --version"
+        run: docker run --platform linux/arm64 --user=999 --rm kcllang/kcl sh -c "kcl version"
       - name: Test docker arm64 non-user with KCL running
         run: docker run --platform linux/arm64 --user=999 --rm kcllang/kcl sh -c "echo 'a=1' | kcl run -"
