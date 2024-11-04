@@ -11,7 +11,7 @@ require (
 	github.com/spf13/cobra v1.8.1
 	github.com/stretchr/testify v1.9.0
 	kcl-lang.io/kcl-go v0.10.7
-	kcl-lang.io/kcl-openapi v0.9.0
+	kcl-lang.io/kcl-openapi v0.10.0
 	kcl-lang.io/kcl-plugin v0.6.0
 	kcl-lang.io/kpm v0.10.0
 )

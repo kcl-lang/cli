@@ -59,6 +59,7 @@ func (o *ImportOptions) Run() error {
 	case Crd, OpenAPI:
 		for _, p := range files {
 			opts := new(generator.GenOpts)
+			opts.KeepOrder = true
 			// Convert CLI options to generator.GenOpts
 			opts.Spec = p
 			if o.Output != "" {
