@@ -3,7 +3,6 @@ package cmd
 import (
 	"github.com/spf13/cobra"
 	"kcl-lang.io/kpm/pkg/client"
-	"kcl-lang.io/kpm/pkg/downloader"
 )
 
 const (
@@ -56,11 +55,7 @@ func NewModPullCmd(cli *client.KpmClient) *cobra.Command {
 }
 
 func pull(cli *client.KpmClient, args []string, localPath string) error {
-	sourceUrl, err := ParseUrlFromArgs(cli, args)
-	if err != nil {
-		return err
-	}
-	source, err := downloader.NewSourceFromStr(sourceUrl.String())
+	source, err := ParseSourceFromArgs(cli, args)
 	if err != nil {
 		return err
 	}

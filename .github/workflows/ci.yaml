@@ -30,6 +30,12 @@ jobs:
           GO111MODULE: on
         run: |
           make cover
+
+      - name: Running e2e tests with coverage
+        env:
+          GO111MODULE: on
+        run: |
+          make e2e
       - name: Send coverage
         uses: shogo82148/actions-goveralls@v1
         with:

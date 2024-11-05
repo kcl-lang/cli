@@ -1,1 +1,1 @@
-cannot specify multiple KCL modules [oci://ghcr.io/kcl-lang/hellworld oci://ghcr.io/kcl-lang/hellworld]
+cannot specify multiple KCL modules [oci://ghcr.io/kcl-lang/helloworld oci://ghcr.io/kcl-lang/helloworld]

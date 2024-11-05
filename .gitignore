@@ -38,3 +38,4 @@ _kcl_test.k
 # e2e test cases dir
 scripts/e2e/pkg_in_reg/*
 scripts/e2e/registry_auth/*
+scripts/registry_auth/*

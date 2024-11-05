@@ -14,6 +14,8 @@ func appendLangFlags(o *options.RunOptions, flags *pflag.FlagSet) {
 		"Specify the KCL module git url")
 	flags.StringVarP(&o.Oci, "oci", "", "",
 		"Specify the KCL module oci url")
+	flags.StringVarP(&o.Path, "path", "", "",
+		"Specify the KCL module local path")
 	flags.StringVarP(&o.Tag, "tag", "t", "",
 		"Specify the tag for the OCI or Git artifact")
 	flags.StringVarP(&o.Commit, "commit", "c", "",
