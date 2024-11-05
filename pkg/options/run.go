@@ -306,7 +306,7 @@ func (o *RunOptions) writeResult(result *kcl.KCLResultList) error {
 			return err
 		}
 	} else {
-		file, err := os.OpenFile(o.Output, os.O_CREATE|os.O_RDWR, 0744)
+		file, err := os.OpenFile(o.Output, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0744)
 		if err != nil {
 			return err
 		}
