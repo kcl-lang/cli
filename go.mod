@@ -13,7 +13,7 @@ require (
 	kcl-lang.io/kcl-go v0.10.8
 	kcl-lang.io/kcl-openapi v0.10.0
 	kcl-lang.io/kcl-plugin v0.6.0
-	kcl-lang.io/kpm v0.10.0
+	kcl-lang.io/kpm v0.10.1-0.20241107094147-b05e196b2c05
 )
 
 require (
@@ -33,6 +33,7 @@ require (
 	github.com/containers/ocicrypt v1.2.0 // indirect
 	github.com/containers/storage v1.55.0 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
+	github.com/dchest/siphash v1.2.3 // indirect
 	github.com/distribution/reference v0.6.0 // indirect
 	github.com/ebitengine/purego v0.7.1 // indirect
 	github.com/elliotchance/orderedmap/v2 v2.4.0 // indirect
@@ -47,6 +48,7 @@ require (
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
 	github.com/hashicorp/go-getter v1.7.6 // indirect
 	github.com/hashicorp/go-safetemp v1.0.0 // indirect
+	github.com/jinzhu/copier v0.4.0 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/julienschmidt/httprouter v1.3.0 // indirect
 	github.com/kubescape/go-git-url v0.0.30 // indirect

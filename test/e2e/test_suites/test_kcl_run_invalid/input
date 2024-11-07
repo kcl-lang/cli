@@ -1,1 +1,1 @@
-kcl run --oci oci://ghcr.io/kcl-lang/hellworld oci://ghcr.io/kcl-lang/hellworld
+kcl run --oci oci://ghcr.io/kcl-lang/helloworld oci://ghcr.io/kcl-lang/helloworld
