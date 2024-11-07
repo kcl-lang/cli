@@ -27,7 +27,19 @@ const (
   kcl mod pull --git ssh://github.com/kcl-lang/konfig --tag v0.4.0
 
   # Pull the module from the OCI Registry by flag
-  kcl mod pull --oci https://ghcr.io/kcl-lang/helloworld --tag 0.1.0`
+  kcl mod pull --oci https://ghcr.io/kcl-lang/helloworld --tag 0.1.0
+  
+  # Pull the module from the OCI Registry by flag and specify the module spce
+  kcl mod pull subhelloworld --oci https://ghcr.io/kcl-lang/helloworld --tag 0.1.4
+  
+  # Pull the module from the OCI Registry by flag and specify the module spce with version
+  kcl mod pull subhelloworld:0.0.1 --oci https://ghcr.io/kcl-lang/helloworld --tag 0.1.4
+  
+  # Pull the module from the Git Repo by flag and specify the module spce
+  kcl mod pull cc --git git://github.com/kcl-lang/flask-demo-kcl-manifests.git --commit 8308200
+  
+  # Pull the module from the Git Repo by flag and specify the module spce with version
+  kcl mod pull cc:0.0.1 --git git://github.com/kcl-lang/flask-demo-kcl-manifests.git --commit 8308200`
 )
 
 // NewModPullCmd returns the mod pull command.
