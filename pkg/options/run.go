@@ -20,12 +20,9 @@ import (
 	"kcl-lang.io/kcl-go/pkg/tools/gen"
 	"kcl-lang.io/kpm/pkg/client"
 	"kcl-lang.io/kpm/pkg/constants"
-	"kcl-lang.io/kpm/pkg/downloader"
 	"kcl-lang.io/kpm/pkg/opt"
 	pkg "kcl-lang.io/kpm/pkg/package"
 	"kcl-lang.io/kpm/pkg/runner"
-	"kcl-lang.io/kpm/pkg/settings"
-	"kcl-lang.io/kpm/pkg/utils"
 )
 
 const (
@@ -70,8 +67,6 @@ type RunOptions struct {
 	Git string
 	// Oci Url is the package url of the OCI artifact.
 	Oci string
-	// Path is the package path of the local artifact.
-	Path string
 	// Tag is the package tag of the OCI or Git artifact.
 	Tag string
 	// Commit is the package commit of the Git artifact.
@@ -162,7 +157,6 @@ func (o *RunOptions) Run() error {
 
 // Complete completes the options based on the provided arguments.
 func (o *RunOptions) Complete(args []string) error {
-	var pkgSourceUrl *url.URL = nil
 	if len(o.Git) != 0 {
 		gitUrl, err := url.Parse(o.Git)
 		if err != nil {
@@ -182,7 +176,7 @@ func (o *RunOptions) Complete(args []string) error {
 			query.Set("branch", o.Branch)
 		}
 		gitUrl.RawQuery = query.Encode()
-		pkgSourceUrl = gitUrl
+		o.Entries = append(o.Entries, gitUrl.String())
 	}
 
 	if len(o.Oci) != 0 {
@@ -198,76 +192,26 @@ func (o *RunOptions) Complete(args []string) error {
 			query.Set("tag", o.Tag)
 		}
 		ociUrl.RawQuery = query.Encode()
-		pkgSourceUrl = ociUrl
+		o.Entries = append(o.Entries, ociUrl.String())
 	}
 
-	if len(o.Path) != 0 {
-		pathUrl, err := url.Parse(o.Path)
-		if err != nil {
-			return err
-		}
-		pkgSourceUrl = pathUrl
-	}
-	modSpec := downloader.ModSpec{}
-	var err error
 	for _, arg := range args {
-		err = modSpec.FromString(arg)
-		if err != nil || utils.DirExists(arg) {
-			modSpec = downloader.ModSpec{}
-			argUrl, err := url.Parse(arg)
-			if err != nil {
-				return err
-			}
-			query := argUrl.Query()
-			if o.Tag != "" {
-				query.Set("tag", o.Tag)
-			}
-			if o.Commit != "" {
-				query.Set("commit", o.Commit)
-			}
-			if o.Branch != "" {
-				query.Set("branch", o.Branch)
-			}
-			argUrl.RawQuery = query.Encode()
-			if pkgSourceUrl != nil {
-				o.Entries = append(o.Entries, pkgSourceUrl.String())
-			}
-			pkgSourceUrl = argUrl
-			o.Entries = append(o.Entries, pkgSourceUrl.String())
-			pkgSourceUrl = nil
-		}
-	}
-
-	if !modSpec.IsNil() && err == nil {
-		source, err := downloader.NewSourceFromStr(pkgSourceUrl.String())
+		argUrl, err := url.Parse(arg)
 		if err != nil {
 			return err
 		}
-		source.ModSpec = &modSpec
-
-		if source.SpecOnly() {
-			source.Oci = &downloader.Oci{
-				Reg:  settings.GetSettings().DefaultOciRegistry(),
-				Repo: utils.JoinPath(settings.GetSettings().DefaultOciRepo(), source.ModSpec.Name),
-				Tag:  source.ModSpec.Version,
-			}
+		query := argUrl.Query()
+		if o.Tag != "" {
+			query.Set("tag", o.Tag)
 		}
-
-		urlStr, err := source.ToString()
-		if err != nil {
-			return err
+		if o.Commit != "" {
+			query.Set("commit", o.Commit)
 		}
-
-		urlWithSpec, err := url.Parse(urlStr)
-		if err != nil {
-			return err
+		if o.Branch != "" {
+			query.Set("branch", o.Branch)
 		}
-		if pkgSourceUrl.Scheme != "" {
-			urlWithSpec.Scheme = pkgSourceUrl.Scheme
-		}
-		o.Entries = append(o.Entries, urlWithSpec.String())
-	} else if pkgSourceUrl != nil {
-		o.Entries = append(o.Entries, pkgSourceUrl.String())
+		argUrl.RawQuery = query.Encode()
+		o.Entries = append(o.Entries, argUrl.String())
 	}
 	return nil
 }
