@@ -1,3 +1,5 @@
-the lastest version '0.1.1' will be downloaded
-downloading 'test/helloworld:0.1.1' from 'localhost:5001/test/helloworld:0.1.1'
+the lastest version '0.1.4' will be downloaded
+downloading 'test/helloworld:0.1.4' from 'localhost:5001/test/helloworld:0.1.4'
+The_fisrt_schema_inst:
+  msg: Hello Schema!
 The_first_kcl_program: Hello World!

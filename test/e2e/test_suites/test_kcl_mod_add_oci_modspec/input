@@ -1,0 +1,1 @@
+kcl mod add subhelloworld --oci https://ghcr.io/kcl-lang/helloworld --tag 0.1.4
