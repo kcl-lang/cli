@@ -20,9 +20,11 @@ import (
 	"kcl-lang.io/kcl-go/pkg/tools/gen"
 	"kcl-lang.io/kpm/pkg/client"
 	"kcl-lang.io/kpm/pkg/constants"
+	"kcl-lang.io/kpm/pkg/downloader"
 	"kcl-lang.io/kpm/pkg/opt"
 	pkg "kcl-lang.io/kpm/pkg/package"
 	"kcl-lang.io/kpm/pkg/runner"
+	"kcl-lang.io/kpm/pkg/utils"
 )
 
 const (
@@ -79,6 +81,8 @@ type RunOptions struct {
 	Format string
 	// Writer is used to output the run result. Default is os.Stdout.
 	Writer io.Writer
+	// ModSpec is the module spec for the KCL module.
+	ModSpec *downloader.ModSpec
 }
 
 // NewRunOptions returns a new instance of RunOptions with default values.
@@ -125,7 +129,8 @@ func (o *RunOptions) Run() error {
 			o.Entries[i] = entry
 		}
 	}
-	result, err = cli.Run(
+
+	opts := []client.RunOption{
 		client.WithRunSourceUrls(o.Entries),
 		client.WithSettingFiles(o.Settings),
 		client.WithArguments(o.Arguments),
@@ -140,7 +145,13 @@ func (o *RunOptions) Run() error {
 		client.WithStrictRange(o.StrictRangeCheck),
 		client.WithCompileOnly(o.CompileOnly),
 		client.WithLogger(os.Stdout),
-	)
+	}
+
+	if o.ModSpec != nil {
+		opts = append(opts, client.WithRunModSpec(o.ModSpec))
+	}
+
+	result, err = cli.Run(opts...)
 
 	if err != nil {
 		if o.NoStyle {
@@ -196,22 +207,30 @@ func (o *RunOptions) Complete(args []string) error {
 	}
 
 	for _, arg := range args {
-		argUrl, err := url.Parse(arg)
-		if err != nil {
-			return err
+
+		modSpec := downloader.ModSpec{}
+		err := modSpec.FromString(arg)
+		// If the arg is a directory or is not a Mod Spec, parse it as other source
+		if utils.DirExists(arg) || err != nil {
+			argUrl, err := url.Parse(arg)
+			if err != nil {
+				return err
+			}
+			query := argUrl.Query()
+			if o.Tag != "" {
+				query.Set("tag", o.Tag)
+			}
+			if o.Commit != "" {
+				query.Set("commit", o.Commit)
+			}
+			if o.Branch != "" {
+				query.Set("branch", o.Branch)
+			}
+			argUrl.RawQuery = query.Encode()
+			o.Entries = append(o.Entries, argUrl.String())
+		} else {
+			o.ModSpec = &modSpec
 		}
-		query := argUrl.Query()
-		if o.Tag != "" {
-			query.Set("tag", o.Tag)
-		}
-		if o.Commit != "" {
-			query.Set("commit", o.Commit)
-		}
-		if o.Branch != "" {
-			query.Set("branch", o.Branch)
-		}
-		argUrl.RawQuery = query.Encode()
-		o.Entries = append(o.Entries, argUrl.String())
 	}
 	return nil
 }

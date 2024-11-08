@@ -27,20 +27,32 @@ For example, 'kcl run path/to/kcl.k' will run the file named path/to/kcl.k
   # Run multiple files
   kcl run path/to/kcl1.k path/to/kcl2.k
 
-  # Run OCI packages
+  # Run OCI modules
   kcl run oci://ghcr.io/kcl-lang/helloworld --tag 0.1.0
 
   # Run remote Git repo
   kcl run git://github.com/kcl-lang/flask-demo-kcl-manifests --commit ade147b
 
-  # Run OCI packages by flag
+  # Run OCI modules by flag
   kcl run --oci https://ghcr.io/kcl-lang/helloworld --tag 0.1.0
 
   # Run remote module from Git with branch repo by flag
   kcl run --git https://github.com/kcl-lang/flask-demo-kcl-manifests --branch main
 
   # Run remote module from Git with branch repo by flag with ssh url
-  kcl run --git ssh://github.com/kcl-lang/flask-demo-kcl-manifests --branch main`
+  kcl run --git ssh://github.com/kcl-lang/flask-demo-kcl-manifests --branch main
+ 
+  # Run OCI submodule by flag
+  kcl run subhelloworld --oci https://ghcr.io/kcl-lang/helloworld --tag 0.1.4
+
+  # Run OCI submodule with version by flag
+  kcl run subhelloworld:0.0.1 --oci https://ghcr.io/kcl-lang/helloworld --tag 0.1.4
+
+  # Run Git submodule by flag
+  kcl run cc --git https://github.com/kcl-lang/flask-demo-kcl-manifests --commit 8308200
+
+  # Run Git submodule by flag
+  kcl run cc:0.0.1 --git https://github.com/kcl-lang/flask-demo-kcl-manifests --commit 8308200`
 )
 
 // NewRunCmd returns the run command.
