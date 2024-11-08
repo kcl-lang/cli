@@ -27,6 +27,12 @@ $current_dir/bin/kcl mod push
 
 cd "$current_dir"
 
+# Push the package helloworld/0.1.4 to the registry
+cd ./scripts/e2e/pkg_in_reg/oci/ghcr.io/kcl-lang/helloworld/0.1.4/helloworld/0.1.4
+$current_dir/bin/kcl mod push
+
+cd "$current_dir"
+
 # Push the package 'kcl1' depends on 'k8s' to the registry
 cd ./scripts/e2e/pkg_in_reg/kcl1
 $current_dir/bin/kcl mod push

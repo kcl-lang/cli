@@ -1,0 +1,7 @@
+[dependencies]
+  [dependencies.cc]
+    name = "cc"
+    full_name = "cc_0.0.1"
+    version = "0.0.1"
+    url = "https://github.com/kcl-lang/flask-demo-kcl-manifests"
+    commit = "8308200"

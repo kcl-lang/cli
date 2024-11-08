@@ -1,1 +1,1 @@
-kcl mod add https://github.com/kcl-lang/flask-demo-kcl-manifests.git --branch main
+kcl mod add git://github.com/kcl-lang/flask-demo-kcl-manifests.git --branch main

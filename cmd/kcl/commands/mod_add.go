@@ -42,8 +42,17 @@ const (
   # Add the sub module dependency named "helloworld" from the Git repo by the tag flag with ssh url
   kcl mod add helloworld --git ssh://github.com/kcl-lang/modules --tag v0.1.0
 
+  # Add the sub module dependency named "cc" with version "0.0.1" from the Git repo by the commit flag with ssh url
+  kcl mod add cc:0.0.1 --git https://github.com/kcl-lang/flask-demo-kcl-manifests --commit 8308200
+
   # Add the module dependency from the OCI registry named "" by the tag flag
-  kcl mod add --oci https://ghcr.io/kcl-lang/helloworld --tag 0.1.0`
+  kcl mod add --oci https://ghcr.io/kcl-lang/helloworld --tag 0.1.0
+ 
+  # Add the sub module dependency named "subhelloworld" from the OCI registry by the tag flag
+  kcl mod add subhelloworld --oci https://ghcr.io/kcl-lang/helloworld --tag 0.1.4
+
+  # Add the sub module dependency named "subhelloworld" with version "0.0.1" from the OCI registry by the tag flag
+  kcl mod add subhelloworld:0.0.1 --oci https://ghcr.io/kcl-lang/helloworld --tag 0.1.4`
 )
 
 // NewModAddCmd returns the mod add command.
@@ -100,7 +109,10 @@ func ModAdd(cli *client.KpmClient, args []string) error {
 		return err
 	}
 
-	kclPkg, err := pkg.LoadKclPkg(pwd)
+	kclPkg, err := pkg.LoadKclPkgWithOpts(
+		pkg.WithPath(pwd),
+		pkg.WithSettings(cli.GetSettings()),
+	)
 	if err != nil {
 		return err
 	}
@@ -110,13 +122,13 @@ func ModAdd(cli *client.KpmClient, args []string) error {
 		return err
 	}
 
-	addOpts, err := parseAddOptions(cli, globalPkgPath, args)
+	source, err := ParseSourceFromArgs(cli, args)
 	if err != nil {
 		return err
 	}
 
-	if addOpts.RegistryOpts.Local != nil {
-		absAddPath, err := filepath.Abs(addOpts.RegistryOpts.Local.Path)
+	if source.Local != nil {
+		absAddPath, err := filepath.Abs(source.Local.Path)
 		if err != nil {
 			return reporter.NewErrorEvent(reporter.Bug, err, "internal bugs, please contact us to fix it.")
 		}
@@ -128,12 +140,10 @@ func ModAdd(cli *client.KpmClient, args []string) error {
 		}
 	}
 
-	err = addOpts.Validate()
-	if err != nil {
-		return err
-	}
-
-	_, err = cli.AddDepWithOpts(kclPkg, addOpts)
+	err = cli.Add(
+		client.WithAddKclPkg(kclPkg),
+		client.WithAddSource(source),
+	)
 	if err != nil {
 		return err
 	}

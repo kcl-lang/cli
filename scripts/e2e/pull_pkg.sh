@@ -25,4 +25,8 @@ if [ ! -d "./oci/ghcr.io/kcl-lang/helloworld/0.1.1/helloworld/0.1.1" ]; then
   $current_dir/bin/kcl mod pull helloworld:0.1.1
 fi
 
+if [ ! -d "./oci/ghcr.io/kcl-lang/helloworld/0.1.4/helloworld/0.1.4" ]; then
+  $current_dir/bin/kcl mod pull helloworld:0.1.4
+fi
+
 cd "$current_dir"
