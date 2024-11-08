@@ -108,14 +108,14 @@ spec:
 
 func TestRunOptions_Complete(t *testing.T) {
 	options := NewRunOptions()
-	args := []string{"file1.k", "file2.k", "file3.k"}
+	args := []string{"./testdata/run_opt/file1.k", "./testdata/run_opt/file2.k", "./testdata/run_opt/file3.k"}
 
 	err := options.Complete(args)
 	if err != nil {
 		t.Errorf("RunOptions.Complete() failed: %v", err)
 	}
 
-	expectedEntries := []string{"file1.k", "file2.k", "file3.k"}
+	expectedEntries := []string{"./testdata/run_opt/file1.k", "./testdata/run_opt/file2.k", "./testdata/run_opt/file3.k"}
 
 	if len(options.Entries) != len(expectedEntries) {
 		t.Fatalf("unexpected number of entries:\nexpected: %d\ngot: %d", len(expectedEntries), len(options.Entries))
