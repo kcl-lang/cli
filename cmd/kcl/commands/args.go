@@ -20,7 +20,9 @@ func argsGet(a []string, n int) string {
 
 func ParseSourceFromArgs(cli *client.KpmClient, args []string) (*downloader.Source, error) {
 	source := downloader.Source{}
-	modSpec := downloader.ModSpec{}
+	modSpec := downloader.ModSpec{
+		Alias: rename,
+	}
 
 	// Parse the source from the args
 	// Parse the input like: kcl mod pull k8s:1.28 or kcl mod pull oci://ghcr.io/kcl-lang/helloworld --tag 0.1.0
@@ -45,7 +47,9 @@ func ParseSourceFromArgs(cli *client.KpmClient, args []string) (*downloader.Sour
 				}
 				continue
 			} else {
-				modSpec = downloader.ModSpec{}
+				modSpec = downloader.ModSpec{
+					Alias: rename,
+				}
 			}
 
 			// if arg is a url, set the source url
@@ -105,14 +109,6 @@ func ParseSourceFromArgs(cli *client.KpmClient, args []string) (*downloader.Sour
 	}
 
 	source.ModSpec = &modSpec
-	// Set the default oci registry and repo if the source is spec only
-	if source.SpecOnly() {
-		source.Oci = &downloader.Oci{
-			Reg:  cli.GetSettings().DefaultOciRegistry(),
-			Repo: utils.JoinPath(cli.GetSettings().DefaultOciRepo(), source.ModSpec.Name),
-			Tag:  source.ModSpec.Version,
-		}
-	}
 
 	return &source, nil
 }

@@ -3,3 +3,6 @@
     name = "run_5"
     full_name = "run_5_0.0.1"
     version = "0.0.1"
+    reg = "ghcr.io"
+    repo = "kcl-lang/run_5"
+    oci_tag = "0.0.1"
