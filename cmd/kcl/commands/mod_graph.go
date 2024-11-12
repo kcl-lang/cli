@@ -1,10 +1,8 @@
 package cmd
 
 import (
-	"fmt"
 	"os"
 
-	"github.com/dominikbraun/graph"
 	"github.com/spf13/cobra"
 	"golang.org/x/mod/module"
 	"kcl-lang.io/kpm/pkg/client"
@@ -65,7 +63,10 @@ func ModGraph(cli *client.KpmClient, args []string) error {
 		return err
 	}
 
-	kclPkg, err := pkg.LoadKclPkg(pwd)
+	kclPkg, err := pkg.LoadKclPkgWithOpts(
+		pkg.WithPath(pwd),
+		pkg.WithSettings(cli.GetSettings()),
+	)
 	if err != nil {
 		return err
 	}
@@ -75,30 +76,20 @@ func ModGraph(cli *client.KpmClient, args []string) error {
 		return err
 	}
 
-	_, depGraph, err := cli.InitGraphAndDownloadDeps(kclPkg)
+	gra, err := cli.Graph(
+		client.WithGraphMod(kclPkg),
+	)
+
+	graStr, err := gra.DisplayGraphFromVertex(
+		module.Version{Path: kclPkg.GetPkgName(), Version: kclPkg.GetPkgVersion()},
+	)
+
 	if err != nil {
 		return err
 	}
 
-	adjMap, err := depGraph.AdjacencyMap()
-	if err != nil {
-		return err
-	}
+	reporter.ReportMsgTo(graStr, cli.GetLogWriter())
 
-	// Print the dependency graph to stdout.
-	root := module.Version{Path: kclPkg.GetPkgName(), Version: kclPkg.GetPkgVersion()}
-	err = graph.BFS(depGraph, root, func(source module.Version) bool {
-		for target := range adjMap[source] {
-			reporter.ReportMsgTo(
-				fmt.Sprint(format(source), " ", format(target)),
-				cli.GetLogWriter(),
-			)
-		}
-		return false
-	})
-	if err != nil {
-		return err
-	}
 	return nil
 }
 
