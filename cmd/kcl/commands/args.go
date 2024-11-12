@@ -47,7 +47,9 @@ func ParseSourceFromArgs(cli *client.KpmClient, args []string) (*downloader.Sour
 				}
 				continue
 			} else {
-				modSpec = downloader.ModSpec{}
+				modSpec = downloader.ModSpec{
+					Alias: rename,
+				}
 			}
 
 			// if arg is a url, set the source url
