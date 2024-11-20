@@ -38,6 +38,6 @@ jobs:
       - name: Test docker arm64 non-user with KCL running
         run: docker run --platform linux/arm64 --user=999 --rm kcllang/kcl sh -c "echo 'a=1' | kcl run -"
       - name: Test docker arm64 non-user with KCL module OCI source pulling
-        run: docker run --platform linux/arm64 --user=999 -e KCL_PKG_PATH=/tmp --rm kcllang/kcl:release-kcl-image-0.10.x sh -c "kcl mod pull subhelloworld:0.0.1 --oci https://ghcr.io/kcl-lang/helloworld --tag 0.1.4"
+        run: docker run --platform linux/arm64 --user=999 -e KCL_PKG_PATH=/tmp --rm kcllang/kcl:release-kcl-image-0.10.x sh -c "mkdir -p /tmp && cd /tmp && kcl mod pull subhelloworld:0.0.1 --oci https://ghcr.io/kcl-lang/helloworld --tag 0.1.4"
       - name: Test docker arm64 non-user with KCL module Git source pulling
-        run: docker run --platform linux/arm64 --user=999 -e KCL_PKG_PATH=/tmp --rm kcllang/kcl:release-kcl-image-0.10.x sh -c "kcl mod pull cc:0.0.1 --git git://github.com/kcl-lang/flask-demo-kcl-manifests.git --commit 8308200"
+        run: docker run --platform linux/arm64 --user=999 -e KCL_PKG_PATH=/tmp --rm kcllang/kcl:release-kcl-image-0.10.x sh -c "mkdir -p /tmp && cd /tmp && kcl mod pull cc:0.0.1 --git git://github.com/kcl-lang/flask-demo-kcl-manifests.git --commit 8308200"

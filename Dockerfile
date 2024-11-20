@@ -25,6 +25,8 @@ RUN kcl version && \
 RUN apt-get update && \
     apt-get install -y --no-install-recommends git ca-certificates && \
     rm -rf /var/lib/apt/lists/*
+# Create the temporary directory
+RUN mkdir -p /tmp
 
 # Configure KCL runtime environment
 # Set temporary directories for write permissions
