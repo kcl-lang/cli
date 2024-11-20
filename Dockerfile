@@ -23,7 +23,7 @@ RUN kcl version && \
 # Install git for KCL package management
 # Use best practices for apt-get commands
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends git && \
+    apt-get install -y --no-install-recommends git ca-certificates && \
     rm -rf /var/lib/apt/lists/*
 
 # Configure KCL runtime environment
