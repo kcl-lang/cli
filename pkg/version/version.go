@@ -32,18 +32,19 @@ func getVersion(version string) string {
 }
 
 const (
-	VersionTypeLatest = Version_0_10_9
+	VersionTypeLatest = Version_0_10_10
 
-	Version_0_10_9 VersionType = "0.10.9"
-	Version_0_10_8 VersionType = "0.10.8"
-	Version_0_10_7 VersionType = "0.10.7"
-	Version_0_10_6 VersionType = "0.10.6"
-	Version_0_10_5 VersionType = "0.10.5"
-	Version_0_10_4 VersionType = "0.10.4"
-	Version_0_10_3 VersionType = "0.10.3"
-	Version_0_10_2 VersionType = "0.10.2"
-	Version_0_10_1 VersionType = "0.10.1"
-	Version_0_10_0 VersionType = "0.10.0"
+	Version_0_10_10 VersionType = "0.10.9"
+	Version_0_10_9  VersionType = "0.10.9"
+	Version_0_10_8  VersionType = "0.10.8"
+	Version_0_10_7  VersionType = "0.10.7"
+	Version_0_10_6  VersionType = "0.10.6"
+	Version_0_10_5  VersionType = "0.10.5"
+	Version_0_10_4  VersionType = "0.10.4"
+	Version_0_10_3  VersionType = "0.10.3"
+	Version_0_10_2  VersionType = "0.10.2"
+	Version_0_10_1  VersionType = "0.10.1"
+	Version_0_10_0  VersionType = "0.10.0"
 
 	Version_0_9_8 VersionType = "0.9.8"
 	Version_0_9_7 VersionType = "0.9.7"
