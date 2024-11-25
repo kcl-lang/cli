@@ -9,7 +9,7 @@ require (
 	github.com/onsi/ginkgo/v2 v2.21.0
 	github.com/onsi/gomega v1.35.1
 	github.com/spf13/cobra v1.8.1
-	github.com/stretchr/testify v1.9.0
+	github.com/stretchr/testify v1.10.0
 	kcl-lang.io/kcl-go v0.10.8
 	kcl-lang.io/kcl-openapi v0.10.0
 	kcl-lang.io/kcl-plugin v0.6.0
