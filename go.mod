@@ -13,7 +13,7 @@ require (
 	kcl-lang.io/kcl-go v0.10.8
 	kcl-lang.io/kcl-openapi v0.10.0
 	kcl-lang.io/kcl-plugin v0.6.0
-	kcl-lang.io/kpm v0.10.1-0.20241112112118-8cf5a37c7c35
+	kcl-lang.io/kpm v0.11.0-alpha.1
 )
 
 require (
