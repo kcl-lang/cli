@@ -8,7 +8,7 @@ import (
 )
 
 func GenTempFileFromStdin() (string, error) {
-	tempFile, err := os.CreateTemp("", "stdin")
+	tempFile, err := os.CreateTemp("", "stdin-*.k")
 	if err != nil {
 		return "", err
 	}

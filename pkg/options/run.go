@@ -207,6 +207,10 @@ func (o *RunOptions) Complete(args []string) error {
 	}
 
 	for _, arg := range args {
+		if arg == "-" {
+			o.Entries = append(o.Entries, arg)
+			continue
+		}
 
 		modSpec := downloader.ModSpec{}
 		err := modSpec.FromString(arg)
