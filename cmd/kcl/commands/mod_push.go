@@ -7,9 +7,9 @@ import (
 
 	"github.com/spf13/cobra"
 	"kcl-lang.io/kpm/pkg/client"
+	"kcl-lang.io/kpm/pkg/downloader"
 	"kcl-lang.io/kpm/pkg/errors"
 	kpmoci "kcl-lang.io/kpm/pkg/oci"
-	"kcl-lang.io/kpm/pkg/opt"
 	pkg "kcl-lang.io/kpm/pkg/package"
 	"kcl-lang.io/kpm/pkg/reporter"
 	"kcl-lang.io/kpm/pkg/utils"
@@ -164,24 +164,21 @@ func pushPackage(ociUrl string, kclPkg *pkg.KclPkg, vendorMode bool, cli *client
 			)
 		}
 	}
-
-	// 3. Generate the OCI options from oci url and the version of current kcl package.
-	ociOpts, err := opt.ParseOciOptionFromOciUrl(ociUrl, kclPkg.GetPkgTag())
-	if err != (*reporter.KpmEvent)(nil) {
-		return reporter.NewErrorEvent(
-			reporter.UnsupportOciUrlScheme,
-			errors.InvalidOciUrl,
-			"only support url scheme 'oci://'.",
-		)
-	}
-	ociOpts.Annotations, err = kclPkg.GenOciManifestFromPkg()
+	// 4. Push it.
+	ociSource := downloader.Source{}
+	err = ociSource.FromString(ociUrl)
 	if err != nil {
 		return err
 	}
-
-	reporter.ReportMsgTo(fmt.Sprintf("package '%s' will be pushed", kclPkg.GetPkgName()), cli.GetLogWriter())
-	// 4. Push it.
-	err = cli.PushToOci(tarPath, ociOpts)
+	ociSource.ModSpec = &downloader.ModSpec{
+		Name:    kclPkg.GetPkgName(),
+		Version: kclPkg.GetPkgTag(),
+	}
+	err = cli.Push(
+		client.WithPushModPath(kclPkg.HomePath),
+		client.WithPushSource(ociSource),
+		client.WithPushVendorMode(vendorMode),
+	)
 	if err != (*reporter.KpmEvent)(nil) {
 		return err
 	}
