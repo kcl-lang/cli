@@ -13,7 +13,7 @@ require (
 	kcl-lang.io/kcl-go v0.10.8
 	kcl-lang.io/kcl-openapi v0.10.0
 	kcl-lang.io/kcl-plugin v0.6.0
-	kcl-lang.io/kpm v0.11.0-alpha.1
+	kcl-lang.io/kpm v0.11.0-alpha.2
 )
 
 require (
@@ -36,7 +36,7 @@ require (
 	github.com/dchest/siphash v1.2.3 // indirect
 	github.com/distribution/reference v0.6.0 // indirect
 	github.com/ebitengine/purego v0.7.1 // indirect
-	github.com/elliotchance/orderedmap/v2 v2.4.0 // indirect
+	github.com/elliotchance/orderedmap/v2 v2.5.0 // indirect
 	github.com/emicklei/proto v1.13.2 // indirect
 	github.com/felixge/httpsnoop v1.0.4 // indirect
 	github.com/go-task/slim-sprig/v3 v3.0.0 // indirect
