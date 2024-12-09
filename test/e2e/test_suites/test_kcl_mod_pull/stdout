@@ -1,4 +1,4 @@
 start to pull oci://localhost:5001/test/helloworld
-the lastest version '0.1.4' will be downloaded
+the latest version '0.1.4' will be downloaded
 downloading 'test/helloworld:0.1.4' from 'localhost:5001/test/helloworld:0.1.4'
 pulled helloworld 0.1.4 successfully
