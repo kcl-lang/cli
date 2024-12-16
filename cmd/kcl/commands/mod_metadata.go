@@ -61,13 +61,6 @@ func NewModMetadataCmd(cli *client.KpmClient) *cobra.Command {
 				return err
 			}
 
-			if update {
-				err = kclPkg.UpdateModAndLockFile()
-				if err != nil {
-					return err
-				}
-			}
-
 			fmt.Println(jsonStr)
 
 			return nil
