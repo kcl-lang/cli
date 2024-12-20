@@ -1,1 +1,1 @@
-kcl mod add --git ssh://github.com/kcl-lang/konfig --commit 01ca24c
+kcl mod add --git ssh://github.com/kcl-lang/konfig --commit f0daf4c
