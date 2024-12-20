@@ -1,1 +1,1 @@
-kcl mod add --git https://github.com/kcl-lang/konfig --tag v0.4.0
+kcl mod add --git https://github.com/kcl-lang/konfig --tag v0.10.0
