@@ -101,6 +101,11 @@ func New() *cobra.Command {
 
 // NewWithName creates a new KCL CLI with the name
 func NewWithName(name string) *cobra.Command {
+	return NewWithNameAndCommands(name, nil)
+}
+
+// NewWithNameAndCommands creates a new KCL CLI with the specified name and additional commands.
+func NewWithNameAndCommands(name string, commands []*cobra.Command) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:           name,
 		Short:         "The KCL Command Line Interface (CLI).",
@@ -109,23 +114,38 @@ func NewWithName(name string) *cobra.Command {
 		SilenceErrors: true,
 		Version:       version.GetVersionString(),
 	}
-	// Language commands
-	cmd.AddCommand(NewRunCmd())
-	// Tool commands
-	cmd.AddCommand(NewLintCmd())
-	cmd.AddCommand(NewDocCmd())
-	cmd.AddCommand(NewFmtCmd())
-	cmd.AddCommand(NewTestCmd())
-	cmd.AddCommand(NewVetCmd())
-	cmd.AddCommand(NewCleanCmd())
-	cmd.AddCommand(NewImportCmd())
-	// Module & Registry commands
-	cmd.AddCommand(NewModCmd())
-	cmd.AddCommand(NewRegistryCmd())
-	// Server command
-	cmd.AddCommand(NewServerCmd())
-	// Version command
-	cmd.AddCommand(NewVersionCmd())
+
+	// Default commands
+	defaultCommands := []*cobra.Command{
+		// Language commands
+		NewRunCmd(),
+		// Tool commands
+		NewLintCmd(),
+		NewDocCmd(),
+		NewFmtCmd(),
+		NewTestCmd(),
+		NewVetCmd(),
+		NewCleanCmd(),
+		NewImportCmd(),
+		// Module & Registry commands
+		NewModCmd(),
+		NewRegistryCmd(),
+		// Server command
+		NewServerCmd(),
+		// Version command
+		NewVersionCmd(),
+	}
+
+	// Add default commands
+	for _, c := range defaultCommands {
+		cmd.AddCommand(c)
+	}
+
+	// Add user-provided commands, if any
+	for _, c := range commands {
+		cmd.AddCommand(c)
+	}
+
 	// Plugin commands e.g. kcl language server for kcl-language-server
 	bootstrapCmdPlugin(cmd, plugin.NewDefaultPluginHandler([]string{cmdName}))
 
