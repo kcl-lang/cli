@@ -2,8 +2,6 @@ module kcl-lang.io/cli
 
 go 1.23
 
-toolchain go1.23.1
-
 require (
 	github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d
 	github.com/onsi/ginkgo/v2 v2.22.2
@@ -125,7 +123,7 @@ require (
 	github.com/go-openapi/strfmt v0.23.0 // indirect
 	github.com/go-openapi/swag v0.23.0 // indirect
 	github.com/go-openapi/validate v0.24.0 // indirect
-	github.com/goccy/go-yaml v1.15.23
+	github.com/goccy/go-yaml v1.17.1
 	github.com/gofrs/flock v0.12.1 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang-collections/collections v0.0.0-20130729185459-604e922904d3 // indirect
