@@ -1,4 +1,9 @@
-FROM --platform=${BUILDPLATFORM} golang:1.23 AS build
+ARG BUILDER_IMAGE=golang:1.23
+ARG BASE_IMAGE=debian:11-slim
+
+# Build the manager binary
+FROM --platform=${BUILDPLATFORM} ${BUILDER_IMAGE} AS builder
+
 COPY / /src
 WORKDIR /src
 
@@ -9,13 +14,12 @@ WORKDIR /src
 ARG TARGETOS
 ARG TARGETARCH
 
-ENV CGO_ENABLED=0
+RUN --mount=type=cache,target=/go/pkg --mount=type=cache,target=/root/.cache/go-build  GOARCH=${TARGETARCH}  GOOS=linux CGO_ENABLED=0 make build
 
-RUN --mount=type=cache,target=/go/pkg --mount=type=cache,target=/root/.cache/go-build GOOS=${TARGETOS} GOARCH=${TARGETARCH} make build
+FROM  ${BASE_IMAGE}
 
-FROM debian:11-slim AS image
+COPY --from=builder /src/bin/kcl /usr/local/bin/kcl
 
-COPY --from=build /src/bin/kcl /usr/local/bin/kcl
 # Verify KCL installation and basic functionality
 RUN kcl version && \
     echo 'a=1' | kcl run -
@@ -25,6 +29,7 @@ RUN kcl version && \
 RUN apt-get update && \
     apt-get install -y --no-install-recommends git ca-certificates && \
     rm -rf /var/lib/apt/lists/*
+
 # Create the temporary directory
 RUN mkdir -p /tmp
 
