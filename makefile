@@ -27,7 +27,7 @@ lint:
 .PHONY: build
 build: lint
 	mkdir -p bin/
-	go build -o bin/kcl -ldflags="$(LDFLAGS)" $(MAIN_FILE)
+	$(GO_BUILD_ENV) go build -o bin/kcl -ldflags="$(LDFLAGS)" $(MAIN_FILE)
 
 .PHONY: test
 test:
@@ -92,3 +92,53 @@ e2e: ## Run e2e test
 .PHONY: e2e-init
 e2e-init:
 	scripts/e2e/e2e-init.sh $(TS)
+
+GO_VERSION := $(shell awk '/^go /{print $$2}' go.mod|head -n1)
+
+GIT_TAG ?= $(shell git describe --tags --dirty --always)
+# Image URL to use all building/pushing image targets
+PLATFORMS ?= linux/amd64,linux/arm64
+DOCKER_BUILDX_CMD ?= docker buildx
+IMAGE_BUILD_CMD ?= $(DOCKER_BUILDX_CMD) build
+BASE_IMAGE ?= debian:11-slim
+BUILDER_IMAGE ?= golang:$(GO_VERSION)
+CGO_ENABLED ?= 0
+
+IMAGE_BUILD_EXTRA_OPTS ?=
+
+IMAGE_REGISTRY ?= ghcr.io/kcl-lang
+IMAGE_NAME := kcl
+IMAGE_REPO ?= $(IMAGE_REGISTRY)/$(IMAGE_NAME)
+IMAGE_TAG ?= $(IMAGE_REPO):$(GIT_TAG)
+
+ifdef EXTRA_TAG
+IMAGE_EXTRA_TAG ?= $(IMAGE_REPO):$(EXTRA_TAG)
+endif
+ifdef IMAGE_EXTRA_TAG
+IMAGE_BUILD_EXTRA_OPTS += -t $(IMAGE_EXTRA_TAG)
+endif
+
+# Build the multiplatform container image locally and push to repo.
+.PHONY: image-local-push
+image-local-push: PUSH=--push
+image-local-push: image-local-build
+
+# Build the multiplatform container image locally.
+.PHONY: image-local-build
+image-local-build:
+	BUILDER=$(shell $(DOCKER_BUILDX_CMD) create --use)
+	$(MAKE) image-build PUSH=$(PUSH)
+	$(DOCKER_BUILDX_CMD) rm $$BUILDER
+
+.PHONY: image-push
+image-push: PUSH=--push
+image-push: image-build
+
+image-build:
+	$(IMAGE_BUILD_CMD) -t $(IMAGE_TAG) \
+		--platform=$(PLATFORMS) \
+		--build-arg BASE_IMAGE=$(BASE_IMAGE) \
+		--build-arg BUILDER_IMAGE=$(BUILDER_IMAGE) \
+		--build-arg CGO_ENABLED=$(CGO_ENABLED) \
+		$(PUSH) \
+		$(IMAGE_BUILD_EXTRA_OPTS) ./
