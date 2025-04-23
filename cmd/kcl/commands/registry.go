@@ -17,8 +17,9 @@ const (
 )
 
 var (
-	username string
-	password string
+	username          string
+	password          string
+	passwordFromStdin bool
 )
 
 // NewModCmd returns the mod command.

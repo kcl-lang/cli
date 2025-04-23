@@ -31,7 +31,7 @@ func NewRegistryLoginCmd(cli *client.KpmClient) *cobra.Command {
 		RunE: func(_ *cobra.Command, args []string) error {
 			registry := args[0]
 
-			username, password, err := utils.GetUsernamePassword(username, password, false)
+			username, password, err := utils.GetUsernamePassword(username, password, passwordFromStdin)
 			if err != nil {
 				return err
 			}
@@ -50,6 +50,7 @@ func NewRegistryLoginCmd(cli *client.KpmClient) *cobra.Command {
 
 	cmd.Flags().StringVarP(&username, "username", "u", "", "registry username")
 	cmd.Flags().StringVarP(&password, "password", "p", "", "registry password or identity token")
+	cmd.Flags().BoolVar(&passwordFromStdin, "password-stdin", false, "password from stdin")
 	cmd.Flags().BoolVar(&insecureSkipTLSverify, "insecure-skip-tls-verify", false, "skip tls verification")
 	return cmd
 }
