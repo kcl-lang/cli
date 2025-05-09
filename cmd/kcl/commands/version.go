@@ -16,7 +16,7 @@ func NewVersionCmd() *cobra.Command {
 		Use:   "version",
 		Short: "Show version of the KCL CLI",
 		Run: func(*cobra.Command, []string) {
-			fmt.Println(version.VersionTypeLatest)
+			fmt.Println(version.GetVersionString())
 		},
 		SilenceUsage: true,
 	}
