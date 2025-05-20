@@ -32,8 +32,9 @@ func getVersion(version string) string {
 }
 
 const (
-	VersionTypeLatest = Version_0_11_1
+	VersionTypeLatest = Version_0_11_2
 
+	Version_0_11_2         VersionType = "0.11.2"
 	Version_0_11_1         VersionType = "0.11.1"
 	Version_0_11_0         VersionType = "0.11.0"
 	Version_0_11_0_alpha_1 VersionType = "0.11.0-alpha.1"
