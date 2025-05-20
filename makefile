@@ -100,7 +100,7 @@ GIT_TAG ?= $(shell git describe --tags --dirty --always)
 PLATFORMS ?= linux/amd64,linux/arm64
 DOCKER_BUILDX_CMD ?= docker buildx
 IMAGE_BUILD_CMD ?= $(DOCKER_BUILDX_CMD) build
-BASE_IMAGE ?= debian:11-slim
+BASE_IMAGE ?= debian:12-slim
 BUILDER_IMAGE ?= golang:$(GO_VERSION)
 CGO_ENABLED ?= 0
 
