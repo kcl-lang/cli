@@ -1,5 +1,5 @@
 ARG BUILDER_IMAGE=golang:1.24
-ARG BASE_IMAGE=debian:11-slim
+ARG BASE_IMAGE=debian:12-slim
 
 # Build the manager binary
 FROM --platform=${BUILDPLATFORM} ${BUILDER_IMAGE} AS builder
