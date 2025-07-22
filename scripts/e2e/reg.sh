@@ -25,5 +25,8 @@ docker run -p ${KCL_REGISTRY_PORT}:5000 \
 -e "REGISTRY_AUTH_HTPASSWD_PATH=/auth/htpasswd" \
 -d registry
 
+# Wait for the container to start and registry to be ready
+for i in {1..60}; do nc -z 127.0.0.1 ${KCL_REGISTRY_PORT} && break || sleep 1; echo "Waiting for registry to start $i.."; done
+
 # clean the registry
 docker exec kcl-registry rm -rf /var/lib/registry/docker/registry/v2/repositories/

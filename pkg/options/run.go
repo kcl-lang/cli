@@ -83,6 +83,8 @@ type RunOptions struct {
 	Writer io.Writer
 	// ModSpec is the module spec for the KCL module.
 	ModSpec *downloader.ModSpec
+	// Force is used to force push the package to the registry.
+	Force bool
 }
 
 // NewRunOptions returns a new instance of RunOptions with default values.

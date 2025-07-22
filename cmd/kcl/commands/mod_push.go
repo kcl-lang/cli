@@ -24,6 +24,9 @@ const (
   # Push the current module to the specified registry
   kcl mod push oci://ghcr.io/<some_repo>/<some_package>
 
+  # Push the current module to the registry to override the existing artifact
+  kcl mod push --force
+
   # Push the current module to the registry in the vendor mode
   kcl mod push --vendor`
 )
@@ -44,6 +47,7 @@ func NewModPushCmd(cli *client.KpmClient) *cobra.Command {
 	cmd.Flags().BoolVar(&vendor, "vendor", false, "run in vendor mode (default: false)")
 	cmd.Flags().StringVar(&target, "tar_path", "", "packaged target path that will be pushed")
 	cmd.Flags().BoolVar(&insecureSkipTLSverify, "insecure-skip-tls-verify", false, "skip tls certificate checks for the KCL module download")
+	cmd.Flags().BoolVar(&force, "force", false, "force push the package to the registry")
 
 	return cmd
 }
@@ -178,6 +182,7 @@ func pushPackage(ociUrl string, kclPkg *pkg.KclPkg, vendorMode bool, cli *client
 		client.WithPushModPath(kclPkg.HomePath),
 		client.WithPushSource(ociSource),
 		client.WithPushVendorMode(vendorMode),
+		client.WithPushForce(force),
 	)
 	if err != (*reporter.KpmEvent)(nil) {
 		return err
