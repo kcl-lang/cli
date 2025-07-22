@@ -40,6 +40,7 @@ var (
 	rename                string
 	noSumCheck            bool
 	insecureSkipTLSverify bool
+	force                 bool
 )
 
 // NewModCmd returns the mod command.

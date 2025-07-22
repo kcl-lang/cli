@@ -1,0 +1,1 @@
+kcl mod push --force oci://localhost:5001/myrepo:latest

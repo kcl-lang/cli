@@ -1,0 +1,4 @@
+package 'test_space' will be pushed
+package version '0.0.1' already exists, force pushing
+pushed [registry] localhost:5001/myrepo:latest
+digest:
