@@ -27,7 +27,7 @@ RUN kcl version && \
 # Install git for KCL package management
 # Use best practices for apt-get commands
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends git ca-certificates && \
+    apt-get install -y --no-install-recommends git ca-certificates ssh && \
     rm -rf /var/lib/apt/lists/*
 
 # Create the temporary directory
