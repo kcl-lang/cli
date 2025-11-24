@@ -73,12 +73,12 @@ func cmdBox(msg string, assumeYes bool) bool {
 
 func cleanBuildCache(pwd string) error {
 	cachePaths := []string{
-		filepath.Join(pwd, ".kclvm/cache"),
-		filepath.Join(pwd, "__main__/.kclvm/cache"),
+		filepath.Join(pwd, ".kcl/cache"),
+		filepath.Join(pwd, "__main__/.kcl/cache"),
 	}
 	pkgroot, err := utils.FindPkgRoot(pwd)
 	if err == nil {
-		cachePaths = append(cachePaths, filepath.Join(pkgroot, ".kclvm/cache"), filepath.Join(pkgroot, "__main__/.kclvm/cache"))
+		cachePaths = append(cachePaths, filepath.Join(pkgroot, ".kcl/cache"), filepath.Join(pkgroot, "__main__/.kcl/cache"))
 	}
 	for _, cachePath := range cachePaths {
 		if fs.IsDir(cachePath) {
