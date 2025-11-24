@@ -11,7 +11,7 @@ require (
 	kcl-lang.io/kcl-go v0.12.0-rc.1
 	kcl-lang.io/kcl-openapi v0.10.0
 	kcl-lang.io/kcl-plugin v0.11.0
-	kcl-lang.io/kpm v0.11.4
+	kcl-lang.io/kpm v0.12.0-rc.1
 )
 
 require (
