@@ -30,7 +30,7 @@ coverage.out
 
 build/
 .vscode/
-.kclvm/
+.kcl/
 _kcl_test.k
 
 .DS_store

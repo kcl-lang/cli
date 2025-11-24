@@ -20,7 +20,7 @@ const (
   curl -X POST http://127.0.0.1:2021/api:protorpc/BuiltinService.ListMethod --data '{}'
 
   # Use the Run API
-  curl -X POST http://127.0.0.1:2021/api:protorpc/KclvmService.ExecProgram -H  "accept: application/json" --data '{"k_filename_list": ["main.k"]}'`
+  curl -X POST http://127.0.0.1:2021/api:protorpc/KclService.ExecProgram -H  "accept: application/json" --data '{"k_filename_list": ["main.k"]}'`
 )
 
 var (

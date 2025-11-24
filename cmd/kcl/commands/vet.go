@@ -96,7 +96,7 @@ func validateFile(dataFile, codeFile string, opts *validate.ValidateOptions) (ok
 		opts = &validate.ValidateOptions{}
 	}
 	svc := kcl.Service()
-	resp, err := svc.ValidateCode(&gpyrpc.ValidateCode_Args{
+	resp, err := svc.ValidateCode(&gpyrpc.ValidateCodeArgs{
 		Datafile:      dataFile,
 		File:          codeFile,
 		Schema:        opts.Schema,
