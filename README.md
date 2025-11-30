@@ -17,12 +17,13 @@
 ## Introduction
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fkcl-lang%2Fcli.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fkcl-lang%2Fcli?ref=badge_shield)
 
+KCL `cli` is a command-line interface that includes KCL language core features, IDE features, package management tools, plugins, community integration, and other tools. It now integrates the following tools:
 
-`kcl` is a command-line interface that includes language core features, IDE features, package management tools, community integration, and other tools. It now integrates the following tools:
-
++ [KCL Core and API](https://github.com/kcl-lang/kcl)
 + [KCL Go SDK](https://github.com/kcl-lang/kcl-go)
-+ [Open API Tool](https://github.com/kcl-lang/kcl-openapi)
-+ [Package Manage Tool](https://github.com/kcl-lang/kpm)
++ [KCL Open API Tool](https://github.com/kcl-lang/kcl-openapi)
++ [KCL Package Manage Tool](https://github.com/kcl-lang/kpm)
++ [KCL Plugins](https://github.com/kcl-lang/kcl-plugin)
 + [KCL Playground](https://github.com/kcl-lang/kcl-playground)
 
 In the future, we will unify and integrate these dispersed tools into the `kcl-lang/tools` repo.

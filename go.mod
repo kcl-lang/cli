@@ -8,10 +8,10 @@ require (
 	github.com/onsi/gomega v1.38.2
 	github.com/spf13/cobra v1.10.1
 	github.com/stretchr/testify v1.11.1
-	kcl-lang.io/kcl-go v0.12.0-rc.1
+	kcl-lang.io/kcl-go v0.12.0
 	kcl-lang.io/kcl-openapi v0.10.0
 	kcl-lang.io/kcl-plugin v0.11.0
-	kcl-lang.io/kpm v0.12.0-rc.1
+	kcl-lang.io/kpm v0.12.0
 )
 
 require (
@@ -80,7 +80,7 @@ require (
 	google.golang.org/genproto v0.0.0-20240227224415-6ceb2ff114de // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20251022142026-3a174f9686a8 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20251022142026-3a174f9686a8 // indirect
-	kcl-lang.io/lib v0.12.0-rc.1 // indirect
+	kcl-lang.io/lib v0.12.0 // indirect
 )
 
 require (

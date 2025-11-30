@@ -16,7 +16,14 @@
 
 ## 介绍
 
-`kcl` 是一个命令行界面，包括语言核心功能、IDE 功能、包管理工具、社区集成和其他工具等。
+KCL `cli` 是一个命令行界面，包括 KCL 语言核心功能、IDE 功能、包管理工具、插件、社区集成和其他工具等。
+
++ [KCL 核心和 API](https://github.com/kcl-lang/kcl)
++ [KCL Go SDK](https://github.com/kcl-lang/kcl-go)
++ [KCL Open API 工具](https://github.com/kcl-lang/kcl-openapi)
++ [KCL 包管理工具](https://github.com/kcl-lang/kpm)
++ [KCL 插件](https://github.com/kcl-lang/kcl-plugin)
++ [KCL Playground](https://github.com/kcl-lang/kcl-playground)
 
 ## 安装
 
