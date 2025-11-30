@@ -26,8 +26,6 @@ KCL `cli` is a command-line interface that includes KCL language core features, 
 + [KCL Plugins](https://github.com/kcl-lang/kcl-plugin)
 + [KCL Playground](https://github.com/kcl-lang/kcl-playground)
 
-In the future, we will unify and integrate these dispersed tools into the `kcl-lang/tools` repo.
-
 ## Installation
 
 ### Scripts
