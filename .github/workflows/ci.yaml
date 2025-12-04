@@ -10,7 +10,7 @@ on:
      - main
 
 jobs:
-  Test:
+  test:
     name: Unit tests with coverage
     runs-on: ubuntu-latest
     steps:
@@ -41,7 +41,7 @@ jobs:
         with:
           path-to-profile: coverage.out
 
-  build_image:
+  build-image:
     name: build image
     runs-on: ubuntu-latest
     steps:

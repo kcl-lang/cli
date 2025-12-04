@@ -80,8 +80,11 @@ export PATH=$KCL_INSTALLATION_PATH:$PATH
 ### 从源代码构建
 
 ```shell
-git clone https://github.com/kcl-lang/cli
-cd cli && go build ./cmd/kcl/main.go -o kcl
+git clone https://github.com/kcl-lang/cli && cd cli
+# On Windows, MacOS and Linux
+go build ./cmd/kcl/
+# Build on Linux Musl
+CGO_ENABLED=1 go build -tags="musl netgo static osusergo" -ldflags="-linkmode external -extldflags '-static'" ./cmd/kcl
 ```
 
 请使用以下命令以确保您成功安装了 `kcl`。
