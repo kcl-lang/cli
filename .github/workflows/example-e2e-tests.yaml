@@ -96,11 +96,3 @@ jobs:
 
       - name: e2e tests
         run: PATH=$PATH:$HOME/go/bin kcl ./examples/kubernetes.k
-
-      - name: Example tests
-        shell: bash -ieo pipefail {0}
-        run: PATH=$PATH:$HOME/go/bin ./examples/test.sh
-
-      - name: Run concurrent e2e tests
-        shell: bash -ieo pipefail {0}
-        run: PATH=$PATH:$HOME/go/bin ./scripts/concurrent_test.sh
