@@ -93,8 +93,11 @@ docker run -it kcllang/kcl-arm64
 ### Build from Source Code
 
 ```shell
-git clone https://github.com/kcl-lang/cli
-cd cli && go build ./cmd/kcl/main.go -o kcl
+git clone https://github.com/kcl-lang/cli && cd cli
+# On Windows, MacOS and Linux
+go build ./cmd/kcl/
+# Build on Linux Musl
+CGO_ENABLED=1 go build -tags="musl netgo static osusergo" -ldflags="-linkmode external -extldflags '-static'" ./cmd/kcl
 ```
 
 Use the following command to ensure that you install `kcl` successfully.

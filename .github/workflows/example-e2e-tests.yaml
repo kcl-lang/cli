@@ -69,3 +69,30 @@ jobs:
           scoop install kcl-lang/kcl
           kcl.exe .\examples\kubernetes.k
           .\examples\test.ps1
+
+  musl:
+    runs-on: ubuntu-latest
+    container: golang:1.24-alpine
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v6
+
+      - name: Install musl dependencies (Alpine container)
+        run: |
+          apk add --no-cache \
+            musl-dev \
+            gcc \
+            git \
+            make \
+            linux-headers
+
+      - name: KCL Installation
+        run: |
+          CGO_ENABLED=1 go build -tags="musl netgo static osusergo" -ldflags="-linkmode external -extldflags '-static'" ./cmd/kcl
+          mkdir -p $HOME/go/bin
+          cp -f ./kcl $HOME/go/bin
+        env:
+          CGO_LDFLAGS: '-static'
+
+      - name: e2e tests
+        run: PATH=$PATH:$HOME/go/bin kcl ./examples/kubernetes.k

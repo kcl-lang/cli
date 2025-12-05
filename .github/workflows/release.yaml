@@ -80,3 +80,67 @@ jobs:
           args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.DEPLOY_ACCESS_TOKEN }}
+
+  musl-binary:
+    needs: binary
+    runs-on: ubuntu-latest
+    container: golang:1.24-alpine
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v6
+
+      - name: Install musl dependencies (Alpine container)
+        run: |
+          apk add --no-cache \
+            musl-dev \
+            gcc \
+            git \
+            make \
+            linux-headers \
+            tar
+
+      - name: Compile KCL (musl static build)
+        run: |
+          CGO_ENABLED=1 go build -tags="musl netgo static osusergo" -ldflags="-linkmode external -extldflags '-static'" ./cmd/kcl
+        env:
+          CGO_LDFLAGS: '-static'
+
+      - name: Package musl binary with docs
+        run: |
+          TAG_NAME=${{ github.ref_name }}
+          mkdir -p kcl-musl-package
+          cp -f ./kcl ./kcl-musl-package/
+          cp -f ./README.md ./kcl-musl-package/
+          cp -f ./LICENSE ./kcl-musl-package/
+          tar -czf kcl-${TAG_NAME}-linux-musl-amd64.tar.gz -C kcl-musl-package .
+          ls -lh kcl-${TAG_NAME}-linux-musl-amd64.tar.gz
+          echo "PACKAGE_NAME=kcl-${TAG_NAME}-linux-musl-amd64.tar.gz" >> $GITHUB_ENV
+
+      - name: Upload musl package to Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: kcl-musl-package
+          path: ./${{ env.PACKAGE_NAME }}
+          retention-days: 7
+
+  upload-musl-to-release:
+    needs: [binary, musl-binary]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download musl package from Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: kcl-musl-package
+          path: ./
+
+      - name: Install GitHub CLI
+        run: |
+          sudo apt update && sudo apt install -y gh
+
+      - name: Upload to GitHub Release
+        run: |
+          echo "${{ secrets.DEPLOY_ACCESS_TOKEN }}" | gh auth login --with-token
+          PACKAGE_NAME=$(ls ./kcl-*.tar.gz)
+          gh release upload "${{ github.ref_name }}" "${PACKAGE_NAME}" --clobber
+        env:
+          GITHUB_API_URL: https://api.github.com
