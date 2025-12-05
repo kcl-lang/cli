@@ -117,7 +117,7 @@ jobs:
           echo "PACKAGE_NAME=kcl-${TAG_NAME}-linux-musl-amd64.tar.gz" >> $GITHUB_ENV
 
       - name: Upload musl package to Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: kcl-musl-package
           path: ./${{ env.PACKAGE_NAME }}
