@@ -9,7 +9,7 @@ require (
 	github.com/spf13/cobra v1.10.2
 	github.com/stretchr/testify v1.11.1
 	kcl-lang.io/kcl-go v0.12.3
-	kcl-lang.io/kcl-openapi v0.10.0
+	kcl-lang.io/kcl-openapi v0.10.1
 	kcl-lang.io/kcl-plugin v0.11.0
 	kcl-lang.io/kpm v0.12.3
 )
