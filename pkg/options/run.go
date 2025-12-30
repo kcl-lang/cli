@@ -3,8 +3,6 @@
 package options
 
 import (
-	"bytes"
-	"encoding/json"
 	"fmt"
 	"io"
 	"net/url"
@@ -12,12 +10,13 @@ import (
 	"strings"
 
 	"github.com/acarl005/stripansi"
-	"github.com/goccy/go-yaml"
 	"github.com/pkg/errors"
+	jsonfmt "kcl-lang.io/cli/pkg/format/json"
+	tomlfmt "kcl-lang.io/cli/pkg/format/toml"
+	xmlfmt "kcl-lang.io/cli/pkg/format/xml"
+	yamlfmt "kcl-lang.io/cli/pkg/format/yaml"
 	"kcl-lang.io/cli/pkg/fs"
-	"kcl-lang.io/kcl-go/pkg/3rdparty/toml"
 	"kcl-lang.io/kcl-go/pkg/kcl"
-	"kcl-lang.io/kcl-go/pkg/tools/gen"
 	"kcl-lang.io/kpm/pkg/client"
 	"kcl-lang.io/kpm/pkg/constants"
 	"kcl-lang.io/kpm/pkg/downloader"
@@ -277,8 +276,8 @@ func (o *RunOptions) Validate() error {
 		}
 	}
 
-	if o.Format != "" && strings.ToLower(o.Format) != Json && strings.ToLower(o.Format) != Yaml && strings.ToLower(o.Format) != Toml {
-		return fmt.Errorf("invalid output format, expected %v, got %v", []string{Json, Yaml, Toml}, o.Format)
+	if o.Format != "" && strings.ToLower(o.Format) != Json && strings.ToLower(o.Format) != Yaml && strings.ToLower(o.Format) != Toml && strings.ToLower(o.Format) != Xml {
+		return fmt.Errorf("invalid output format, expected %v, got %v", []string{Json, Yaml, Toml, Xml}, o.Format)
 	}
 	for _, setting := range o.Settings {
 		if _, err := os.Stat(setting); err != nil {
@@ -292,37 +291,39 @@ func (o *RunOptions) writeResult(result *kcl.KCLResultList) error {
 	if result == nil {
 		return nil
 	}
+
+	yamlResult := result.GetRawYamlResult()
+	// Check if the result is a YAML Stream (contains multiple documents separated by ---)
+	isYAMLStream := yamlfmt.IsStream(yamlResult)
+
 	var output []byte
+	var err error
+
 	if strings.ToLower(o.Format) == Json {
-		var out bytes.Buffer
-		err := json.Indent(&out, []byte(result.GetRawJsonResult()), "", "    ")
-		if err != nil {
-			return err
-		}
-		output = []byte(out.String() + "\n")
-	} else if strings.ToLower(o.Format) == Toml {
-		var out []byte
-		var err error
-		if o.SortKeys {
-			yamlData := make(map[string]any)
-			if err := yaml.UnmarshalWithOptions([]byte(result.GetRawYamlResult()), &yamlData); err != nil {
-				return err
-			}
-			out, err = toml.Marshal(&yamlData)
+		if isYAMLStream {
+			output, err = jsonfmt.Stream(yamlResult)
 		} else {
-			yamlData := &yaml.MapSlice{}
-			if err := yaml.UnmarshalWithOptions([]byte(result.GetRawYamlResult()), yamlData, yaml.UseOrderedMap()); err != nil {
-				return err
-			}
-			out, err = gen.MarshalTOML(yamlData)
+			output, err = jsonfmt.Single(result)
 		}
-		if err != nil {
-			return err
+	} else if strings.ToLower(o.Format) == Toml {
+		if isYAMLStream {
+			output, err = tomlfmt.Stream(yamlResult, o.SortKeys)
+		} else {
+			output, err = tomlfmt.Single(yamlResult, o.SortKeys)
 		}
-		output = []byte(string(out) + "\n")
+	} else if strings.ToLower(o.Format) == Xml {
+		if isYAMLStream {
+			output, err = xmlfmt.Stream(yamlResult)
+		} else {
+			output, err = xmlfmt.Single(yamlResult)
+		}
 	} else {
 		// Both considering the raw YAML format and the YAML stream format that contains the `---` separator.
-		output = []byte(result.GetRawYamlResult() + "\n")
+		output = []byte(yamlResult + "\n")
+	}
+
+	if err != nil {
+		return err
 	}
 
 	if o.Output == "" {
