@@ -8,7 +8,9 @@ const (
 	// Yaml is the YAML output format.
 	Yaml string = "yaml"
 	// Toml is the TOML output format.
-	Toml            string = "toml"
+	Toml string = "toml"
+	// Xml is the XML output format.
+	Xml             string = "xml"
 	GoStruct        string = "gostruct"
 	Auto            string = "auto"
 	Crd             string = "crd"

@@ -21,7 +21,7 @@ func appendLangFlags(o *options.RunOptions, flags *pflag.FlagSet) {
 	flags.StringVarP(&o.Branch, "branch", "b", "",
 		"Specify the branch for the Git artifact")
 	flags.StringVar(&o.Format, "format", "yaml",
-		"Specify the output format")
+		"Specify the output format (yaml, json, toml, xml)")
 	flags.BoolVarP(&o.DisableNone, "disable_none", "n", false,
 		"Disable dumping None values")
 	flags.BoolVarP(&o.Debug, "debug", "d", false,

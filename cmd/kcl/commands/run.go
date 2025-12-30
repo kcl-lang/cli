@@ -24,6 +24,9 @@ For example, 'kcl run path/to/kcl.k' will run the file named path/to/kcl.k
   # Run a single file and output TOML
   kcl run path/to/kcl.k --format toml
 
+  # Run a single file and output XML
+  kcl run path/to/kcl.k --format xml
+
   # Run multiple files
   kcl run path/to/kcl1.k path/to/kcl2.k
 
