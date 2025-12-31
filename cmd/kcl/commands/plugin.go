@@ -10,6 +10,15 @@ import (
 	"kcl-lang.io/cli/pkg/plugin"
 )
 
+// isFileOrDir checks if the given path is an existing file or directory
+func isFileOrDir(path string) bool {
+	info, err := os.Stat(path)
+	if err != nil {
+		return false
+	}
+	return info.IsDir() || info.Mode().IsRegular()
+}
+
 // executeRunCmd the run command for the root command.
 func executeRunCmd(args []string) {
 	cmd := NewRunCmd()
@@ -60,11 +69,30 @@ func bootstrapCmdPlugin(cmd *cobra.Command, pluginHandler plugin.PluginHandler) 
 			case "help", "completion", cobra.ShellCompRequestCmd, cobra.ShellCompNoDescRequestCmd:
 			default:
 				if !builtinSubCmdExist {
+					// Check if the first argument might be a file/directory before trying plugins
+					// If it looks like a KCL file or existing path, execute run command directly
+					if len(cmdPathPieces) > 0 && !strings.HasPrefix(cmdPathPieces[0], "-") {
+						firstArg := cmdPathPieces[0]
+						// If it looks like a KCL file or is an existing file/directory, try to run it
+						if strings.HasSuffix(firstArg, ".k") || isFileOrDir(firstArg) {
+							executeRunCmd(cmdPathPieces)
+							return
+						}
+					}
+
+					// Try to find and execute a plugin
 					if err := plugin.HandlePluginCommand(pluginHandler, cmdPathPieces, false); err != nil {
 						fmt.Fprintf(os.Stderr, "Error: %v\n", err)
 						os.Exit(1)
 					}
-					executeRunCmd(cmdPathPieces)
+
+					// No plugin found and the argument doesn't look like a file
+					// Show helpful error for unknown command
+					if len(cmdPathPieces) > 0 && !strings.HasPrefix(cmdPathPieces[0], "-") {
+						fmt.Fprintf(os.Stderr, "Error: unknown command \"%s\" for \"%s\"\n", cmdName, cmd.Name())
+						fmt.Fprintf(os.Stderr, "Run '%s --help' for available commands.\n", cmd.Name())
+						os.Exit(1)
+					}
 				}
 			}
 		}
