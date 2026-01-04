@@ -3,9 +3,64 @@ package fs
 import (
 	"fmt"
 	"io"
+	"net/http"
+	"net/url"
 	"os"
 	"path/filepath"
+	"strings"
 )
+
+// IsURL checks if the given path is an HTTP or HTTPS URL.
+func IsURL(path string) bool {
+	return strings.HasPrefix(path, "http://") || strings.HasPrefix(path, "https://")
+}
+
+// GenTempFileFromURL fetches content from a URL and saves it to a temp file.
+// It returns the path to the temp file or an error if the fetch fails.
+// The caller is responsible for removing the temp file after use.
+func GenTempFileFromURL(urlStr string) (string, error) {
+	// Parse the URL to extract the file extension
+	parsedURL, err := url.Parse(urlStr)
+	if err != nil {
+		return "", fmt.Errorf("invalid URL %q: %w", urlStr, err)
+	}
+
+	// Extract file extension from URL path for temp file naming
+	ext := filepath.Ext(parsedURL.Path)
+	if ext == "" {
+		ext = ".tmp"
+	}
+
+	// Create temp file with appropriate extension
+	tempFile, err := os.CreateTemp("", "kcl-import-*"+ext)
+	if err != nil {
+		return "", fmt.Errorf("failed to create temp file: %w", err)
+	}
+	defer tempFile.Close()
+
+	// Fetch content from URL
+	resp, err := http.Get(urlStr)
+	if err != nil {
+		os.Remove(tempFile.Name())
+		return "", fmt.Errorf("failed to fetch URL %q: %w", urlStr, err)
+	}
+	defer resp.Body.Close()
+
+	// Check for successful response
+	if resp.StatusCode != http.StatusOK {
+		os.Remove(tempFile.Name())
+		return "", fmt.Errorf("failed to fetch URL %q: HTTP %d %s", urlStr, resp.StatusCode, resp.Status)
+	}
+
+	// Copy response body to temp file
+	_, err = io.Copy(tempFile, resp.Body)
+	if err != nil {
+		os.Remove(tempFile.Name())
+		return "", fmt.Errorf("failed to save content from URL %q: %w", urlStr, err)
+	}
+
+	return tempFile.Name(), nil
+}
 
 func GenTempFileFromStdin() (string, error) {
 	tempFile, err := os.CreateTemp("", "stdin-*.k")

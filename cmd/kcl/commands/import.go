@@ -20,6 +20,8 @@ Supported conversion modes:
 - openapi:         convert OpenAPI spec to KCL schema
 - crd:             convert Kubernetes CRD to KCL schema
 - auto:            automatically detect the input format
+
+Input can be a local file path or an HTTP/HTTPS URL.
 `
 	importExample = `  # Generate KCL models from OpenAPI spec
   kcl import -m openapi swagger.json
@@ -43,7 +45,13 @@ Supported conversion modes:
   kcl import -m terraformschema schema.json
 
   # Generate KCL models from Go structs
-  kcl import -m gostruct schema.go`
+  kcl import -m gostruct schema.go
+
+  # Generate KCL models from a remote JSON URL
+  kcl import -m json https://api.github.com/meta
+
+  # Generate KCL models from a raw GitHub YAML file
+  kcl import https://raw.githubusercontent.com/kcl-lang/cli/main/examples/settings/settings.yaml`
 )
 
 // NewImportCmd returns the import command.
