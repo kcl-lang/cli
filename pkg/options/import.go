@@ -37,7 +37,36 @@ func NewImportOptions() *ImportOptions {
 func (o *ImportOptions) Run() error {
 	opts := &gen.GenKclOptions{}
 	mode := strings.ToLower(o.Mode)
-	files, err := fs.ExpandInputFiles(o.Files, o.Recursive)
+
+	// Process input files, fetching URLs to temp files if needed
+	processedFiles := make([]string, 0, len(o.Files))
+	tempFiles := []string{}
+
+	for _, f := range o.Files {
+		if fs.IsURL(f) {
+			// Fetch URL content to temp file
+			tempPath, err := fs.GenTempFileFromURL(f)
+			if err != nil {
+				for _, tf := range tempFiles {
+					os.Remove(tf)
+				}
+				return err
+			}
+			tempFiles = append(tempFiles, tempPath)
+			processedFiles = append(processedFiles, tempPath)
+		} else {
+			processedFiles = append(processedFiles, f)
+		}
+	}
+
+	// Ensure temp files are cleaned up when function returns
+	defer func() {
+		for _, tf := range tempFiles {
+			os.Remove(tf)
+		}
+	}()
+
+	files, err := fs.ExpandInputFiles(processedFiles, o.Recursive)
 	if err != nil {
 		return err
 	}
