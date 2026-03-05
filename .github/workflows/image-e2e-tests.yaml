@@ -28,7 +28,7 @@ jobs:
         with:
           platforms: linux/amd64,linux/arm64
       - name: Setup Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
       - name: Test docker amd64 non-user with KCL version
         run: docker run --user=999 --rm kcllang/kcl sh -c "kcl version"
       - name: Test docker amd64 non-user with KCL running
