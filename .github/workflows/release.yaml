@@ -84,7 +84,7 @@ jobs:
   musl-binary:
     needs: binary
     runs-on: ubuntu-latest
-    container: golang:1.24-alpine
+    container: golang:1.25-alpine
     steps:
       - name: Git checkout
         uses: actions/checkout@v6
