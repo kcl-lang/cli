@@ -11,7 +11,7 @@ require (
 	kcl-lang.io/kcl-go v0.12.3
 	kcl-lang.io/kcl-openapi v0.10.2
 	kcl-lang.io/kcl-plugin v0.11.0
-	kcl-lang.io/kpm v0.12.3
+	kcl-lang.io/kpm v0.12.4
 )
 
 require (
@@ -66,7 +66,7 @@ require (
 	github.com/hashicorp/go-getter v1.8.3 // indirect
 	github.com/jinzhu/copier v0.4.0 // indirect
 	github.com/julienschmidt/httprouter v1.3.0 // indirect
-	github.com/kubescape/go-git-url v0.0.30 // indirect
+	github.com/kubescape/go-git-url v0.0.31 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/mitchellh/go-wordwrap v1.0.1 // indirect
 	github.com/moby/sys/capability v0.4.0 // indirect
@@ -142,7 +142,7 @@ require (
 	github.com/go-openapi/swag v0.23.0 // indirect
 	github.com/go-openapi/validate v0.24.0 // indirect
 	github.com/goccy/go-yaml v1.19.2
-	github.com/gofrs/flock v0.12.1 // indirect
+	github.com/gofrs/flock v0.13.0 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang-collections/collections v0.0.0-20130729185459-604e922904d3 // indirect
 	github.com/golang/groupcache v0.0.0-20241129210726-2c02b8208cf8 // indirect
