@@ -1,13 +1,9 @@
-# This is an example .goreleaser.yml file with some sane defaults.
-# Make sure to check the documentation at http://goreleaser.com
 version: 2
+
 before:
   hooks:
-    # You may remove this if you don't use go modules.
     - go mod tidy
-    # - ./scripts/install-kcl-lsp-all.sh
 
-# .goreleaser.yml
 builds:
   - id: default
     env:
@@ -22,55 +18,51 @@ builds:
       - amd64
       - arm64
     ldflags:
-      - "-X kcl-lang.io/cli/pkg/version.version={{.Version}}"
+      - "-X kcl-lang.io/cli/pkg/version.version={{ .Version }}"
 
 archives:
   - id: default
-    builds:
+    ids:
       - default
     name_template: "kcl-v{{ .Version }}-{{ .Os }}-{{ .Arch }}"
     format_overrides:
       - goos: windows
-        format: zip
-    # Put kcl-language-server binaries into add to the kcl archive.
-    # files:
-    #   - ./bin/kcl-lsp-v{{ .Version }}-{{ .Os }}-{{ .Arch }}/*
+        formats:
+          - zip
 
-brews:
-  - tap:
+homebrew_casks:
+  - name: kcl
+    ids:
+      - default
+    binaries:
+      - kcl
+    repository:
       owner: kcl-lang
       name: homebrew-tap
-    name: kcl
-    url_template: "https://github.com/kcl-lang/cli/releases/download/{{ .Tag }}/kcl-v{{ .Version }}-{{ .Os }}-{{ .Arch }}.tar.gz"
-    download_strategy: CurlDownloadStrategy
-    # Git author used to commit to the repository.
-    # Defaults are shown.
+      branch: main
+    directory: Casks
+    homepage: "https://github.com/kcl-lang/kcl"
+    description: "KCL Command Line Interface"
+    license: "Apache-2.0"
     commit_author:
       name: GoReleaser Bot
       email: goreleaser@carlosbecker.com
-    folder: HomebrewFormula
+    url:
+      verified: github.com/kcl-lang/cli
+
+scoops:
+  - name: kcl
+    url_template: "https://github.com/kcl-lang/cli/releases/download/{{ .Tag }}/kcl-v{{ .Version }}-{{ .Os }}-{{ .Arch }}.zip"
+    repository:
+      owner: kcl-lang
+      name: scoop-bucket
+      branch: main
+      token: "{{ .Env.GITHUB_TOKEN }}"
+    directory: Scoops
+    commit_author:
+      name: goreleaserbot
+      email: bot@goreleaser.com
+    commit_msg_template: "Scoop update for kcl version {{ .Tag }}"
     homepage: "https://github.com/kcl-lang/kcl"
     description: "KCL Command Line Interface"
-    dependencies:
-      - name: "kcl-lsp"
-    license: "Apache License"
-    skip_upload: false
-    test: |
-      system "#{bin}/kcl version"
-
-scoop:
-  name: kcl
-  url_template: "https://github.com/kcl-lang/cli/releases/download/{{ .Tag }}/kcl-v{{ .Version }}-{{ .Os }}-{{ .Arch }}.zip"
-  bucket:
-    owner: kcl-lang
-    name: scoop-bucket
-    branch: main
-    token: "{{ .Env.GITHUB_TOKEN }}"
-  folder: Scoops
-  commit_author:
-    name: goreleaserbot
-    email: bot@goreleaser.com
-  commit_msg_template: "Scoop update for kcl version {{ .Tag }}"
-  homepage: "http://github.com/kcl-lang/kcl"
-  description: "KCL Command Line Interface"
-  license: Apache License 2.0
+    license: "Apache-2.0"
