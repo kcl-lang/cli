@@ -30,25 +30,19 @@ archives:
         formats:
           - zip
 
-homebrew_casks:
+homebrews:
   - name: kcl
-    ids:
-      - default
-    binaries:
-      - kcl
     repository:
       owner: kcl-lang
       name: homebrew-tap
       branch: main
-    directory: Casks
+    url_template: "https://github.com/kcl-lang/cli/releases/download/{{ .Tag }}/kcl-v{{ .Version }}-{{ .Os }}-{{ .Arch }}.tar.gz"
     homepage: "https://github.com/kcl-lang/kcl"
     description: "KCL Command Line Interface"
     license: "Apache-2.0"
     commit_author:
       name: GoReleaser Bot
       email: goreleaser@carlosbecker.com
-    url:
-      verified: github.com/kcl-lang/cli
 
 scoops:
   - name: kcl
