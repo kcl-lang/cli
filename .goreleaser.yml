@@ -30,7 +30,7 @@ archives:
         formats:
           - zip
 
-homebrews:
+brews:
   - name: kcl
     repository:
       owner: kcl-lang
