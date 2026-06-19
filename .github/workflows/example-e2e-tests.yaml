@@ -13,7 +13,7 @@ jobs:
         os: [ ubuntu-22.04, ubuntu-latest ]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-go@v6
         with:
           go-version-file: go.mod
@@ -34,7 +34,7 @@ jobs:
         os: [ macos-15-intel, macos-latest ]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-go@v6
         with:
           go-version-file: go.mod
@@ -55,7 +55,7 @@ jobs:
   windows:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Install Make
         run: choco install make -y
@@ -75,7 +75,7 @@ jobs:
     container: golang:1.25-alpine
     steps:
       - name: Git checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Install musl dependencies (Alpine container)
         run: |
