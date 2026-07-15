@@ -91,13 +91,24 @@ func ParseSourceFromArgs(cli *client.KpmClient, args []string) (*downloader.Sour
 				return nil, err
 			}
 
-			ociUrl.Scheme = constants.OciScheme
-			query := ociUrl.Query()
-			query.Add(constants.Tag, tag)
-			ociUrl.RawQuery = query.Encode()
-			err = source.FromString(ociUrl.String())
-			if err != nil {
-				return nil, err
+			// If the value has no scheme at all, treat it as a bare repository path
+			// (e.g. "myorg/kcl-templates/utils").  The registry host will be resolved
+			// at runtime from KPM_REG / DefaultOciRegistry.
+			if ociUrl.Scheme == "" {
+				source.Oci = &downloader.Oci{
+					Repo:       oci,
+					Tag:        tag,
+					RegFromEnv: true,
+				}
+			} else {
+				ociUrl.Scheme = constants.OciScheme
+				query := ociUrl.Query()
+				query.Add(constants.Tag, tag)
+				ociUrl.RawQuery = query.Encode()
+				err = source.FromString(ociUrl.String())
+				if err != nil {
+					return nil, err
+				}
 			}
 		} else if len(path) != 0 {
 			source.Local = &downloader.Local{
