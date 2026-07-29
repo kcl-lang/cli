@@ -22,6 +22,7 @@ const (
 
 // NewFmtCmd returns the fmt command.
 func NewFmtCmd() *cobra.Command {
+	o := new(kcl.FormatPathOptions)
 	cmd := &cobra.Command{
 		Use:     "fmt",
 		Short:   "KCL format tool",
@@ -33,17 +34,27 @@ func NewFmtCmd() *cobra.Command {
 				args = append(args, ".")
 			}
 			for _, p := range args {
-				paths, err := kcl.FormatPath(p)
+				paths, err := kcl.FormatPathWithOptions(p, kcl.FormatPathOptions{
+					DryRun: o.DryRun,
+				})
 				if err != nil {
 					return err
 				}
 				changedPaths = append(changedPaths, paths...)
 			}
-			fmt.Println(strings.Join(changedPaths, "\n"))
+			if len(changedPaths) > 0 {
+				fmt.Println(strings.Join(changedPaths, "\n"))
+			}
+			if o.DryRun && len(changedPaths) > 0 {
+				return fmt.Errorf("%d KCL file(s) require formatting", len(changedPaths))
+			}
 			return nil
 		},
 		SilenceUsage: true,
 	}
+
+	flags := cmd.Flags()
+	flags.BoolVar(&o.DryRun, "dry-run", false, "Report files requiring formatting without modifying them.")
 
 	return cmd
 }

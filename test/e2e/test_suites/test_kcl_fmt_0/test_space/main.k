@@ -1,0 +1,2 @@
+schema AppConfig:
+          replicas:int
