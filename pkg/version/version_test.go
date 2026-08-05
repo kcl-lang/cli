@@ -20,3 +20,19 @@ func TestGetVersionString(t *testing.T) {
 		})
 	}
 }
+
+func TestBuildInfoVersion(t *testing.T) {
+	// Save and restore the package-level version variable so we can exercise the
+	// build info path without leaking state across tests.
+	prevVersion := version
+	defer func() { version = prevVersion }()
+
+	// Force the package-level fallback so buildInfoVersion is consulted.
+	version = ""
+
+	// When running under `go test`, ReadBuildInfo returns "(devel)" for the main
+	// module, which buildInfoVersion must treat as "no version available".
+	if got := buildInfoVersion(); got != "" {
+		t.Errorf("buildInfoVersion() under `go test` = %q, want empty string", got)
+	}
+}

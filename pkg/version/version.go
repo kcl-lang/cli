@@ -5,18 +5,46 @@ package version
 import (
 	"fmt"
 	"runtime"
+	"runtime/debug"
+	"strings"
 )
 
 // version will be set by build flags.
 var version string
 
-// GetVersionString() will return the latest version of kpm.
+// GetVersionString() returns the KCL CLI version string in the form
+// `{version}-{goos}-{goarch}`.
+//
+// The version is resolved in the following order:
+//  1. The `version` package variable, populated by `-ldflags "-X .../pkg/version.version=..."`
+//     at build time (used by goreleaser and the musl release build).
+//  2. The module version embedded in the Go build info (works for binaries installed
+//     via `go install kcl-lang.io/cli@vX.Y.Z` from a tagged module).
+//  3. The hardcoded `VersionTypeLatest` constant as a last resort.
 func GetVersionString() string {
-	if len(version) == 0 {
-		// If version is not set by build flags, return the version constant.
-		return VersionTypeLatest.String()
+	if len(version) != 0 {
+		return version
 	}
-	return version
+	if v := buildInfoVersion(); v != "" {
+		return v
+	}
+	return VersionTypeLatest.String()
+}
+
+// buildInfoVersion extracts a usable version string from the Go runtime build info.
+// It strips the leading "v" (e.g. "v0.12.8" -> "0.12.8") and returns an empty
+// string when the build info is unavailable or reports a non-release version
+// such as "(devel)" or a pseudo-version.
+func buildInfoVersion() string {
+	info, ok := debug.ReadBuildInfo()
+	if !ok {
+		return ""
+	}
+	v := info.Main.Version
+	if v == "" || v == "(devel)" {
+		return ""
+	}
+	return strings.TrimPrefix(v, "v")
 }
 
 // VersionType is the version type of kpm.
