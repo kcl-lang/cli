@@ -101,7 +101,10 @@ jobs:
 
       - name: Compile KCL (musl static build)
         run: |
-          CGO_ENABLED=1 go build -tags="musl netgo static osusergo" -ldflags="-linkmode external -extldflags '-static'" ./cmd/kcl
+          VERSION=$(cat VERSION)
+          CGO_ENABLED=1 go build -tags="musl netgo static osusergo" \
+            -ldflags="-linkmode external -extldflags '-static' -X 'kcl-lang.io/cli/pkg/version.version=${VERSION}'" \
+            ./cmd/kcl
         env:
           CGO_LDFLAGS: '-static'
 
