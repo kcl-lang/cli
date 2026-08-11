@@ -33,12 +33,30 @@ const (
   kcl vet data.json code.k -s Schema
 
   # Validate and output results as JSON for CI/CD integration
-  kcl vet data.json code.k --output json`
+  kcl vet data.json code.k --output json
+
+  # Validate against a schema that imports an external KCL package
+  kcl vet data.yaml schema.k -E my_pkg=./vendor/my_pkg`
 )
+
+// externalPackageEntryDelimiter is the separator used inside a single
+// --external flag value to split the package name from its on-disk
+// path, matching the convention used by `kcl run --external`.
+const externalPackageEntryDelimiter = "="
 
 // VetOptions holds the options for the vet command.
 type VetOptions struct {
 	validate.ValidateOptions
+	// ExternalPackagesRaw holds the raw `--external`/`-E` flag values
+	// collected from the command line, each formatted as
+	// `<pkg_name>=<pkg_path>`. The slice is parsed into
+	// `gpyrpc.ExternalPkg` entries at validation time so that
+	// empty or malformed entries can be reported with a clear error
+	// rather than being silently dropped. We intentionally do not
+	// round-trip through `validate.ValidateOptions.ExternalPackages`
+	// so this CLI stays buildable against any released version of
+	// kcl-go that already ships the stable gRPC schema.
+	ExternalPackagesRaw []string
 	// Output specifies the output format: "text" (default) or "json"
 	Output string
 }
@@ -94,6 +112,8 @@ func NewVetCmd() *cobra.Command {
 		"Specify the validate config attribute name.")
 	cmd.Flags().StringVar(&o.Format, "format", "",
 		"Specify the validate data format. e.g., yaml, json. Default is json")
+	cmd.Flags().StringSliceVarP(&o.ExternalPackagesRaw, "external", "E", []string{},
+		"Specify the mapping of package name and path where the package is located, e.g. my_pkg=./vendor/my_pkg")
 	cmd.Flags().StringVar(&o.Output, "output", "text",
 		"Specify the output format. e.g., text, json. Default is text")
 
@@ -101,10 +121,15 @@ func NewVetCmd() *cobra.Command {
 }
 
 func doValidate(dataFile, codeFile string, o *VetOptions) error {
-	var ok bool
-	var errMsg string
+	externalPkgs, err := parseExternalPackages(o.ExternalPackagesRaw)
+	if err != nil {
+		return outputResult(o.Output, false, "", err)
+	}
 	if dataFile == "-" {
-		// Read data from stdin
+		// Read data from stdin. The high-level helper does not yet
+		// surface external packages, but for parity with the file
+		// path we still rely on the gRPC `ValidateCode` endpoint so
+		// the schema selection matches the user's expectations.
 		input, err := io.ReadAll(os.Stdin)
 		if err != nil {
 			return outputResult(o.Output, false, "", err)
@@ -113,45 +138,87 @@ func doValidate(dataFile, codeFile string, o *VetOptions) error {
 		if err != nil {
 			return outputResult(o.Output, false, "", err)
 		}
-		ok, err = validate.ValidateCode(string(input), string(code), &o.ValidateOptions)
+		svc := kcl.Service()
+		resp, err := svc.ValidateCode(&gpyrpc.ValidateCodeArgs{
+			Datafile:      string(input),
+			Code:          string(code),
+			Schema:        o.Schema,
+			AttributeName: o.AttributeName,
+			Format:        o.Format,
+			ExternalPkgs:  externalPkgs,
+		})
 		if err != nil {
 			return outputResult(o.Output, false, err.Error(), nil)
 		}
-	} else {
-		// Read data from files
-		dataFiles, err := fs.ExpandInputFiles([]string{dataFile}, false)
+		return outputResult(o.Output, resp.Success, resp.ErrMessage, nil)
+	}
+	// Read data from files.
+	dataFiles, err := fs.ExpandInputFiles([]string{dataFile}, false)
+	if err != nil {
+		return outputResult(o.Output, false, "", err)
+	}
+	for _, dataFile := range dataFiles {
+		ok, errMsg, err := validateFile(dataFile, codeFile, o, externalPkgs)
 		if err != nil {
 			return outputResult(o.Output, false, "", err)
 		}
-		for _, dataFile := range dataFiles {
-			ok, errMsg, err = validateFile(dataFile, codeFile, &o.ValidateOptions)
-			if err != nil {
-				return outputResult(o.Output, false, "", err)
-			}
-			if !ok {
-				return outputResult(o.Output, false, errMsg, nil)
-			}
+		if !ok {
+			return outputResult(o.Output, false, errMsg, nil)
 		}
 	}
-	return outputResult(o.Output, ok, "", nil)
+	return outputResult(o.Output, true, "", nil)
 }
 
-func validateFile(dataFile, codeFile string, opts *validate.ValidateOptions) (ok bool, errMsg string, err error) {
-	if opts == nil {
-		opts = &validate.ValidateOptions{}
-	}
+func validateFile(dataFile, codeFile string, o *VetOptions, externalPkgs []*gpyrpc.ExternalPkg) (ok bool, errMsg string, err error) {
 	svc := kcl.Service()
 	resp, err := svc.ValidateCode(&gpyrpc.ValidateCodeArgs{
 		Datafile:      dataFile,
 		File:          codeFile,
-		Schema:        opts.Schema,
-		AttributeName: opts.AttributeName,
-		Format:        opts.Format,
+		Schema:        o.Schema,
+		AttributeName: o.AttributeName,
+		Format:        o.Format,
+		ExternalPkgs:  externalPkgs,
 	})
 	if err != nil {
 		return false, "", err
 	}
 	return resp.Success, resp.ErrMessage, nil
+}
+
+// parseExternalPackages converts each `--external` flag value of the
+// form `pkg_name=pkg_path` into a `gpyrpc.ExternalPkg` entry ready to
+// be forwarded to `ValidateCodeArgs`. Empty entries are ignored so
+// that users can append a trailing separator without tripping the
+// parser, matching the historical behaviour of `kcl run --external`.
+// Malformed entries — those missing the separator, the package name
+// or the path — are rejected so the user gets a clear error instead
+// of a confusing downstream message.
+func parseExternalPackages(raw []string) ([]*gpyrpc.ExternalPkg, error) {
+	if len(raw) == 0 {
+		return nil, nil
+	}
+	out := make([]*gpyrpc.ExternalPkg, 0, len(raw))
+	for _, entry := range raw {
+		entry = strings.TrimSpace(entry)
+		if entry == "" {
+			continue
+		}
+		idx := strings.Index(entry, externalPackageEntryDelimiter)
+		if idx <= 0 || idx == len(entry)-1 {
+			return nil, fmt.Errorf(
+				"invalid --external value %q, expected '<pkg_name>=<pkg_path>'",
+				entry,
+			)
+		}
+		out = append(out, &gpyrpc.ExternalPkg{
+			PkgName: strings.TrimSpace(entry[:idx]),
+			PkgPath: strings.TrimSpace(entry[idx+1:]),
+		})
+	}
+	if len(out) == 0 {
+		return nil, nil
+	}
+	return out, nil
 }
 
 // outputResult outputs the validation result in the specified format.
