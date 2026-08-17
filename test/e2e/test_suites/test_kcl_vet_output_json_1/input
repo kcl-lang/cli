@@ -1,0 +1,1 @@
+kcl vet --format json --schema User data.json main.k --output json

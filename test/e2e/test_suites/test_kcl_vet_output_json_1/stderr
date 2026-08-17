@@ -1,0 +1,21 @@
+[
+  {
+    "errorType": "EvaluationError",
+    "file": "data.json",
+    "line": 1,
+    "column": 1,
+    "details": {
+      "errorMessage": "Instance check failed",
+      "codeSnippet": "{"
+    },
+    "schema": {
+      "filepath": "main.k",
+      "lineInFile": 10,
+      "columnInFile": 1,
+      "details": {
+        "errorMessage": "Check failed on the condition",
+        "codeSnippet": "age > 10"
+      }
+    }
+  }
+]
