@@ -112,7 +112,10 @@ func NewVetCmd() *cobra.Command {
 		"Specify the validate config attribute name.")
 	cmd.Flags().StringVar(&o.Format, "format", "",
 		"Specify the validate data format. e.g., yaml, json. Default is json")
-	cmd.Flags().StringSliceVarP(&o.ExternalPackagesRaw, "external", "E", []string{},
+	// StringArrayVar (not StringSlice) keeps the value of a single flag
+	// occurrence intact, so paths containing commas are preserved. See
+	// https://github.com/kcl-lang/cli/issues/232.
+	cmd.Flags().StringArrayVarP(&o.ExternalPackagesRaw, "external", "E", []string{},
 		"Specify the mapping of package name and path where the package is located, e.g. my_pkg=./vendor/my_pkg")
 	cmd.Flags().StringVar(&o.Output, "output", "text",
 		"Specify the output format. e.g., text, json. Default is text")
