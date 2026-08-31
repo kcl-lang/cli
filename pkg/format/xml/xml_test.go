@@ -324,3 +324,156 @@ func TestNilHandling(t *testing.T) {
 		t.Logf("Note: Nil values are present (this is acceptable if handled correctly)")
 	}
 }
+
+// TestAttrMarkerSimple verifies the marker renders a single attribute.
+func TestAttrMarkerSimple(t *testing.T) {
+	yaml := `TextView:
+  __kcl_info_meta__: [android:id]
+  android:id: "@+id/userNameTextView"
+`
+	out, err := Single(yaml)
+	if err != nil {
+		t.Fatalf("Single() error = %v", err)
+	}
+	got := string(out)
+	if !strings.Contains(got, `android:id="`) {
+		t.Errorf("expected android:id attribute, got: %s", got)
+	}
+	if strings.Contains(got, "__kcl_info_meta__") {
+		t.Errorf("marker key must not be emitted as element, got: %s", got)
+	}
+}
+
+// TestAttrMarkerMultiAttr verifies multiple attributes on one element.
+func TestAttrMarkerMultiAttr(t *testing.T) {
+	yaml := `TextView:
+  __kcl_info_meta__: [android:id, android:text]
+  android:id: "@+id/userNameTextView"
+  android:text: 用户名
+`
+	out, err := Single(yaml)
+	if err != nil {
+		t.Fatalf("Single() error = %v", err)
+	}
+	got := string(out)
+	if !strings.Contains(got, `android:id="`) {
+		t.Errorf("expected android:id attribute, got: %s", got)
+	}
+	if !strings.Contains(got, `android:text="`) {
+		t.Errorf("expected android:text attribute, got: %s", got)
+	}
+	if strings.Contains(got, "<__kcl_info_meta__") || strings.Contains(got, "<android:id") {
+		t.Errorf("attrs should not be rendered as elements, got: %s", got)
+	}
+}
+
+// TestAttrMarkerMixedAttrsChildren verifies attrs and children coexist.
+func TestAttrMarkerMixedAttrsChildren(t *testing.T) {
+	yaml := `Button:
+  __kcl_info_meta__: [android:id]
+  android:id: "@+id/btn"
+  label: "OK"
+  enabled: true
+`
+	out, err := Single(yaml)
+	if err != nil {
+		t.Fatalf("Single() error = %v", err)
+	}
+	got := string(out)
+	if !strings.Contains(got, `android:id="`) {
+		t.Errorf("expected android:id attribute, got: %s", got)
+	}
+	if !strings.Contains(got, "<label>OK</label>") {
+		t.Errorf("expected <label> child element, got: %s", got)
+	}
+	if !strings.Contains(got, "<enabled>true</enabled>") {
+		t.Errorf("expected <enabled> child element, got: %s", got)
+	}
+}
+
+// TestAttrMarkerAbsentKey verifies a listed-but-missing key does not panic
+// and is silently skipped. This guards against `disable_none`/`query_paths`
+// leaving a stale marker entry.
+func TestAttrMarkerAbsentKey(t *testing.T) {
+	yaml := `TextView:
+  __kcl_info_meta__: [android:id, android:text]
+  android:text: 用户名
+`
+	out, err := Single(yaml)
+	if err != nil {
+		t.Fatalf("Single() error = %v", err)
+	}
+	got := string(out)
+	if !strings.Contains(got, `android:text="`) {
+		t.Errorf("expected android:text attribute, got: %s", got)
+	}
+	if strings.Contains(got, `android:id=`) {
+		t.Errorf("absent attr should not be emitted, got: %s", got)
+	}
+}
+
+// TestAttrMarkerNoAttrRegression verifies that without the marker, output is
+// unchanged from the legacy renderer.
+func TestAttrMarkerNoAttrRegression(t *testing.T) {
+	yaml := `TextView:
+  android:id: "@+id/userNameTextView"
+  android:text: 用户名
+`
+	out, err := Single(yaml)
+	if err != nil {
+		t.Fatalf("Single() error = %v", err)
+	}
+	got := string(out)
+	if !strings.Contains(got, "<android:id>") {
+		t.Errorf("without marker, android:id should be a child element, got: %s", got)
+	}
+	if !strings.Contains(got, "<android:text>") {
+		t.Errorf("without marker, android:text should be a child element, got: %s", got)
+	}
+}
+
+// TestAttrMarkerNested verifies nested schema instances carry their own
+// markers independently.
+func TestAttrMarkerNested(t *testing.T) {
+	yaml := `parent:
+  child:
+    __kcl_info_meta__: [name]
+    name: nested
+  sibling: siblingVal
+`
+	out, err := Single(yaml)
+	if err != nil {
+		t.Fatalf("Single() error = %v", err)
+	}
+	got := string(out)
+	if !strings.Contains(got, `name="nested"`) {
+		t.Errorf("expected nested child attribute, got: %s", got)
+	}
+	if !strings.Contains(got, "<sibling>siblingVal</sibling>") {
+		t.Errorf("expected sibling child element, got: %s", got)
+	}
+}
+
+// TestAttrMarkerStream verifies multi-doc stream where only some docs have
+// the marker.
+func TestAttrMarkerStream(t *testing.T) {
+	yamlStream := `---
+TextView:
+  __kcl_info_meta__: [android:id]
+  android:id: "@+id/a"
+---
+Button:
+  android:id: plain
+`
+	out, err := Stream(yamlStream)
+	if err != nil {
+		t.Fatalf("Stream() error = %v", err)
+	}
+	got := string(out)
+	if !strings.Contains(got, "android:id=\"@+id/a\"") {
+		t.Errorf("first doc should have attribute, got: %s", got)
+	}
+	if !strings.Contains(got, "<android:id>plain</android:id>") {
+		t.Errorf("second doc should be plain child element, got: %s", got)
+	}
+}

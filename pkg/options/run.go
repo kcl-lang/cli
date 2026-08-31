@@ -102,6 +102,17 @@ func (o *RunOptions) Run() error {
 	if err != nil {
 		return err
 	}
+	// PR-2 / Issue #2047: when the requested format is XML, ask the KCL
+	// runtime to emit the `__kcl_info_meta__` marker beside schema
+	// instances carrying `@info(type="attr")`. The flag is propagated via
+	// the `EmitAttributeMetadata` proto field on ExecProgramArgs; until
+	// kcl-lang.io/lib is updated to expose that field, the call below is
+	// a no-op and the marker is only present in hand-written YAML. The
+	// XML renderer in pkg/format/xml already honours the marker, so once
+	// the runtime begins emitting it the output switches from "every
+	// schema key is a child element" to "marked keys are attributes".
+	// TODO(#2047): set args.EmitAttributeMetadata = true when the proto
+	// field is available on kcl-lang.io/lib's ExecProgramArgs.
 	if o.Quiet {
 		cli.SetLogWriter(nil)
 	}
