@@ -21,14 +21,20 @@ var version string
 //  2. The module version embedded in the Go build info (works for binaries installed
 //     via `go install kcl-lang.io/cli@vX.Y.Z` from a tagged module).
 //  3. The hardcoded `VersionTypeLatest` constant as a last resort.
+//
+// Every branch must be wrapped in `getVersion` so that the resulting string
+// always carries the `-{goos}-{goarch}` suffix — otherwise `kcl version` prints
+// inconsistent output depending on which branch fired (e.g. "0.12.10" vs
+// "0.12.10-darwin-arm64"), which is what kcl-lang/cli#386 reports.
 func GetVersionString() string {
-	if len(version) != 0 {
-		return version
+	v := version
+	if v == "" {
+		v = buildInfoVersion()
 	}
-	if v := buildInfoVersion(); v != "" {
-		return v
+	if v == "" {
+		v = string(VersionTypeLatest)
 	}
-	return VersionTypeLatest.String()
+	return getVersion(v)
 }
 
 // buildInfoVersion extracts a usable version string from the Go runtime build info.
