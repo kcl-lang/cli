@@ -29,6 +29,8 @@ func appendLangFlags(o *options.RunOptions, flags *pflag.FlagSet) {
 		"Specify the branch for the Git artifact")
 	flags.StringVar(&o.Format, "format", "yaml",
 		"Specify the output format (yaml, json, toml, xml). When xml is selected, schema attributes decorated with `@info(type=\"attr\")` are rendered as `name=\"value\"` attributes on the parent element instead of as child elements.")
+	flags.StringVar(&o.ErrorFormat, "error_format", "",
+		"Specify the diagnostic output format: pretty, short, arcanist, or sarif (default: pretty)")
 	flags.BoolVarP(&o.DisableNone, "disable_none", "n", false,
 		"Disable dumping None values")
 	flags.BoolVarP(&o.Debug, "debug", "d", false,
