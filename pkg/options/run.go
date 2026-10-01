@@ -78,6 +78,8 @@ type RunOptions struct {
 	CompileOnly bool
 	// Format is the output type, e.g., Json, Yaml, Toml etc. Default is Yaml.
 	Format string
+	// ErrorFormat is the diagnostic output format, e.g., pretty, short, arcanist, sarif.
+	ErrorFormat string
 	// Writer is used to output the run result. Default is os.Stdout.
 	Writer io.Writer
 	// ModSpec is the module spec for the KCL module.
@@ -157,6 +159,9 @@ func (o *RunOptions) Run() error {
 		client.WithStrictRange(o.StrictRangeCheck),
 		client.WithCompileOnly(o.CompileOnly),
 		client.WithLogger(os.Stdout),
+	}
+	if o.ErrorFormat != "" {
+		opts = append(opts, client.WithErrorFormat(o.ErrorFormat))
 	}
 
 	if o.ModSpec != nil {
@@ -414,6 +419,11 @@ func CompileOptionFromCli(o *RunOptions) *opt.CompileOptions {
 
 	// --strict_range_check, -r
 	opts.StrictRangeCheck = o.StrictRangeCheck
+
+	// --error_format
+	if o.ErrorFormat != "" {
+		opts.ExecProgramArgs.ErrorFormat = o.ErrorFormat
+	}
 
 	opts.CompileOnly = o.CompileOnly
 
