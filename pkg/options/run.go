@@ -422,7 +422,7 @@ func CompileOptionFromCli(o *RunOptions) *opt.CompileOptions {
 
 	// --error_format
 	if o.ErrorFormat != "" {
-		opts.ExecProgramArgs.ErrorFormat = o.ErrorFormat
+		opts.Merge(kcl.WithErrorFormat(o.ErrorFormat))
 	}
 
 	opts.CompileOnly = o.CompileOnly
