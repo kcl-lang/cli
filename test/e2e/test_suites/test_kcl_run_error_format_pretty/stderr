@@ -1,1 +1,1 @@
-error[E2L23]: CompileError
+name 'undefined_var' is not defined
