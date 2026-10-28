@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"net/url"
+	"strings"
 
 	"kcl-lang.io/kpm/pkg/client"
 	"kcl-lang.io/kpm/pkg/constants"
@@ -35,6 +36,18 @@ func ParseSourceFromArgs(cli *client.KpmClient, args []string) (*downloader.Sour
 					Path: arg,
 				}
 				continue
+			}
+
+			// A reference that names the registry or the namespace cannot be
+			// expressed by a package spec, so it is parsed as an OCI source.
+			if len(git) == 0 && len(oci) == 0 && len(path) == 0 {
+				if ociSource, ok := parseQualifiedOCIRef(arg); ok {
+					if source.Oci != nil {
+						return nil, fmt.Errorf("only one source is allowed")
+					}
+					source.Oci = ociSource
+					continue
+				}
 			}
 
 			// if arg is not path, it is Modspec
@@ -70,7 +83,10 @@ func ParseSourceFromArgs(cli *client.KpmClient, args []string) (*downloader.Sour
 			source.Git.Tag = tag
 			source.Git.Commit = commit
 			source.Git.Branch = branch
-		} else if source.Oci != nil {
+		} else if source.Oci != nil && len(tag) != 0 {
+			// The tag flag overrides the tag of the reference, but it must
+			// not clear it: the reference may carry a tag itself, either
+			// in the "name:tag" form or in the query of an "oci://" URL.
 			source.Oci.Tag = tag
 		}
 	}
@@ -122,6 +138,79 @@ func ParseSourceFromArgs(cli *client.KpmClient, args []string) (*downloader.Sour
 	source.ModSpec = &modSpec
 
 	return &source, nil
+}
+
+// parseQualifiedOCIRef parses a package reference that names the registry
+// or the namespace explicitly:
+//
+//	<namespace>/<name>[:<tag>]
+//	<registry>/<namespace>/<name>[:<tag>]
+//
+// It returns the OCI source and true when the argument is such a
+// reference, and false for anything else — a bare package name, a URL, a
+// local path or a git reference.
+//
+// Such a reference cannot be expressed by a package spec: the spec's name
+// is joined with the default repo when it is resolved, which turns
+// "ghcr.io/kcl-lang/helloworld" into "kcl-lang/ghcr.io/kcl-lang/helloworld"
+// and "kcl-lang/helloworld" into "kcl-lang/kcl-lang/helloworld" — both
+// repositories that do not exist.
+//
+// The namespace replaces the default repo instead of being prefixed to it,
+// the same way the host-less --oci form treats a bare repository path. The
+// registry stays unresolved when the reference does not name one, so it is
+// read from KPM_REG at runtime.
+func parseQualifiedOCIRef(arg string) (*downloader.Oci, bool) {
+	// A URL is parsed as a URL elsewhere, and a digest reference carries an
+	// "@" that is not part of a tag.
+	if strings.Contains(arg, "://") || strings.Contains(arg, "@") {
+		return nil, false
+	}
+
+	// The tag is the part after the last colon that follows the last slash,
+	// so that a port in the registry host ("localhost:5000/foo") is not
+	// mistaken for a tag.
+	name, tag := arg, ""
+	if idx := strings.LastIndex(arg, ":"); idx != -1 && !strings.Contains(arg[idx+1:], "/") {
+		name, tag = arg[:idx], arg[idx+1:]
+	}
+
+	segments := strings.Split(name, "/")
+	if len(segments) < 2 {
+		// A bare package name lives in the default repo.
+		return nil, false
+	}
+
+	reg := ""
+	if isRegistryHost(segments[0]) {
+		reg = segments[0]
+		segments = segments[1:]
+	}
+	if len(segments) == 0 {
+		return nil, false
+	}
+
+	return &downloader.Oci{
+		Reg:  reg,
+		Repo: strings.Join(segments, "/"),
+		Tag:  tag,
+		// The registry is resolved at runtime from KPM_REG when the
+		// reference does not name one.
+		RegFromEnv: reg == "",
+	}, true
+}
+
+// isRegistryHost reports whether the first segment of an OCI reference
+// names a registry rather than a namespace.
+//
+// It follows the convention the OCI distribution spec and Docker use: the
+// first segment is a registry host when it contains a dot or a colon, or
+// when it is exactly "localhost". Anything else is a namespace.
+func isRegistryHost(segment string) bool {
+	if segment == "localhost" {
+		return true
+	}
+	return strings.ContainsAny(segment, ".:")
 }
 
 func ParseUrlFromArgs(cli *client.KpmClient, args []string) (*url.URL, error) {
