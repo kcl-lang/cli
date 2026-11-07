@@ -45,7 +45,7 @@
 // kcl
 //
 //	import     migration other data and schema to kcl e.g., openapi, jsonschema, json, yaml
-//	export     convert kcl schema to other schema e.g., openapi (Not yet implemented)
+//	export     export kcl schemas to source code in another language e.g., rust, python, go, java, typescript
 //
 // ```
 //
@@ -127,6 +127,7 @@ func NewWithNameAndCommands(name string, commands []*cobra.Command) *cobra.Comma
 		NewVetCmd(),
 		NewCleanCmd(),
 		NewImportCmd(),
+		NewExportCmd(),
 		// Module & Registry commands
 		NewModCmd(),
 		NewRegistryCmd(),
