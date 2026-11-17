@@ -100,6 +100,10 @@ go build ./cmd/kcl/
 CGO_ENABLED=1 go build -tags="musl netgo static osusergo" -ldflags="-linkmode external -extldflags '-static'" ./cmd/kcl
 ```
 
+#### FreeBSD
+
+On FreeBSD the CLI loads `libkcl.so` and calls `kcl_service_new`. It looks in `KCL_LIB_HOME`, the user cache (`~/.cache/kcl`), `/usr/local/lib`, and `/usr/lib`. A missing runtime prints an error that names `libkcl` and the platform. Cross-compiling the binary still depends on `installLib` in [kcl-lang/lib](https://github.com/kcl-lang/lib); see [docs/freebsd.md](docs/freebsd.md) and [kcl-lang/kcl#1029](https://github.com/kcl-lang/kcl/issues/1029).
+
 Use the following command to ensure that you install `kcl` successfully.
 
 ```shell

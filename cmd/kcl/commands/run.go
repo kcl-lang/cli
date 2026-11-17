@@ -66,7 +66,12 @@ func NewRunCmd() *cobra.Command {
 		Short:   "Run KCL codes.",
 		Long:    runDesc,
 		Example: runExample,
-		RunE: func(_ *cobra.Command, args []string) error {
+		RunE: func(cmd *cobra.Command, args []string) error {
+			// executeRunCmd builds this command without the root hook, so
+			// the runtime check has to run here as well.
+			if err := ensureRuntime(cmd); err != nil {
+				return err
+			}
 			if err := o.Complete(args); err != nil {
 				return err
 			}

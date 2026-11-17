@@ -87,6 +87,10 @@ go build ./cmd/kcl/
 CGO_ENABLED=1 go build -tags="musl netgo static osusergo" -ldflags="-linkmode external -extldflags '-static'" ./cmd/kcl
 ```
 
+#### FreeBSD
+
+在 FreeBSD 上，CLI 加载 `libkcl.so` 并调用 `kcl_service_new`。查找顺序为 `KCL_LIB_HOME`、用户缓存（`~/.cache/kcl`）、`/usr/local/lib` 和 `/usr/lib`。缺少运行时库时会返回指明 `libkcl` 和平台的错误，而不会 panic。交叉编译仍依赖 [kcl-lang/lib](https://github.com/kcl-lang/lib) 中的 `installLib`，详见 [docs/freebsd.md](docs/freebsd.md) 与 [kcl-lang/kcl#1029](https://github.com/kcl-lang/kcl/issues/1029)。
+
 请使用以下命令以确保您成功安装了 `kcl`。
 
 ```shell

@@ -11,6 +11,8 @@ builds:
     main: ./cmd/kcl/main.go
     binary: kcl
     goos:
+      # freebsd stays out of the release until kcl-lang.io/lib provides
+      # installLib and a libkcl.so for that OS. See docs/freebsd.md.
       - darwin
       - linux
       - windows
