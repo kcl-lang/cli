@@ -12,6 +12,7 @@ require (
 	kcl-lang.io/kcl-openapi v0.12.1
 	kcl-lang.io/kcl-plugin v0.11.0
 	kcl-lang.io/kpm v0.13.2
+	kcl-lang.io/lib v0.13.2
 )
 
 require (
@@ -117,7 +118,6 @@ require (
 	google.golang.org/genproto v0.0.0-20260715232425-e75dac1f907d // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20260715232425-e75dac1f907d // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20260921155816-b14227669459 // indirect
-	kcl-lang.io/lib v0.13.2 // indirect
 )
 
 require (
