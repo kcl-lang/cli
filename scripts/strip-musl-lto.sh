@@ -23,7 +23,13 @@ case "$arch" in
     ;;
 esac
 
+# go list -m leaves Dir empty until the module is downloaded.
+go mod download kcl-lang.io/lib >/dev/null
 moddir=$(go list -m -f '{{.Dir}}' kcl-lang.io/lib)
+if [ -z "$moddir" ] || [ ! -d "$moddir" ]; then
+  echo "strip-musl-lto: could not locate kcl-lang.io/lib" >&2
+  exit 1
+fi
 archive="$moddir/go/lib/$plat/libkcl.a"
 if [ ! -f "$archive" ]; then
   echo "strip-musl-lto: missing $archive" >&2
