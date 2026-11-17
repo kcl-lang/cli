@@ -84,7 +84,12 @@ jobs:
             gcc \
             git \
             make \
-            linux-headers
+            linux-headers \
+            binutils
+
+      # Go 1.26 rejects .llvmbc/.llvmcmd inside the vendored musl archive.
+      - name: Strip LTO bitcode from vendored musl libkcl
+        run: scripts/strip-musl-lto.sh
 
       - name: KCL Installation
         run: |
