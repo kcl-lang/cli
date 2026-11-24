@@ -6,7 +6,14 @@ import (
 )
 
 func appendLangFlags(o *options.RunOptions, flags *pflag.FlagSet) {
-	flags.StringSliceVarP(&o.PathSelectors, "path_selector", "S", []string{},
+	// Use StringArrayVar (not StringSlice) for every repeatable flag below:
+	// StringSlice splits the value on commas via encoding/csv, which breaks
+	// legitimate inputs that contain commas inside the value, e.g.
+	// `-O person.ids=[1,2]`, `-O 'person.name="Alice,Bob"'`, and any path
+	// selector or settings file path. Each repeat of the flag should become
+	// one distinct element of the slice, regardless of its contents.
+	// See https://github.com/kcl-lang/cli/issues/232.
+	flags.StringArrayVarP(&o.PathSelectors, "path_selector", "S", []string{},
 		"Specify the path selectors")
 	flags.StringVarP(&o.Output, "output", "o", "",
 		"Specify the YAML/JSON output file path")
@@ -21,7 +28,9 @@ func appendLangFlags(o *options.RunOptions, flags *pflag.FlagSet) {
 	flags.StringVarP(&o.Branch, "branch", "b", "",
 		"Specify the branch for the Git artifact")
 	flags.StringVar(&o.Format, "format", "yaml",
-		"Specify the output format (yaml, json, toml, xml)")
+		"Specify the output format (yaml, json, toml, xml). When xml is selected, schema attributes decorated with `@info(type=\"attr\")` are rendered as `name=\"value\"` attributes on the parent element instead of as child elements.")
+	flags.StringVar(&o.ErrorFormat, "error_format", "",
+		"Specify the diagnostic output format: pretty, short, arcanist, or sarif (default: pretty)")
 	flags.BoolVarP(&o.DisableNone, "disable_none", "n", false,
 		"Disable dumping None values")
 	flags.BoolVarP(&o.Debug, "debug", "d", false,
@@ -36,11 +45,11 @@ func appendLangFlags(o *options.RunOptions, flags *pflag.FlagSet) {
 func appendRunnerFlags(o *options.RunOptions, flags *pflag.FlagSet) {
 	flags.StringArrayVarP(&o.Arguments, "argument", "D", []string{},
 		"Specify the top-level argument")
-	flags.StringSliceVarP(&o.Settings, "setting", "Y", []string{},
+	flags.StringArrayVarP(&o.Settings, "setting", "Y", []string{},
 		"Specify the command line setting files")
-	flags.StringSliceVarP(&o.Overrides, "overrides", "O", []string{},
+	flags.StringArrayVarP(&o.Overrides, "overrides", "O", []string{},
 		"Specify the configuration override path and value")
-	flags.StringSliceVarP(&o.ExternalPackages, "external", "E", []string{},
+	flags.StringArrayVarP(&o.ExternalPackages, "external", "E", []string{},
 		"Specify the mapping of package name and path where the package is located")
 	flags.BoolVarP(&o.Vendor, "vendor", "V", false,
 		"Run in vendor mode")

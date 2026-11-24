@@ -78,6 +78,8 @@ type RunOptions struct {
 	CompileOnly bool
 	// Format is the output type, e.g., Json, Yaml, Toml etc. Default is Yaml.
 	Format string
+	// ErrorFormat is the diagnostic output format, e.g., pretty, short, arcanist, sarif.
+	ErrorFormat string
 	// Writer is used to output the run result. Default is os.Stdout.
 	Writer io.Writer
 	// ModSpec is the module spec for the KCL module.
@@ -102,6 +104,17 @@ func (o *RunOptions) Run() error {
 	if err != nil {
 		return err
 	}
+	// PR-2 / Issue #2047: when the requested format is XML, ask the KCL
+	// runtime to emit the `__kcl_info_meta__` marker beside schema
+	// instances carrying `@info(type="attr")`. The flag is propagated via
+	// the `EmitAttributeMetadata` proto field on ExecProgramArgs; until
+	// kcl-lang.io/lib is updated to expose that field, the call below is
+	// a no-op and the marker is only present in hand-written YAML. The
+	// XML renderer in pkg/format/xml already honours the marker, so once
+	// the runtime begins emitting it the output switches from "every
+	// schema key is a child element" to "marked keys are attributes".
+	// TODO(#2047): set args.EmitAttributeMetadata = true when the proto
+	// field is available on kcl-lang.io/lib's ExecProgramArgs.
 	if o.Quiet {
 		cli.SetLogWriter(nil)
 	}
@@ -146,6 +159,9 @@ func (o *RunOptions) Run() error {
 		client.WithStrictRange(o.StrictRangeCheck),
 		client.WithCompileOnly(o.CompileOnly),
 		client.WithLogger(os.Stdout),
+	}
+	if o.ErrorFormat != "" {
+		opts = append(opts, client.WithErrorFormat(o.ErrorFormat))
 	}
 
 	if o.ModSpec != nil {
@@ -403,6 +419,11 @@ func CompileOptionFromCli(o *RunOptions) *opt.CompileOptions {
 
 	// --strict_range_check, -r
 	opts.StrictRangeCheck = o.StrictRangeCheck
+
+	// --error_format
+	if o.ErrorFormat != "" {
+		opts.Merge(kcl.WithErrorFormat(o.ErrorFormat))
+	}
 
 	opts.CompileOnly = o.CompileOnly
 

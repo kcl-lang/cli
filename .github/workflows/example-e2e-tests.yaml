@@ -13,8 +13,8 @@ jobs:
         os: [ ubuntu-22.04, ubuntu-latest ]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-go@v6
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v7
         with:
           go-version-file: go.mod
 
@@ -34,8 +34,8 @@ jobs:
         os: [ macos-15-intel, macos-latest ]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-go@v6
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v7
         with:
           go-version-file: go.mod
   
@@ -55,7 +55,7 @@ jobs:
   windows:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Install Make
         run: choco install make -y
@@ -72,10 +72,10 @@ jobs:
 
   musl:
     runs-on: ubuntu-latest
-    container: golang:1.24-alpine
+    container: golang:1.26-alpine
     steps:
       - name: Git checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Install musl dependencies (Alpine container)
         run: |
@@ -84,7 +84,12 @@ jobs:
             gcc \
             git \
             make \
-            linux-headers
+            linux-headers \
+            binutils
+
+      # Go 1.26 rejects .llvmbc/.llvmcmd inside the vendored musl archive.
+      - name: Strip LTO bitcode from vendored musl libkcl
+        run: scripts/strip-musl-lto.sh
 
       - name: KCL Installation
         run: |

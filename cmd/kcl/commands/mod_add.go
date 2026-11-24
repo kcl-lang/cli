@@ -52,7 +52,13 @@ const (
   kcl mod add subhelloworld --oci https://ghcr.io/kcl-lang/helloworld --tag 0.1.4
 
   # Add the sub module dependency named "subhelloworld" with version "0.0.1" from the OCI registry by the tag flag
-  kcl mod add subhelloworld:0.0.1 --oci https://ghcr.io/kcl-lang/helloworld --tag 0.1.4`
+  kcl mod add subhelloworld:0.0.1 --oci https://ghcr.io/kcl-lang/helloworld --tag 0.1.4
+
+  # Add a host-less OCI dependency: registry resolved at runtime from KPM_REG / DefaultOciRegistry.
+  # Allows the same source to deploy to different registry accounts (e.g. multi-account AWS ECR or
+  # air-gapped environments) by changing only the KPM_REG environment variable.
+  #   export KPM_REG=123456789012.dkr.ecr.eu-west-1.amazonaws.com
+  kcl mod add --oci myorg/kcl-templates/utils --tag 0.2.0`
 )
 
 // NewModAddCmd returns the mod add command.

@@ -1,0 +1,2 @@
+schema S:
+    count: int

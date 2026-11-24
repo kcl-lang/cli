@@ -10,13 +10,22 @@ import (
 const (
 	lintDesc = `This command lints the kcl code. 'kcl lint' takes multiple input for arguments.
 
-For example, 'kcl lint path/to/kcl.k' will lint the file named path/to/kcl.k 
+For example, 'kcl lint path/to/kcl.k' will lint the file named path/to/kcl.k
+
+'kcl lint ./...' lints all the kcl packages under the current directory, one
+package per directory, like 'go build ./...'
 `
 	lintExample = `  # Lint a single file and output YAML
   kcl lint path/to/kcl.k
 
   # Lint multiple files
   kcl lint path/to/kcl1.k path/to/kcl2.k
+
+  # Lint all the packages under the current directory
+  kcl lint ./...
+
+  # Lint all the packages under a specific directory
+  kcl lint path/to/pkg/...
 
   # Lint OCI packages
   kcl lint oci://ghcr.io/kcl-lang/helloworld
@@ -34,6 +43,9 @@ func NewLintCmd() *cobra.Command {
 		Long:    lintDesc,
 		Example: lintExample,
 		RunE: func(_ *cobra.Command, args []string) error {
+			if options.HasLintPattern(args) {
+				return o.LintAllPackages(args)
+			}
 			if err := o.Complete(args); err != nil {
 				return err
 			}

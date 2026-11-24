@@ -113,6 +113,9 @@ func NewWithNameAndCommands(name string, commands []*cobra.Command) *cobra.Comma
 		SilenceUsage:  true,
 		SilenceErrors: true,
 		Version:       version.GetVersionString(),
+		PersistentPreRunE: func(c *cobra.Command, _ []string) error {
+			return ensureRuntime(c)
+		},
 	}
 
 	// Default commands

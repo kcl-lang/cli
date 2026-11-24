@@ -5,18 +5,52 @@ package version
 import (
 	"fmt"
 	"runtime"
+	"runtime/debug"
+	"strings"
 )
 
 // version will be set by build flags.
 var version string
 
-// GetVersionString() will return the latest version of kpm.
+// GetVersionString() returns the KCL CLI version string in the form
+// `{version}-{goos}-{goarch}`.
+//
+// The version is resolved in the following order:
+//  1. The `version` package variable, populated by `-ldflags "-X .../pkg/version.version=..."`
+//     at build time (used by goreleaser and the musl release build).
+//  2. The module version embedded in the Go build info (works for binaries installed
+//     via `go install kcl-lang.io/cli@vX.Y.Z` from a tagged module).
+//  3. The hardcoded `VersionTypeLatest` constant as a last resort.
+//
+// Every branch must be wrapped in `getVersion` so that the resulting string
+// always carries the `-{goos}-{goarch}` suffix — otherwise `kcl version` prints
+// inconsistent output depending on which branch fired (e.g. "0.12.10" vs
+// "0.12.10-darwin-arm64"), which is what kcl-lang/cli#386 reports.
 func GetVersionString() string {
-	if len(version) == 0 {
-		// If version is not set by build flags, return the version constant.
-		return VersionTypeLatest.String()
+	v := version
+	if v == "" {
+		v = buildInfoVersion()
 	}
-	return version
+	if v == "" {
+		v = string(VersionTypeLatest)
+	}
+	return getVersion(v)
+}
+
+// buildInfoVersion extracts a usable version string from the Go runtime build info.
+// It strips the leading "v" (e.g. "v0.12.8" -> "0.12.8") and returns an empty
+// string when the build info is unavailable or reports a non-release version
+// such as "(devel)" or a pseudo-version.
+func buildInfoVersion() string {
+	info, ok := debug.ReadBuildInfo()
+	if !ok {
+		return ""
+	}
+	v := info.Main.Version
+	if v == "" || v == "(devel)" {
+		return ""
+	}
+	return strings.TrimPrefix(v, "v")
 }
 
 // VersionType is the version type of kpm.
@@ -32,25 +66,36 @@ func getVersion(version string) string {
 }
 
 const (
-	VersionTypeLatest = Version_0_12_3
+	VersionTypeLatest = Version_0_13_3
 
-	Version_0_12_3 VersionType = "0.12.3"
-	Version_0_12_2 VersionType = "0.12.2"
-	Version_0_12_1 VersionType = "0.12.1"
-	Version_0_12_0 VersionType = "0.12.0"
-	Version_0_11_2 VersionType = "0.11.2"
-	Version_0_11_1 VersionType = "0.11.1"
-	Version_0_11_0 VersionType = "0.11.0"
-	Version_0_10_9 VersionType = "0.10.9"
-	Version_0_10_8 VersionType = "0.10.8"
-	Version_0_10_7 VersionType = "0.10.7"
-	Version_0_10_6 VersionType = "0.10.6"
-	Version_0_10_5 VersionType = "0.10.5"
-	Version_0_10_4 VersionType = "0.10.4"
-	Version_0_10_3 VersionType = "0.10.3"
-	Version_0_10_2 VersionType = "0.10.2"
-	Version_0_10_1 VersionType = "0.10.1"
-	Version_0_10_0 VersionType = "0.10.0"
+	Version_0_13_3  VersionType = "0.13.3"
+	Version_0_13_2  VersionType = "0.13.2"
+	Version_0_13_1  VersionType = "0.13.1"
+	Version_0_13_0  VersionType = "0.13.0"
+	Version_0_12_10 VersionType = "0.12.10"
+	Version_0_12_9  VersionType = "0.12.9"
+	Version_0_12_8  VersionType = "0.12.8"
+	Version_0_12_7  VersionType = "0.12.7"
+	Version_0_12_6  VersionType = "0.12.6"
+	Version_0_12_5  VersionType = "0.12.5"
+	Version_0_12_4  VersionType = "0.12.4"
+	Version_0_12_3  VersionType = "0.12.3"
+	Version_0_12_2  VersionType = "0.12.2"
+	Version_0_12_1  VersionType = "0.12.1"
+	Version_0_12_0  VersionType = "0.12.0"
+	Version_0_11_2  VersionType = "0.11.2"
+	Version_0_11_1  VersionType = "0.11.1"
+	Version_0_11_0  VersionType = "0.11.0"
+	Version_0_10_9  VersionType = "0.10.9"
+	Version_0_10_8  VersionType = "0.10.8"
+	Version_0_10_7  VersionType = "0.10.7"
+	Version_0_10_6  VersionType = "0.10.6"
+	Version_0_10_5  VersionType = "0.10.5"
+	Version_0_10_4  VersionType = "0.10.4"
+	Version_0_10_3  VersionType = "0.10.3"
+	Version_0_10_2  VersionType = "0.10.2"
+	Version_0_10_1  VersionType = "0.10.1"
+	Version_0_10_0  VersionType = "0.10.0"
 
 	Version_0_9_8 VersionType = "0.9.8"
 	Version_0_9_7 VersionType = "0.9.7"

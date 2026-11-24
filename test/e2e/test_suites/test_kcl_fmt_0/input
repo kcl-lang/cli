@@ -1,0 +1,1 @@
+kcl fmt --dry-run <workspace>/test_space/main.k

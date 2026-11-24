@@ -79,6 +79,9 @@ func ModGraph(cli *client.KpmClient, args []string) error {
 	gra, err := cli.Graph(
 		client.WithGraphMod(kclPkg),
 	)
+	if err != nil {
+		return err
+	}
 
 	graStr, err := gra.DisplayGraphFromVertex(
 		module.Version{Path: kclPkg.GetPkgName(), Version: kclPkg.GetPkgVersion()},

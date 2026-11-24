@@ -80,6 +80,9 @@ func NewImportCmd() *cobra.Command {
 		"Skips validation of spec prior to generation")
 	cmd.Flags().StringVarP(&o.ModelPackage, "package", "p", "models",
 		"The package to save the models. Default is models")
+	cmd.Flags().StringVarP(&o.DataIdentifier, "identifier", "i", "",
+		"Assign the imported data to this top-level KCL name (e.g. 'myData = { ... }'). "+
+			"Only applies to data modes (json, yaml, toml).")
 
 	return cmd
 }
