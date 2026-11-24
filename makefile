@@ -29,6 +29,10 @@ build: lint
 	mkdir -p bin/
 	$(GO_BUILD_ENV) go build -o bin/kcl -ldflags="$(LDFLAGS)" $(MAIN_FILE)
 
+.PHONY: build-freebsd
+build-freebsd:
+	scripts/build-freebsd.sh
+
 .PHONY: test
 test:
 	go test -v ./...
