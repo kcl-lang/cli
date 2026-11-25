@@ -4,7 +4,7 @@
 # golang:1.26-alpine moved past the Go that accepted this archive. Current
 # Go rejects objects named by #cgo LDFLAGS when they contain .llvmbc or
 # .llvmcmd (cmd/go/internal/work/security.go). That bitcode is unused for
-# a normal static link. kcl-lang.io/lib v0.13.2 still ships it.
+# a normal static link. kcl-lang.io/lib v0.13.3 still ships it.
 #
 # Only the archive for the current GOARCH is rewritten. A cross objcopy
 # cannot parse the other architecture's objects.
