@@ -39,7 +39,7 @@ GOOS=freebsd GOARCH=amd64 CGO_ENABLED=0 go build \
 
 ## Remaining release gap
 
-`kcl-lang.io/lib` v0.13.2 builds `go/install/install_lib_unix.go` for Linux and Darwin only. A FreeBSD compile therefore stops in the dependency:
+`kcl-lang.io/lib` v0.13.3 builds `go/install/install_lib_unix.go` for Linux and Darwin only. A FreeBSD compile therefore stops in the dependency:
 
 ```text
 kcl-lang.io/lib/go/install/install.go: undefined: installLib
